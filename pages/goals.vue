@@ -1,9 +1,11 @@
 <template>
-  <div class="page">search</div>
+  <div class="page">goals</div>
 </template>
 
 <script>
-export default {};
+export default {
+  transition: "rtl",
+};
 </script>
 
 <style lang="scss" scoped>

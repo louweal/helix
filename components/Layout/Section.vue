@@ -8,6 +8,7 @@
 section {
   position: relative;
   padding: 4px 0; //1.2
+  background-color: #fff;
 
   &.section {
     &--light {

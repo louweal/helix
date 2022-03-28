@@ -2,7 +2,7 @@
   <component
     :is="level === '0' ? 'span' : `h${level}`"
     class="heading"
-    :class="[fontWeight, fontSize]"
+    :class="[fontWeight, fontSize, fontColor, fontStyle]"
   >
     <slot> ({{ size }}) I'm a H{{ level }} </slot>
   </component>
@@ -30,8 +30,12 @@ export default {
       type: String,
       default: "",
     },
+    fstyle: {
+      type: [String, Boolean],
+      default: false,
+    },
+
     weight: {
-      // bold
       type: [String, Boolean],
       default: false,
     },
@@ -43,6 +47,12 @@ export default {
     },
     fontWeight() {
       return this.weight ? `heading--${this.weight}` : false;
+    },
+    fontColor() {
+      return this.color ? `heading--${this.color}` : false;
+    },
+    fontStyle() {
+      return this.fstyle ? `heading--${this.fstyle}` : false;
     },
   },
 };
@@ -64,9 +74,17 @@ export default {
     font-weight: 500;
   }
 
+  &--italic {
+    font-style: italic;
+    color: get-color(meta);
+  }
+
   &--white {
     color: #fff;
-    font-weight: normal;
+  }
+
+  &--black {
+    color: #000;
   }
 }
 </style>

@@ -1,7 +1,16 @@
 <template>
   <div class="pre-loader">
     <div class="pre-loader__inner">
-      <img src="@/assets/images/logo.svg" alt="logo" />
+      <img
+        src="@/assets/images/logo.svg"
+        alt="logo"
+        width="212.62"
+        height="99.41"
+      />
+
+      <div class="bottom-xs-5"></div>
+
+      <icon icon="refresh" />
     </div>
   </div>
 </template>
@@ -22,36 +31,43 @@ export default {};
   height: 100%;
   z-index: 3000;
   overflow: hidden;
-  animation: disappear 0.3s 2.1s ease-in forwards;
-  padding: 1.2rem;
+  // animation: disappear 0.3s 2.1s ease-in forwards;
+  // padding: 1.2rem;
+
+  ::v-deep i {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: get-color(primary);
+    animation: rotate 2s ease-in-out infinite;
+  }
 
   &__inner {
-    background-color: get-color(light);
-    border-radius: 1rem;
+    // background-color: get-color(light);
+    // border-radius: 1rem;
+    // border: 1px solid red;
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: center; //space-around;
     align-items: center;
-  }
-
-  img {
-    width: 275px;
-    animation: disappear 2s 0s reverse cubic-bezier(0.2, 0, 0.1, 1) forwards; // makes the image appear slowly
-
-    @include from(l) {
-      width: 538px;
-    }
   }
 }
 
-@keyframes disappear {
-  from {
-    opacity: 1;
-  }
+// @keyframes disappear {
+//   from {
+//     opacity: 1;
+//   }
+//   to {
+//     opacity: 0;
+//     visibility: hidden;
+//   }
+// }
+
+@keyframes rotate {
   to {
-    opacity: 0;
-    visibility: hidden;
+    transform: rotate(-360deg);
   }
 }
 </style>

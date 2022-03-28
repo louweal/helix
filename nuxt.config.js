@@ -10,7 +10,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "Helix | For heroes",
+    title: "ℏ𝑒𝑙𝑖𝑥",
     htmlAttrs: {
       lang: "en",
     },
@@ -41,6 +41,7 @@ export default {
       "~/components/Layout",
     ],
   },
+
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [],

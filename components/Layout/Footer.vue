@@ -4,7 +4,7 @@
       <li>
         <nuxt-link to="/"
           ><img
-            src="@/assets/images/ico-contracts.svg"
+            src="@/assets/images/icons/ico-contracts.svg"
             alt="all contracts"
             height="24"
         /></nuxt-link>
@@ -12,7 +12,7 @@
       <li>
         <nuxt-link to="/search"
           ><img
-            src="@/assets/images/ico-search.svg"
+            src="@/assets/images/icons/ico-search.svg"
             alt="search contracts"
             height="24"
         /></nuxt-link>
@@ -20,14 +20,17 @@
       <li>
         <nuxt-link to="/goals"
           ><img
-            src="@/assets/images/ico-goals.svg"
+            src="@/assets/images/icons/ico-goals.svg"
             alt="personal goals"
             height="24"
         /></nuxt-link>
       </li>
       <li>
         <nuxt-link to="/account"
-          ><img src="@/assets/images/ico-account.svg" alt="account" height="24"
+          ><img
+            src="@/assets/images/icons/ico-account.svg"
+            alt="account"
+            height="24"
         /></nuxt-link>
       </li>
     </ul>

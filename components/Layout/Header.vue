@@ -41,6 +41,9 @@ export default {
     }
   },
 
+  beforeDestroy() {
+    window.removeEventListener("resize", this.setPushdownHeight);
+  },
   methods: {
     setPushdownHeight() {
       let header = this.$refs["header"];
@@ -95,20 +98,11 @@ export default {
   flex-direction: row;
   align-items: center;
   width: 100%;
-  background-color: #fff;
-  border-bottom: 1px solid get-color(line);
-  box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.02);
+  background-color: transparent;
   z-index: 11;
   transition: transform 0.4s ease-in-out;
   will-change: transform;
-
-  &__inner {
-    padding: 1.1rem 0;
-
-    @include from(l) {
-      padding: 1.1rem 0;
-    }
-  }
+  padding: 6px 4px 2px 4px;
 
   &--fixed {
     position: fixed;
