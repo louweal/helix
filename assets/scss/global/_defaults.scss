@@ -1,0 +1,80 @@
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: get-color(primary);
+  color: #fff; 
+}
+
+html {
+  min-width: 300px;
+  font-size: 16px;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+
+}
+
+body {
+  font-family: $base-font;
+  font-weight: normal;
+  font-style: normal;
+  color: get-color(base-text);
+  text-align: left;
+  width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &.modal-open {
+    overflow-y: hidden;
+    position: fixed;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent;
+}
+
+main {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+}
+
+img {
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+address {
+  font-style: normal;
+}
+
+a {
+  text-decoration: none;
+  color: get-color(primary);
+}
+
+li,
+address {
+  line-height: 178%;
+}
+
+ul.inline {
+  li {
+    display: inline;
+  }
+}

@@ -1,0 +1,81 @@
+/*
+* Only use SCSS variables in this file
+*/
+
+@use "sass:math";
+
+// CONSTANTS -- DO NOT CHANGE CONSTANTS
+$REM: 16; // DO NOT CHANGE THIS
+
+// VARIABLES -- CHANGE THESE TO FIT THE DESIGN
+$theme-colors: (
+  base-text: #686868,
+  headings: #686868,
+  primary: #339A69,
+  secondary: #2E9DA6,
+  accent: #2E9DA6,
+  meta: #D4D3DF,
+  light: #f5f5f5,
+  dark: #686868,
+  line: #dbdbdb,  
+);
+
+$container-max-width: 1440px;
+
+$text-base-size: math.div(17,$REM)+rem; 
+
+// typography
+
+$base-font: "Roboto", Helvetica, Arial, sans-serif;
+$heading-font: "Roboto", Helvetica, Arial, sans-serif;
+
+
+//  'math.div(PX,$REM)+rem' automatically computes the fontsize in PX to rem :)
+$fs-xs: (null: (math.div(9,$REM)+rem, 1.5, 1rem), l: (math.div(9,$REM)+rem, 1.5, 1rem)); // todo: add 'm' breakpoint
+$fs-s: (null: (math.div(11,$REM)+rem, 1.5, 1rem), l: (math.div(11,$REM)+rem, 1.5, 1rem));
+$fs-m: (null: (math.div(14,$REM)+rem, 1.5,	0.9rem,), l: (math.div(14,$REM)+rem, 1.45, 1rem));
+$fs-l: (null: (math.div(15,$REM)+rem, 1.0, 1rem,), l: (math.div(15,$REM)+rem, 1.4, 1rem));
+$fs-xl: (null: (math.div(16,$REM)+rem, 1.5, 1.2rem), l: (math.div(16,$REM)+rem, 1.45, 1.5rem));
+$fs-2xl: (null: (math.div(18,$REM)+rem, 1.45, 1.5rem), l: (math.div(18,$REM)+rem, 1.4, 1.5rem));
+$fs-3xl: (null: (math.div(23,$REM)+rem, 1.25, 1.5rem),l: (math.div(23,$REM)+rem, 1.2, 1.5rem));
+$fs-4xl: (null: (math.div(23,$REM)+rem, 1.3, 1.5rem), l: (math.div(23,$REM)+rem, 1.2, 1.5rem));
+$fs-5xl: (null: (math.div(23,$REM)+rem, 1.15, 1.5rem), l: (math.div(23,$REM)+rem, 1.1, 1.5rem));
+$fs-6xl: (null: (math.div(23,$REM)+rem, 1.2, 1.5rem), l: (math.div(23,$REM)+rem, 1.15, 1.5rem));
+
+$ratio-helpers-prefix: '.ratio-';
+$aspect-ratios: (
+  // helpful tool for finding nearest aspect ratio: https://lawlesscreation.github.io/nearest-aspect-ratio/ 
+
+  16x9  : (width:16,height:9),
+  4x3   : (width:4,height:3),
+  3x2   : (width:3,height:2),
+  9x16  : (width:9,height:16),
+  3x4   : (width:3,height:4),
+  2x3   : (width:2,height:3),
+  1x1   : (width:1,height:1),
+  2x1   : (width:2,height:1),
+  3x1   : (width:3,height:1),
+  5x2   : (width:5,height:2),
+  60x39   : (width:60,height:39), // for a VisualGrid with gap 20px
+);
+
+$breakpoints: (
+  'xs':  320px, // minimum 
+  's': 414px, // mobile (was 480px before)
+  'm':  768px, // tablet
+  'l': 977px, // desktop
+  'xl':  1366px, // widescreen (was 1200 before)
+  'xxl':  1680px, // fullhd
+);
+
+$radius: 1rem;
+
+$input-background-color: transparent;
+$input-background-hover-color: $input-background-color;
+$input-spacing: .75rem;
+$input-border-hover-color: get-color(dark);
+$input-border-radius: 0;
+$input-border-width: 1px;
+$input-font-family: $base-font;
+$input-font-size: 19px;
+$input-border-color: #0A006B; 

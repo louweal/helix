@@ -1,0 +1,123 @@
+@mixin from($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+      @media (min-width:#{inspect(map-get($breakpoints, $breakpoint))}) {
+           @content;
+      }
+  }
+  @else {
+       @warn"Unfortunately, no value could be retrieved from `#{$breakpoint}`. " + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+@mixin until($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+      $maxbreakpoint: inspect(map-get($breakpoints, $breakpoint) - 1);
+      @media (max-width:#{$maxbreakpoint}) {
+           @content;
+      }
+  }
+  @else {
+       @warn"Unfortunately, no value could be retrieved from `#{$breakpoint}`. " + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+@mixin maintain-ratio($ratio: 1 1) {
+  $width: 100%;
+  $height: calc((#{nth($ratio, 2)} * 100%) / #{nth($ratio, 1)});
+  position: relative;
+  width: $width;
+  height: 0;
+  padding-bottom: $height;
+  overflow: hidden;
+
+  > * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-size: cover;
+  }
+}
+
+@mixin set-aspect-ratio-helpers($class-prefix:$ratio-helpers-prefix,$aspect-ratios:$aspect-ratios){
+  @each $name, $value in $aspect-ratios {
+
+    $ratio  : $value;
+    $width  : map-get($ratio, width);
+    $height : map-get($ratio, height);
+
+    #{$class-prefix}#{$name}{
+      @include maintain-ratio($width $height);
+    }
+
+  }
+}
+
+
+@function get-color($key: 'primary') {
+  @return map-get($theme-colors, $key);
+}
+
+@mixin position($position, $sides) {
+  position: $position;
+  @each $side in $sides {
+    #{$side}: 0;
+  }
+}
+
+@mixin font-size($fs-map, $fs-breakpoints: $breakpoints) {
+	@each $fs-breakpoint, $fs-font-size in $fs-map {
+		@if $fs-breakpoint == null {
+			@include make-font-size($fs-font-size);
+		} @else {
+			// If $fs-font-size is a key that exists in
+			// $fs-breakpoints, use the value
+			@if map-has-key($fs-breakpoints, $fs-breakpoint) {
+				$fs-breakpoint: map-get($fs-breakpoints, $fs-breakpoint);
+			}
+			@media screen and (min-width: $fs-breakpoint) {
+				@include make-font-size($fs-font-size);
+			}
+		}
+	}
+}
+
+@mixin make-font-size($fs-font-size) {
+	// If $fs-font-size is a list, include
+	// both font-size and line-height
+	@if type-of($fs-font-size) == "list" {
+		font-size: nth($fs-font-size, 1);
+		@if (length($fs-font-size) > 1) {
+			line-height: nth($fs-font-size, 2);
+		}
+		@if (length($fs-font-size) > 2) {
+			margin-bottom: nth($fs-font-size, 3);
+		}
+	} @else {
+		font-size: $fs-font-size;
+	}
+}
+
+@mixin pin              { @include position(absolute, top right left bottom); }
+@mixin pin-top          { @include position(absolute, top right left); }
+@mixin pin-bottom       { @include position(absolute, right bottom left); }
+@mixin pin-left         { @include position(absolute, top bottom left); }
+@mixin pin-right        { @include position(absolute, top bottom right); }
+@mixin pin-topleft      { @include position(absolute, top left); }
+@mixin pin-bottomleft   { @include position(absolute, bottom left); }
+@mixin pin-topright     { @include position(absolute, top right); }
+@mixin pin-bottomright  { @include position(absolute, bottom right); }
+
+@mixin fix              { @include position(fixed, top right left bottom); }
+@mixin fix-top          { @include position(fixed, top right left); }
+@mixin fix-bottom       { @include position(fixed, right bottom left); }
+@mixin fix-left         { @include position(fixed, top bottom left); }
+@mixin fix-right        { @include position(fixed, top bottom right); }
+@mixin fix-topleft      { @include position(fixed, top left); }
+@mixin fix-bottomleft   { @include position(fixed, bottom left); }
+@mixin fix-topright     { @include position(fixed, top right); }
+@mixin fix-bottomright  { @include position(fixed, bottom right); }

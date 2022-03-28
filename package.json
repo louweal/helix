@@ -1,0 +1,22 @@
+{
+  "name": "hederianmint",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev-external": "cross-env NUXT_HOST=0.0.0.0 nuxt",
+    "dev": "nuxt --port 8000",
+    "build": "nuxt build",
+    "start": "nuxt start --port 8001",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "core-js": "^3.19.3",
+    "nuxt": "^2.15.7"
+  },
+  "devDependencies": {
+    "@nuxtjs/style-resources": "^1.2.1",
+    "cross-env": "^7.0.3",
+    "sass": "^1.43.4",
+    "sass-loader": "10.1.1"
+  }
+}

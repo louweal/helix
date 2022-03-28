@@ -1,0 +1,154 @@
+$grid-columns: 12;
+$grid-gutter: 4px;
+
+@mixin grid($breakpoints: null, $cols: 12, $gutter: 30px) {
+  @if ($breakpoints==null) {
+    @warn "No breakpoints are passed as parameter";
+  } @else {
+    // basis grid wrapper
+    .grid {
+      display: flex;
+      flex-flow: column nowrap;
+      // margin-left: -$gutter * 0.5;
+      // margin-right: -$gutter * 0.5;
+      flex-flow: row wrap;
+
+      // @include until(s) {
+      //   margin-left: -$gutter * 0.25;
+      //   margin-right: -$gutter * 0.25;
+      // }
+
+      &.no-bottom-margin-cols {
+        > .col, >
+        [class^="col-"] {
+          margin-bottom: 0;
+        }
+      }
+
+      &.collapse {
+        margin-left: 0;
+        margin-right: 0;
+
+        > .col,
+        > [class^="col-"] {
+          padding: 0;
+        }
+      }
+
+      // &.collapse-m {
+      //   @include until(m) {
+      //     margin-left: 0;
+      //     margin-right: 0;
+
+      //     .col,
+      //     [class^="col-"] {
+      //       padding: 0;
+      //     }
+      //   }
+      // }
+
+      // &.uncollapse {
+      //   margin-left: -$gutter * 0.5;
+      //   margin-right: -$gutter * 0.5;
+
+      //   .col,
+      //   [class^="col-"] {
+      //     padding: 0 $gutter * 0.5;
+      //   }
+      // }
+    }
+
+    // helper classes for aligning and distributing flexbox childs
+    @each $name, $value in $breakpoints {
+      @include from(#{$name}) {
+        .align-#{$name}-start {
+          flex-direction: column;
+          justify-content: flex-start;
+          text-align: left;
+        }
+
+        .align-#{$name}-center {
+          display: flex;
+          justify-content: center;
+          text-align: center;
+        }
+
+        .align-#{$name}-end {
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .align-#{$name}-top {
+          align-items: flex-start;
+        }
+
+        .align-#{$name}-middle {
+          align-items: center;
+        }
+
+        .align-#{$name}-bottom {
+          align-items: flex-end;
+        }
+
+        .around-#{$name} {
+          justify-content: space-around;
+        }
+
+        .between-#{$name} {
+          justify-content: space-between;
+        }
+
+        .reverse-#{$name} {
+          flex-direction: row-reverse;
+        }
+      }
+    }
+
+    // base col
+
+    .col,
+    [class^="col-"] {
+      display: block;
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0;
+      padding: 0 $gutter * 0.5;
+      margin-bottom: $gutter;
+
+      @include until(s) {
+        margin-bottom: math.div($gutter, 2);
+      }
+    }
+
+    .grid-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    // set up cols, offset and order helpers for different helper media breakpoints
+
+    @each $name, $value in $breakpoints {
+      @include from(#{$name}) {
+        @for $i from 1 through $cols {
+          .col-#{$name}-#{$i} {
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: calc((100% / #{$grid-columns} * #{$i}) - 0.1px);
+            max-width: calc((100% / #{$grid-columns} * #{$i}) - 0.1px);
+          }
+        }
+        @for $i from 0 through $cols {
+          .offset-#{$name}-#{$i} {
+            margin-left: calc((100% / #{$grid-columns} * #{$i} - 0.1px));
+          }
+
+          .order-#{$name}-#{$i} {
+            order: #{$i};
+          }
+        }
+      }
+    }
+  }
+}
+
+@include grid($breakpoints, $grid-columns, $grid-gutter);
