@@ -17,7 +17,7 @@ export default {
     },
     gap: {
       type: Number,
-      default: 0.25,
+      default: 1,
     },
     forceDir: {
       type: Boolean,
@@ -32,27 +32,30 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   margin-left: calc(-1 * var(--gap));
+  align-items: center;
 
-  &:not(.stack--forced) {
-    @include until(s) {
-      // makes horizontal stacks always vertical on mobile!
-      flex-direction: column;
-      margin-left: 0;
-      margin-top: calc(-0.5 * var(--gap));
+  // &:not(.stack--forced) {
+  //   @include until(s) {
+  //     // makes horizontal stacks always vertical on mobile!
+  //     flex-direction: column;
+  //     margin-left: 0;
+  //     margin-top: calc(-0.5 * var(--gap));
 
-      > *,
-      > ::v-deep * {
-        margin-top: calc(0.5 * var(--gap)) !important;
-        margin-left: 0;
-      }
-      // end copy of stack--vertical
-    }
-  }
+  //     > *,
+  //     > ::v-deep * {
+  //       margin-top: calc(0.5 * var(--gap)) !important;
+  //       margin-left: 0;
+  //     }
+  //     // end copy of stack--vertical
+  //   }
+  // }
 
   > *,
   > ::v-deep * {
     // margin-bottom: 0.5rem;
     margin-left: var(--gap);
+    flex-grow: 0;
+    flex-shrink: 0;
   }
 }
 

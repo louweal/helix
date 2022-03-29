@@ -4,9 +4,12 @@
     :class="isExpanded ? 'accordion-item--active' : false"
   >
     <div class="accordion-item__header" @click="isExpanded = !isExpanded">
-      <Heading level="3" size="m" class="bottom-xs-0" weight="400">
-        {{ label }}
-      </Heading>
+      <Stack :gap="1.3">
+        <icon v-if="icon" :icon="icon" size="lg" />
+        <Heading level="3" size="m" class="bottom-xs-0" weight="400">
+          {{ label }}
+        </Heading>
+      </Stack>
       <icon icon="chevron-down" class="accordion-item__icon" />
     </div>
     <transition name="expand">
@@ -30,6 +33,10 @@ export default {
       type: String,
       default: 3,
     },
+    icon: {
+      type: [String, Boolean],
+      default: false,
+    },
   },
 
   data() {
@@ -44,7 +51,7 @@ export default {
 .accordion-item {
   position: relative;
   display: block;
-  border-bottom: 1px solid #f1f1f1;
+  border-bottom: 1px solid get-color(line);
 
   &__header {
     display: flex;

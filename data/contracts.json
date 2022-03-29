@@ -6,7 +6,7 @@
     "seller": "GreenStore Amsterdam",
     "startdate": "16-02-2022",
     "production_country": "Sweden",
-    "intro": "Lorem ipsum",
+    "intro": false,
     "material_description": "lorem lorem lorem",
     "materials": [
       "oak wood",

@@ -1,19 +1,14 @@
 .container {
   margin: 0 auto;
   position: relative;
-  width: calc(100% - 2*12px);
-
+  width: min(calc(100% - 2*12px), 414px);
 
   &--wide {
-    // max-width: none;
-    width: calc(100% - 2*4px);
+    width: min(calc(100% - 2*4px), 414px);
   }
 
-  // &--break-mobile { // break out right side of container on mobile and tablet
-  //   margin-right: calc((100vw - 100%) / -2);
+  &--full {
+    width: min(100%, 414px);
+  }
 
-  //   @include from(xl) { //1200
-  //     margin-right: auto;
-  //   }
-  // }
 }

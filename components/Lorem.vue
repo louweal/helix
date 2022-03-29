@@ -1,7 +1,10 @@
 
 <!-- generates a paragraph with lorem ipsum text with a length "MAX" or a random length between MIN and MAX -->
 <template>
-  <span>
+  <span v-if="lowercase">
+    {{ mode === "chars" ? firstChars.toLowerCase() : firstWords.toLowerCase() }}
+  </span>
+  <span v-else>
     {{ mode === "chars" ? firstChars : firstWords }}
   </span>
 </template>
@@ -25,26 +28,39 @@ export default {
       type: String,
       default: "words", // words || chars
     },
+    lowercase: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
+    shuffled() {
+      return this.$options.loremIpsum.text
+        .split(".")
+        .map((value) => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value)
+        .join(".");
+    },
+
     randomIntFromInterval() {
-      if (this.min && this.max) {
-        return Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+      let min = this.min + 1;
+      let max = this.max + 1;
+
+      if (min && max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
       } else {
-        return this.max;
+        return max;
       }
     },
 
     firstChars() {
-      return this.$options.loremIpsum.text.substring(
-        0,
-        this.randomIntFromInterval
-      );
+      return this.shuffled.substring(0, this.randomIntFromInterval);
     },
 
     firstWords() {
-      return this.$options.loremIpsum.text
+      return this.shuffled
         .split(/[ ,]+/)
         .slice(0, this.randomIntFromInterval)
         .join(" ");

@@ -1,0 +1,9 @@
+.page {
+  position: relative;
+  margin-bottom: 52px;
+  min-height: calc(100vh - 52px);
+
+  &--white {
+    background-color: #fff;
+  }
+}

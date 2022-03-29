@@ -7,7 +7,9 @@
       :class="fixed ? `header--fixed` : false"
       ref="header"
     >
-      <categories />
+      <div class="container container--wide">
+        <categories />
+      </div>
     </header>
 
     <div ref="pushdown" />
@@ -102,7 +104,7 @@ export default {
   z-index: 11;
   transition: transform 0.4s ease-in-out;
   will-change: transform;
-  padding: 6px 4px 2px 4px;
+  padding: 6px 4px 6px 4px;
 
   &--fixed {
     position: fixed;

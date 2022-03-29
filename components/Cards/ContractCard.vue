@@ -1,5 +1,5 @@
 <template>
-  <div class="contract-card">
+  <nuxt-link class="contract-card" :to="'/contracts/' + data.ID">
     <div class="contract-card__visual bottom-xs-1">
       <div
         class="img ratio-1x1"
@@ -16,7 +16,7 @@
     <heading size="s" level="0" weight="400" fstyle="italic">
       {{ data.seller }}</heading
     >
-  </div>
+  </nuxt-link>
 </template>
 
 
@@ -33,6 +33,7 @@ export default {
 
 <style lang="scss" scoped>
 .contract-card {
+  display: block;
   background-color: #fff;
   border-radius: 6px;
   width: 100%;

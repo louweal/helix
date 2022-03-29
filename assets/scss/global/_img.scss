@@ -2,10 +2,18 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  // background-color: get-color('light');
+
+  &--light {
+    background-color: get-color('light');
+  }
+
+  &--round {
+    border-radius: 50%;
+  }
+
+
 }
 
 .img--radius-1 {
   border-radius: 1rem;
 }
-

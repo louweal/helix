@@ -1,27 +1,46 @@
 <template>
-  <Section>
-    <div class="container" style="margin-top: 30px">
-      <div class="align-xs-center">
-        <heading level="1" size="5xl" weight="700" color="black">FAQ</heading>
-      </div>
+  <div class="page page--white">
+    <Section>
+      <div class="container">
+        <Section class="bottom-xs-2">
+          <back-button to="/account" />
+        </Section>
 
-      <AccordionItem
-        :label="faq.question"
-        level="2"
-        v-for="(faq, index) in $options.faqs"
-        :key="index"
-      >
-        <template v-if="answer">
-          {{ faq.answer }}
-        </template>
-        <lorem v-else :max="45" />
-      </AccordionItem>
-    </div>
-  </Section>
+        <div class="align-xs-center">
+          <heading level="1" size="5xl" weight="700" color="black">FAQ</heading>
+        </div>
+
+        <accordion-item
+          :label="faq.question"
+          level="2"
+          v-for="(faq, index) in $options.faqs"
+          :key="index"
+        >
+          <template v-if="faq.answer">
+            {{ faq.answer }}
+          </template>
+          <lorem v-else :max="45" />
+        </accordion-item>
+
+        <div class="bottom-xs-3"></div>
+
+        <div class="align-xs-center bottom-xs-5">
+          <img
+            src="@/assets/images/logo-small.svg"
+            alt="logo helix"
+            width="39.1"
+            height="14.32"
+          />
+        </div>
+      </div>
+    </Section>
+  </div>
 </template>
 
 <script>
+import BackButton from "../components/Buttons/BackButton.vue";
 export default {
+  components: { BackButton },
   faqs: [
     {
       question: "What is a Helix’ smart contract (HSC)?",

@@ -100,6 +100,11 @@ $btn-radius: 7px;
     color: #fff; //get-color(base-text);
   }
 
+  &--dark {
+    background: get-color(dark);
+    color: #fff;
+  }
+
   &:hover {
     background-color: get-color(primary);
     color: #fff;

@@ -1,13 +1,31 @@
 <template>
   <main class="main">
-    <pre-loader />
+    <Header fixed />
+    <section class="section--light">
+      <div class="container container--wide">
+        <div class="grid">
+          <div class="col-xs-6">
+            <contract-card
+              v-for="(contract, index) in $options.contracts"
+              :key="index"
+              :data="contract"
+            />
+          </div>
+        </div>
+        <!-- <lorem :max="300" /> -->
+      </div>
+    </section>
   </main>
 </template>
 
 <script>
+import contracts from "./../data/contracts.json";
+
 export default {
-  created() {
-    setTimeout(() => this.$router.push({ path: "/app" }), 5000);
-  },
+  //   transition: "home",
+
+  contracts: contracts, //.sort((a, b) => (a.ID > b.ID ? 1 : -1)),
+
+  computed: {},
 };
 </script>

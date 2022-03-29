@@ -1,20 +1,22 @@
 <template>
-  <div>
-    <!-- <transition name="page"> -->
-    <div class="bg"></div>
+  <main>
     <!-- <pre-loader /> -->
 
-    <template v-if="width < 800">
-      <Nuxt />
-      <Footer />
+    <template v-if="width >= 800">
+      <div class="container container--wide">
+        <notification>
+          <p>Switch to a mobile device for better user experience.</p>
+          <p>
+            <a href="https://helixheroes.org">helixheroes.org</a>
+          </p>
+        </notification>
+      </div>
     </template>
 
-    <template v-else>
-      Please view this app on a mobile device (or resize your browser window and
-      refresh) todo change windowWidth on resize
-    </template>
-    <!-- </transition> -->
-  </div>
+    <Nuxt />
+
+    <Footer />
+  </main>
 </template>
 
 <script>
@@ -86,29 +88,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-  width: 100%;
+main {
+  position: relative;
 }
 
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 .page-enter,
 .page-leave-to {
-  // opacity: 0;
-  transform: translateY(100%);
+  opacity: 0.5;
+  // transform: translateY(40px);
 }
 
-.rtl-enter-active,
-.rtl-leave-active {
-  transition: all 0.5s;
-}
-.rtl-enter {
-  transform: translateX(100%);
-}
-.rtl-leave-to {
-  // opacity: 0;
-  transform: translateX(-100%);
-}
+// .rtl-enter-active,
+// .rtl-leave-active {
+//   transition: all 0.5s;
+// }
+// .rtl-enter {
+//   transform: translateX(40px);
+// }
+// .rtl-leave-to {
+//   // opacity: 0;
+//   transform: translateX(0px);
+// }
 </style>

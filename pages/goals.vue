@@ -1,10 +1,12 @@
 <template>
-  <div class="page">goals</div>
+  <div class="page">
+    <div class="container">goa ls</div>
+  </div>
 </template>
 
 <script>
 export default {
-  transition: "rtl",
+  // transition: "rtl",
 };
 </script>
 

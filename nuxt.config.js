@@ -37,6 +37,7 @@ export default {
       "~/components",
       "~/components/Buttons",
       "~/components/Cards",
+      "~/components/Table",
       "~/components/Tabs",
       "~/components/Layout",
     ],

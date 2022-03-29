@@ -1,0 +1,73 @@
+<template>
+  <div class="account-card" @click="signIn">
+    <div class="grid collapse align-xs-middle">
+      <div class="col-xs-2">
+        <div
+          class="img img--round img--light ratio-1x1"
+          :style="{
+            backgroundImage:
+              `url(` + require(`~/assets/images/${data.avatar}`) + `)`,
+          }"
+        ></div>
+      </div>
+      <div class="col-xs-7 offset-xs-1">
+        <heading size="l" level="2" class="bottom-xs-0">
+          {{ data.name }}</heading
+        >
+        <heading size="m" level="0" weight="400"> {{ data.accountId }}</heading>
+      </div>
+      <div class="col-xs-2">
+        <div class="align-xs-end">
+          <icon icon="chevron-right" size="lg" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script>
+export default {
+  props: {
+    data: {
+      type: Object,
+      default: () => {},
+    },
+    dropdown: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  methods: {
+    signIn() {
+      console.log("todo update store");
+
+      this.$router.push({
+        path: "/",
+      });
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.account-card {
+  display: block;
+  background-color: #fff;
+  border-radius: 6px;
+  width: 100%;
+  // padding-bottom: 7px;
+  padding: 9px;
+  border: 1px solid get-color(line);
+  // display: flex;
+
+  &__visual {
+    // width: 100%;
+    position: relative;
+    margin: 0 12px;
+    // border: 1px solid red;
+    background-color: #fff;
+  }
+}
+</style>

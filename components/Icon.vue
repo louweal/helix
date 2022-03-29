@@ -31,7 +31,7 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: get-color(base-text);
+  color: #000; //get-color(base-text);
   line-height: 1;
   flex-shrink: 0;
   max-width: initial;
@@ -41,7 +41,7 @@ export default {
   // }
 
   &--lg {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 }
 </style>
