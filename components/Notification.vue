@@ -23,7 +23,7 @@ export default {
   methods: {
     hide() {
       let note = this.$refs["notification"];
-      note.style.transform = "translateY(400px)";
+      note.style.transform = "translateY(100px)";
     },
   },
 };
@@ -44,11 +44,8 @@ export default {
   z-index: 3;
 
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.09);
-  // text-align: center;
   transform: translateY(-66px);
-  transition: transform 2s ease-out;
-  // display: flex;
-  // align-items: center;
+  transition: transform 0.9s 0.1s ease-out;
 
   &--warning {
     border: 1px solid orange;
