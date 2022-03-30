@@ -108,6 +108,8 @@
       </Section>
 
       <Section>
+        <hr />
+
         <accordion-item label="Materials" icon="tools" level="2">
           <lorem :max="200" />
         </accordion-item>

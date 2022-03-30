@@ -1,6 +1,6 @@
 <template>
   <main>
-    <!-- <pre-loader /> -->
+    <pre-loader />
 
     <template v-if="width >= 800">
       <div class="container container--wide">
