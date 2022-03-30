@@ -31,7 +31,6 @@ export default {
 };
 </script>
 
-
 <style lang="scss" scoped>
 .deposit {
   color: #000;
@@ -46,6 +45,7 @@ export default {
     display: inline-block;
     font-size: 13.5px;
     vertical-align: top;
+    margin-left: -5px;
   }
 }
 </style>

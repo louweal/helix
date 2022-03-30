@@ -8,7 +8,7 @@
 
 ::selection {
   background-color: get-color(primary);
-  color: #fff; 
+  color: #fff;
 }
 
 html {
@@ -19,7 +19,6 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-style: normal;
-
 }
 
 body {
@@ -32,6 +31,7 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none;
   background-color: get-color(light);
+  -webkit-tap-highlight-color: transparent;
 
   &.modal-open {
     overflow-y: hidden;

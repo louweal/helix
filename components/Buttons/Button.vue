@@ -1,5 +1,5 @@
 <template>
-  <div
+  <component
     :is="true ? 'nuxt-link' : 'div'"
     :to="href"
     class="button"
@@ -10,7 +10,7 @@
     ]"
   >
     <slot>i'm a button</slot>
-  </div>
+  </component>
 </template>
 
 <script>
@@ -43,24 +43,24 @@ export default {
   },
 
   computed: {
-    isNone() {
-      return this.href === "" && this.hash === "";
-    },
-    isInternal({ $store }) {
-      return (
-        this.href.startsWith("/") ||
-        this.href.startsWith($store.state.hostname) ||
-        this.href.startsWith(process.env.SITEMAP_HOSTNAME)
-      );
-    },
-    internalLink() {
-      if (this.href.startsWith("/")) {
-        return this.href;
-      }
-      return (
-        "/" + this.href.replace(/^[a-zA-Z]{3,5}:\/{2}[a-zA-Z0-9_.:-]+\//, "")
-      );
-    },
+    // isNone() {
+    //   return this.href === "" && this.hash === "";
+    // },
+    // isInternal({ $store }) {
+    //   return (
+    //     this.href.startsWith("/") ||
+    //     this.href.startsWith($store.state.hostname) ||
+    //     this.href.startsWith(process.env.SITEMAP_HOSTNAME)
+    //   );
+    // },
+    // internalLink() {
+    //   if (this.href.startsWith("/")) {
+    //     return this.href;
+    //   }
+    //   return (
+    //     "/" + this.href.replace(/^[a-zA-Z]{3,5}:\/{2}[a-zA-Z0-9_.:-]+\//, "")
+    //   );
+    // },
   },
 };
 </script>
@@ -87,7 +87,7 @@ $btn-radius: 7px;
 
   transition: background-color 0.25s ease-in;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 8px 10px;
 
   i {
     margin-right: 0.5rem;
@@ -105,14 +105,14 @@ $btn-radius: 7px;
     color: #fff;
   }
 
-  &:hover {
-    background-color: get-color(primary);
-    color: #fff;
+  // &:hover {
+  //   background-color: get-color(primary);
+  //   color: #fff;
 
-    i {
-      color: #fff;
-    }
-  }
+  //   i {
+  //     color: #fff;
+  //   }
+  // }
 
   &--fullwidth {
     width: 100%;

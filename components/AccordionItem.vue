@@ -6,7 +6,7 @@
     <div class="accordion-item__header" @click="isExpanded = !isExpanded">
       <Stack :gap="1.3">
         <icon v-if="icon" :icon="icon" size="lg" />
-        <Heading level="3" size="m" class="bottom-xs-0" weight="400">
+        <Heading level="3" size="l" class="bottom-xs-0" weight="400">
           {{ label }}
         </Heading>
       </Stack>
@@ -64,7 +64,7 @@ export default {
   &__icon {
     display: inline-flex;
     font-size: 1.5rem;
-    transition: transform 0.25s ease-in;
+    // transition: transform 0s;
   }
 
   &__body {

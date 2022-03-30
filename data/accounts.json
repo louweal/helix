@@ -1,27 +1,27 @@
 [
   {
-    "ID": 1,
+    "ID": 0,
     "name": "Jane Doe",
     "seller": false,
     "accountId": "0.0.1234567",
     "avatar": "avatar1.png"
   },
   {
-    "ID": 2,
+    "ID": 1,
     "name": "John Doe",
     "seller": false,
     "accountId": "0.0.7654321",
     "avatar": "avatar2.png"
   },
   {
-    "ID": 3,
+    "ID": 2,
     "name": "GreenStore Amsterdam",
     "seller": true,
     "accountId": "0.0.0034243",
     "avatar": "avatar3.png"
   },
   {
-    "ID": 4,
+    "ID": 3,
     "name": "Plastic Soup Foundation",
     "charity": true,
     "accountId": "0.0.0034243",

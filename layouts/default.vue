@@ -15,7 +15,7 @@
 
     <Nuxt />
 
-    <Footer />
+    <Footer v-if="$route.path !== '/login'" />
   </main>
 </template>
 

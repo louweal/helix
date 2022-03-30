@@ -1,4 +1,4 @@
-$grid-columns: 12;
+$grid-columns: 24;
 $grid-gutter: 4px;
 
 @mixin grid($breakpoints: null, $cols: 12, $gutter: 30px) {
@@ -19,8 +19,8 @@ $grid-gutter: 4px;
       // }
 
       &.no-bottom-margin-cols {
-        > .col, >
-        [class^="col-"] {
+        > .col,
+        > [class^="col-"] {
           margin-bottom: 0;
         }
       }

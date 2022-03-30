@@ -1,0 +1,14 @@
+[
+  {
+    "ID": 0,
+    "duration": "year",
+    "goal": "buy nothing new",
+    "startdate": "1-1-2022"
+  },
+  {
+    "ID": 1,
+    "duration": "year",
+    "goal": "buy less than 3 items",
+    "startdate": "1-1-2022"
+  }
+]

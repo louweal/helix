@@ -40,8 +40,8 @@ $heading-font: "Roboto", Helvetica, Arial, sans-serif;
 //  'math.div(PX,$REM)+rem' automatically computes the fontsize in PX to rem :)
 $fs-xs: (null: (math.div(11,$REM)+rem, 1.5, 1rem), l: (math.div(11,$REM)+rem, 1.5, 1rem)); // todo: add 'm' breakpoint
 $fs-s: (null: (math.div(12.5,$REM)+rem, 1.5, 1rem), l: (math.div(12.5,$REM)+rem, 1.5, 1rem));
-$fs-m: (null: (math.div(13.5,$REM)+rem, 1.5,	0.9rem,), l: (math.div(13.5,$REM)+rem, 1.45, 0.2rem));
-$fs-l: (null: (math.div(15,$REM)+rem, 1.4, 1rem,), l: (math.div(15,$REM)+rem, 1.4, 1rem));
+$fs-m: (null: (math.div(14,$REM)+rem, 1.5,	0.9rem,), l: (math.div(14,$REM)+rem, 1.45, 0.2rem));
+$fs-l: (null: (math.div(16,$REM)+rem, 1.4, 1rem,), l: (math.div(16,$REM)+rem, 1.4, 1rem));
 $fs-xl: (null: (math.div(16,$REM)+rem, 1.4, 1.2rem), l: (math.div(16,$REM)+rem, 1.45, 1.5rem));
 $fs-2xl: (null: (math.div(18,$REM)+rem, 1.45, 1.5rem), l: (math.div(18,$REM)+rem, 1.4, 1.5rem));
 $fs-3xl: (null: (math.div(23,$REM)+rem, 1.25, 1.5rem),l: (math.div(23,$REM)+rem, 1.2, 1.5rem));

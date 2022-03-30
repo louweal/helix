@@ -3,7 +3,7 @@
     <div class="container">
       <Section>
         <div class="grid collapse">
-          <div class="col-xs-2">
+          <div class="col-xs-4">
             <div
               class="img ratio-1x1 img--round img--light"
               :style="{

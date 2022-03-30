@@ -1,20 +1,18 @@
 <template>
   <main class="main">
     <Header fixed />
-    <section class="section--light">
-      <div class="container container--wide">
-        <div class="grid">
-          <div class="col-xs-6">
-            <contract-card
-              v-for="(contract, index) in $options.contracts"
-              :key="index"
-              :data="contract"
-            />
-          </div>
+    <div class="container container--wide">
+      <div class="grid">
+        <div
+          class="col-xs-12"
+          v-for="(contract, index) in $options.contracts"
+          :key="index"
+        >
+          <contract-card :data="contract" />
         </div>
-        <!-- <lorem :max="300" /> -->
       </div>
-    </section>
+      <!-- <lorem :max="300" /> -->
+    </div>
   </main>
 </template>
 

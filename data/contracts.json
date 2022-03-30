@@ -8,10 +8,20 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": [
-      "oak wood",
-      "bio cotton"
-    ],
+    "materials": ["oak wood", "bio cotton"],
+    "charityId": "PSF",
+    "state": "active"
+  },
+  {
+    "ID": 2,
+    "name": "Dining chair",
+    "visual": "chair.png",
+    "seller": "GreenStore Amsterdam",
+    "startdate": "16-02-2022",
+    "production_country": "Sweden",
+    "intro": false,
+    "material_description": "lorem lorem lorem",
+    "materials": ["oak wood", "bio cotton"],
     "charityId": "PSF",
     "state": "active"
   }

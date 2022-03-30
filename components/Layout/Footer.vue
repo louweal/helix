@@ -1,11 +1,16 @@
 <template>
   <footer class="footer">
     <div class="container">
+      <!-- {{ $route.path }} -->
       <ul>
         <li>
           <nuxt-link to="/"
             ><img
-              src="@/assets/images/icons/ico-contracts.svg"
+              :src="
+                require(isActive('/') || $route.path.startsWith('/contract')
+                  ? '@/assets/images/icons/ico-contracts-active.svg'
+                  : '@/assets/images/icons/ico-contracts.svg')
+              "
               alt="all contracts"
               height="24"
           /></nuxt-link>
@@ -13,7 +18,11 @@
         <li>
           <nuxt-link to="/search"
             ><img
-              src="@/assets/images/icons/ico-search.svg"
+              :src="
+                require(isActive('/search')
+                  ? '@/assets/images/icons/ico-search-active.svg'
+                  : '@/assets/images/icons/ico-search.svg')
+              "
               alt="search contracts"
               height="24"
           /></nuxt-link>
@@ -21,7 +30,11 @@
         <li>
           <nuxt-link to="/goals"
             ><img
-              src="@/assets/images/icons/ico-goals.svg"
+              :src="
+                require(isActive('/goals')
+                  ? '@/assets/images/icons/ico-goals-active.svg'
+                  : '@/assets/images/icons/ico-goals.svg')
+              "
               alt="personal goals"
               height="24"
           /></nuxt-link>
@@ -29,7 +42,11 @@
         <li>
           <nuxt-link to="/account"
             ><img
-              src="@/assets/images/icons/ico-account.svg"
+              :src="
+                require(isActive('/account') || isActive('/faq')
+                  ? '@/assets/images/icons/ico-account-active.svg'
+                  : '@/assets/images/icons/ico-account.svg')
+              "
               alt="account"
               height="24"
           /></nuxt-link>
@@ -39,7 +56,21 @@
   </footer>
 </template>
 
+<script>
+export default {
+  methods: {
+    isActive(link) {
+      return link === this.$route.path;
+    },
+  },
+};
+</script>
+
 <style lang="scss" scoped>
+// ::v-deep .nuxt-link-exact-active {
+//   border: 3px solid red;
+// }
+
 .footer {
   position: fixed;
   bottom: 0;
@@ -47,7 +78,7 @@
   right: 0;
   width: 100%;
   background-color: #fff;
-  z-index: 100;
+  z-index: 5;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.09);
 
   ul {

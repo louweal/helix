@@ -1,10 +1,10 @@
 <template>
   <div class="notification" @click="hide" ref="notification">
     <div class="grid align-xs-middle">
-      <div class="col-xs-11">
+      <div class="col-xs-22">
         <slot />
       </div>
-      <div class="col-xs-1">
+      <div class="col-xs-2">
         <icon icon="chevron-down" size="lg" />
       </div>
     </div>
@@ -28,7 +28,6 @@ export default {
   },
 };
 </script>
-
 
 <style lang="scss" scoped>
 .notification {

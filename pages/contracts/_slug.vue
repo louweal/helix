@@ -1,7 +1,54 @@
 <template>
   <div class="page page--white">
+    <drawer :heading="'Transfer ownership'" id="transfer-drawer">
+      <p>
+        If you transfer the ownership of this contract to someone, the new owner
+        receives 30% of the deposit (xxx h).
+      </p>
+
+      <heading size="m" level="3" class="bottom-xs-0">
+        Item recepient <badge color="primary">30%</badge>
+      </heading>
+
+      <account-card
+        :data="$options.accounts[1]"
+        :list="
+          $options.accounts.filter((a) => a.ID !== 1 && !a.seller && !a.charity)
+        "
+        dropdown
+      />
+
+      <p>
+        After transfering the ownership you will instantly receive the remaining
+        20% of your deposit (5.38 h) and you will donate 5% (1.15 h) to The
+        Plastic Soup Foundation.
+      </p>
+
+      <Button class="button--primary button--fullwidth"> Confirm </Button>
+    </drawer>
+
+    <drawer :heading="'Delete contract'" id="delete-drawer">
+      <p>
+        Do you want to delete this contract? This action donates the complete
+        remainder of the deposit to the charity selected below.
+      </p>
+
+      <heading size="m" level="3" class="bottom-xs-0">
+        Deposit recepient <badge color="primary">99%</badge>
+      </heading>
+
+      <account-card
+        :data="$options.accounts[3]"
+        :list="$options.accounts.filter((a) => a.ID !== 3 && a.charity)"
+        dropdown
+      />
+
+      <Button class="button--primary button--fullwidth"> Confirm </Button>
+    </drawer>
+
     <div class="container container--full">
       <back-button />
+
       <div
         v-if="contract.visual"
         class="img ratio-1x1 img--light"
@@ -24,10 +71,18 @@
 
         <deposit value="30.30" class="bottom-xs-1" />
         <Stack :gap="0.5">
-          <Button @click="false" class="button--primary">
+          <Button
+            @click="false"
+            class="button--primary"
+            @click.native="toggleDrawer('#transfer-drawer')"
+          >
             <icon icon="arrow-right" /> Transfer
           </Button>
-          <Button @click="false" class="button--dark">
+          <Button
+            @click="false"
+            class="button--dark"
+            @click.native="toggleDrawer('#delete-drawer')"
+          >
             <icon icon="delete" />
             Delete
           </Button>
@@ -79,17 +134,31 @@
 
 <script>
 import contracts from "~/data/contracts.json";
+import accounts from "~/data/accounts.json";
 
 export default {
   // transition: "rtl",
 
-  contracts: contracts, //.sort((a, b) => (a.ID > b.ID ? 1 : -1)),
+  contracts, //.sort((a, b) => (a.ID > b.ID ? 1 : -1)),
+  accounts,
 
   computed: {
     contract() {
       return this.$options.contracts.filter(
         (c) => c.ID === +this.$route.params.slug
       )[0];
+    },
+  },
+
+  methods: {
+    toggleDrawer(id) {
+      let drawer = document.querySelector(id);
+      console.log(id);
+      drawer.classList.toggle("drawer--active");
+
+      // let hamburger = document.querySelector(".hamburger");
+      // // console.log(hamburger);
+      // hamburger.classList.toggle("hamburger--active");
     },
   },
 };

@@ -11,14 +11,13 @@
     </div>
 
     <heading size="l" level="2" weight="400" class="bottom-xs-0">
-      {{ data.name }}</heading
-    >
+      {{ data.name }}
+    </heading>
     <heading size="s" level="0" weight="400" fstyle="italic">
-      {{ data.seller }}</heading
-    >
+      {{ data.seller }}
+    </heading>
   </nuxt-link>
 </template>
-
 
 <script>
 export default {
