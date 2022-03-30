@@ -115,9 +115,9 @@ $grid-gutter: 4px;
       padding: 0 $gutter * 0.5;
       margin-bottom: $gutter;
 
-      @include until(s) {
-        margin-bottom: math.div($gutter, 2);
-      }
+      // @include until(s) {
+      //   margin-bottom: math.div($gutter, 2);
+      // }
     }
 
     .grid-col {

@@ -8,6 +8,12 @@
             `url(` + require(`~/assets/images/products/${data.visual}`) + `)`,
         }"
       ></div>
+
+      <div class="contract-card__state" v-if="data.state !== 'active'">
+        <badge :color="data.state === 'transferred' ? 'primary' : false">{{
+          data.state
+        }}</badge>
+      </div>
     </div>
 
     <heading size="l" level="2" weight="400" class="bottom-xs-0">
@@ -40,11 +46,15 @@ export default {
   padding: 12px 4px 12px 4px;
 
   &__visual {
-    // width: 100%;
     position: relative;
-    margin: 0 12px;
-    // border: 1px solid red;
     background-color: #fff;
+    padding: 24px;
+  }
+
+  &__state {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
   }
 }
 </style>

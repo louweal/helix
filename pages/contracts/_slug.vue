@@ -20,8 +20,8 @@
 
       <p>
         After transfering the ownership you will instantly receive the remaining
-        20% of your deposit (5.38 h) and you will donate 5% (1.15 h) to The
-        Plastic Soup Foundation.
+        60% of your deposit ({{ contract.deposit * 0.6 }} h) and you will donate
+        10% ({{ contract.deposit * 0.1 }} h) to The Plastic Soup Foundation.
       </p>
 
       <Button class="button--primary button--fullwidth"> Confirm </Button>
@@ -49,16 +49,18 @@
     <div class="container container--full">
       <back-button />
 
-      <div
-        v-if="contract.visual"
-        class="img ratio-1x1 img--light"
-        :style="{
-          backgroundImage:
-            `url(` +
-            require(`~/assets/images/products/${contract.visual}`) +
-            `)`,
-        }"
-      ></div>
+      <div class="img--light" style="padding: 15%">
+        <div
+          v-if="contract.visual"
+          class="img ratio-1x1"
+          :style="{
+            backgroundImage:
+              `url(` +
+              require(`~/assets/images/products/${contract.visual}`) +
+              `)`,
+          }"
+        ></div>
+      </div>
     </div>
 
     <div class="container">
@@ -69,7 +71,8 @@
 
         <badge color="label-b" class="bottom-xs-2">B</badge>
 
-        <deposit value="30.30" class="bottom-xs-1" />
+        <deposit :value="contract.deposit" class="bottom-xs-1" />
+
         <Stack :gap="0.5">
           <Button
             @click="false"

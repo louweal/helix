@@ -29,6 +29,7 @@ export default {
         "Electronic devices",
         "Utensils",
         "Clothing",
+        "Vehicles",
       ],
     };
   },
@@ -38,6 +39,9 @@ export default {
   methods: {
     setActiveCat(clickedCat) {
       this.activeCat = clickedCat;
+
+      // commit to store
+      this.$store.commit("setCurrentCategory", clickedCat.toLowerCase());
     },
   },
 };

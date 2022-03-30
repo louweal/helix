@@ -18,11 +18,7 @@
         <li>
           <nuxt-link to="/search"
             ><img
-              :src="
-                require(isActive('/search')
-                  ? '@/assets/images/icons/ico-search-active.svg'
-                  : '@/assets/images/icons/ico-search.svg')
-              "
+              src="@/assets/images/icons/ico-search.svg"
               alt="search contracts"
               height="24"
           /></nuxt-link>
