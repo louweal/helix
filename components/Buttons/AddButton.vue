@@ -23,9 +23,9 @@ export default {
 
 <style lang="scss" scoped>
 .add-button {
-  position: fixed;
-  right: 8px;
-  top: 6px;
+  position: absolute;
+  right: 0;
+  top: 0;
   z-index: 2;
   background-color: #fff;
   border-radius: 7px;
