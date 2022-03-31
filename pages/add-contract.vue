@@ -13,7 +13,10 @@
           placeholder="Product name"
         />
 
-        <div class="field field--light field--upload" @click="todo">
+        <div
+          class="field field--light field--upload"
+          @click="toggleDrawer('#gallery-drawer')"
+        >
           Upload image
         </div>
 
@@ -39,10 +42,30 @@
         />
       </div>
     </div>
+
+    <drawer id="gallery-drawer">
+      <template v-slot:header> Gallery (demo) </template>
+
+      <div class="grid">
+        <div class="col-xs-6" v-for="index in 8" :key="index">
+          <div class="img ratio-1x1 img--light"></div>
+        </div>
+      </div>
+
+      <Button class="button--primary button--fullwidth"> Confirm </Button>
+    </drawer>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    toggleDrawer(id) {
+      let drawer = document.querySelector(id);
+      // console.log(id);
+      drawer.classList.toggle("drawer--active");
+    },
+  },
+};
 </script>
 

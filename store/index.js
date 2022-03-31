@@ -1,6 +1,6 @@
 export const state = () => ({
   currentCategory: "all",
-  currentAccount: 0
+  currentAccount: -1
 });
 
 // export const actions = {

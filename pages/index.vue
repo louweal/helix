@@ -24,6 +24,13 @@ import contracts from "./../data/contracts.json";
 
 export default {
   contracts: contracts,
+
+  created() {
+    if (this.$store.state.currentAccount === -1) {
+      this.$router.push({ path: "/login" });
+    }
+  },
+
   computed: {
     selectedContracts() {
       let myContracts = this.$options.contracts.filter(

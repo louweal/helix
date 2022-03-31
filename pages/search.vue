@@ -49,10 +49,13 @@ export default {
       let myContracts = this.$options.contracts.filter(
         (c) => c.owner === this.$store.state.currentAccount
       );
+      let sortedContracts = myContracts.sort((a, b) =>
+        a.state > b.state ? 1 : -1
+      );
       if (this.q.length < 2) {
-        return myContracts;
+        return sortedContracts;
       } else {
-        let results = myContracts.filter((c) =>
+        let results = sortedContracts.filter((c) =>
           c.name.toLowerCase().includes(this.q)
         );
         return results;

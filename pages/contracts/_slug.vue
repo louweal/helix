@@ -1,6 +1,6 @@
 <template>
   <div class="page page--white">
-    <drawer :heading="'Transfer ownership'" id="transfer-drawer">
+    <drawer id="transfer-drawer">
       <template v-slot:header> Transfer ownership </template>
       <p>
         If you transfer the ownership of this contract to someone, the new owner
@@ -29,7 +29,7 @@
       <Button class="button--primary button--fullwidth"> Confirm </Button>
     </drawer>
 
-    <drawer :heading="'Delete contract'" id="delete-drawer">
+    <drawer id="delete-drawer">
       <template v-slot:header> Delete contract </template>
 
       <p>

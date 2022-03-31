@@ -90,6 +90,7 @@ export default {
       // console.log("todo update store");
 
       this.$store.commit("setCurrentAccount", +id);
+      this.$store.commit("setCurrentCategory", "all");
 
       this.$router.push({
         path: "/",
