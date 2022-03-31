@@ -37,11 +37,9 @@ export default {
   margin: 0 auto;
   border-radius: 7px;
   position: fixed;
-
   bottom: 0;
   padding: 12px;
   z-index: 3;
-
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.09);
   transform: translateY(-66px);
   transition: transform 0.9s 0.1s ease-out;

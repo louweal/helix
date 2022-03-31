@@ -52,7 +52,7 @@
     </drawer>
 
     <div class="container container--full">
-      <back-button />
+      <back-button transparent />
 
       <div class="img--light" style="padding: 15%">
         <div

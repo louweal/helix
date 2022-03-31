@@ -22,6 +22,7 @@
           v-for="i in 3"
           :key="i"
           :data="$options.accounts[i - 1]"
+          login
         />
       </Stack>
     </div>

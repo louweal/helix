@@ -8,7 +8,11 @@
       ref="header"
     >
       <div class="container container--wide">
-        <slot><categories /></slot>
+        <slot>
+          <categories />
+
+          <add-button v-if="true" />
+        </slot>
       </div>
     </header>
 
@@ -21,6 +25,7 @@ export default {
   data() {
     return {
       prevPosY: 0,
+      seller: true,
     };
   },
 

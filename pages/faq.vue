@@ -1,15 +1,13 @@
 <template>
   <div class="page page--white">
+    <back-button to="/account" bg> FAQ </back-button>
+
+    <div class="bottom-xs-5"></div>
     <Section>
       <div class="container">
-        <Section class="bottom-xs-2">
-          <back-button to="/account" />
-        </Section>
+        <!-- <Section class="bottom-xs-2"> </Section> -->
 
-        <div class="align-xs-center">
-          <heading level="1" size="5xl" weight="700" color="black">FAQ</heading>
-        </div>
-
+        <hr />
         <accordion-item
           :label="faq.question"
           level="2"
@@ -21,17 +19,6 @@
           </template>
           <lorem v-else :max="45" />
         </accordion-item>
-
-        <div class="bottom-xs-3"></div>
-
-        <div class="align-xs-center bottom-xs-5">
-          <img
-            src="@/assets/images/logo-small.svg"
-            alt="logo helix"
-            width="39.1"
-            height="14.32"
-          />
-        </div>
       </div>
     </Section>
   </div>

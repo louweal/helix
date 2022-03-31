@@ -2,44 +2,35 @@
   <div class="page page--white">
     <div class="container">
       <Section>
-        <div class="grid collapse">
-          <div class="col-xs-4">
-            <div
-              class="img ratio-1x1 img--round img--light"
-              :style="{
-                backgroundImage:
-                  `url(` + require(`~/assets/images/avatar1.png`) + `)`,
-              }"
-            />
-          </div>
-        </div>
-
-        <heading
-          size="2xl"
-          level="1"
-          weight="400"
-          class="bottom-xs-0"
-          color="black"
-        >
-          Jane Doe
-        </heading>
-
-        <heading size="m" level="0" weight="400" color="black">
-          Hedera ID: 0.0.1234567
-        </heading>
+        <account-card class="bottom-xs-1" :data="$options.accounts[0]" />
       </Section>
 
-      <Section>
-        <hr />
-        <nav-item to="/faq">Frequently asked questions</nav-item>
-        <nav-item to="/login">Sign out</nav-item>
-      </Section>
+      <!-- <hr /> -->
+      <nav-item to="">Settings</nav-item>
+      <nav-item to="">Contact</nav-item>
+
+      <nav-item to="/login">Sign out</nav-item>
+
+      <div class="bottom-xs-3"></div>
+
+      <div class="align-xs-center bottom-xs-5">
+        <img
+          src="@/assets/images/logo-small.svg"
+          alt="logo helix"
+          width="39.1"
+          height="14.32"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import accounts from "~/data/accounts.json";
+
+export default {
+  accounts,
+};
 </script>
 
 <style lang="scss" scoped>

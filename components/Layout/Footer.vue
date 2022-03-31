@@ -24,10 +24,10 @@
           /></nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/goals"
+          <nuxt-link to="/faq"
             ><img
               :src="
-                require(isActive('/goals')
+                require(isActive('/faq')
                   ? '@/assets/images/icons/ico-goals-active.svg'
                   : '@/assets/images/icons/ico-goals.svg')
               "

@@ -4,7 +4,7 @@
     class="heading"
     :class="[fontWeight, fontSize, fontColor, fontStyle]"
   >
-    <slot> ({{ size }}) I'm a H{{ level }} </slot>
+    <slot />
   </component>
 </template>
 

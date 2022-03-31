@@ -1,6 +1,7 @@
 <template>
   <div class="search-bar">
     <input
+      class="field"
       id="searchbar"
       autocomplete="off"
       required
@@ -36,22 +37,23 @@ export default {
   width: 100%;
   padding: 4px;
   background-color: #fff;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.09);
   border-radius: 6px;
   position: relative;
 
-  input[type="text"] {
-    height: 40px;
-    box-sizing: border-box;
-    border: none;
-    width: 100%;
-    padding: 6px 4px 4px 40px !important;
-    outline: none;
-    font-size: 17px;
+  // input[type="text"] {
+  //   height: 40px;
+  //   box-sizing: border-box;
+  //   border: none;
+  //   width: 100%;
+  //   padding: 6px 4px 4px 40px !important;
+  //   outline: none;
+  //   font-size: 17px;
 
-    &::placeholder {
-      font-style: italic;
-    }
-  }
+  //   &::placeholder {
+  //     font-style: italic;
+  //   }
+  // }
 
   ::v-deep .icon {
     z-index: 30;
