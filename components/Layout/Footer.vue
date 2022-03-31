@@ -59,7 +59,6 @@ export default {
       return link === this.$route.path;
     },
     showAllContracts() {
-      console.log("sohw all!");
       this.$store.commit("setCurrentCategory", "all");
     },
   },

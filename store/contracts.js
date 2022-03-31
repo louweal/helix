@@ -11,10 +11,10 @@ export const mutations = {
 
 export const actions = {
   async GET_LIST({ commit }) {
-    console.log("get list");
+    // console.log("get list");
 
     var json = require('~/data/contracts.json');
-    console.log(json);
+    // console.log(json);
 
     commit('SET_CONTRACTS', {
       data: json

@@ -35,8 +35,8 @@ export default {
     ...mapGetters("contracts", ["getContracts"]),
 
     contracts() {
-      console.log("conputed contracts");
-      console.log(this.getContracts());
+      // console.log("conputed contracts");
+      // console.log(this.getContracts());
       return this.getContracts();
     },
 

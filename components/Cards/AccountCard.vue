@@ -85,7 +85,7 @@ export default {
     },
 
     signIn() {
-      console.log("todo update store");
+      // console.log("todo update store");
 
       this.$router.push({
         path: "/",
@@ -93,12 +93,12 @@ export default {
     },
 
     toggleList() {
-      console.log("togglel list");
+      // console.log("togglel list");
       this.listActive = !this.listActive;
     },
 
     selectAccount() {
-      console.log("selected!");
+      // console.log("selected!");
       this.name = "hello";
       // this.listActive = !this.listActive;
     },

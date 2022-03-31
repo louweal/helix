@@ -1,18 +1,16 @@
 <template>
-  <!-- <div class="container container--wide"> -->
   <div class="search-bar">
-    <form>
-      <input
-        type="text"
-        placeholder="find your items"
-        v-model="q"
-        v-on:keyup="onSubmit"
-      />
-      <!-- <input type="submit" value="search" /> -->
-      <icon icon="search" size="lg" />
-    </form>
+    <input
+      id="searchbar"
+      autocomplete="off"
+      required
+      type="text"
+      placeholder="find your items"
+      @input="(e) => (q = e.target.value)"
+      v-on:keyup="onSubmit"
+    />
+    <icon icon="search" size="lg" />
   </div>
-  <!-- </div> -->
 </template>
 
 <script>

@@ -20,18 +20,18 @@
 import contracts from "./../data/contracts.json";
 
 export default {
-  //   transition: "home",
-
-  contracts: contracts, //.sort((a, b) => (a.ID > b.ID ? 1 : -1)),
-
+  contracts: contracts,
   computed: {
     selectedContracts() {
+      let sortedContracts = this.$options.contracts.sort((a, b) =>
+        a.state > b.state ? 1 : -1
+      );
       let selected = this.$store.state.currentCategory;
       // console.log(selected);
       if (selected === "all") {
-        return this.$options.contracts;
+        return sortedContracts;
       } else {
-        return this.$options.contracts.filter(
+        return sortedContracts.filter(
           (c) => c.category === this.$store.state.currentCategory
         );
       }
