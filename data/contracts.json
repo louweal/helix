@@ -10,9 +10,12 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": ["oak wood", "bio cotton"],
+    "materials": [
+      "oak wood",
+      "bio cotton"
+    ],
     "charityId": "PSF",
-    "state": "active"
+    "state": 0
   },
   {
     "ID": 1,
@@ -25,9 +28,12 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": ["oak wood", "bio cotton"],
+    "materials": [
+      "oak wood",
+      "bio cotton"
+    ],
     "charityId": "PSF",
-    "state": "deleted"
+    "state": 2
   },
   {
     "ID": 2,
@@ -40,9 +46,12 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": ["oak wood", "bio cotton"],
+    "materials": [
+      "oak wood",
+      "bio cotton"
+    ],
     "charityId": "PSF",
-    "state": "transferred"
+    "state": 1
   },
   {
     "ID": 3,
@@ -55,9 +64,12 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": ["oak wood", "bio cotton"],
+    "materials": [
+      "oak wood",
+      "bio cotton"
+    ],
     "charityId": "PSF",
-    "state": "active"
+    "state": 0
   },
   {
     "ID": 4,
@@ -70,9 +82,12 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": ["oak wood", "bio cotton"],
+    "materials": [
+      "oak wood",
+      "bio cotton"
+    ],
     "charityId": "PSF",
-    "state": "active"
+    "state": 0
   },
   {
     "ID": 5,
@@ -85,8 +100,11 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": ["oak wood", "bio cotton"],
+    "materials": [
+      "oak wood",
+      "bio cotton"
+    ],
     "charityId": "PSF",
-    "state": "active"
+    "state": 0
   }
 ]

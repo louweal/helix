@@ -9,10 +9,10 @@
         }"
       ></div>
 
-      <div class="contract-card__state" v-if="data.state !== 'active'">
-        <badge :color="data.state === 'transferred' ? 'primary' : false">{{
-          data.state
-        }}</badge>
+      <div class="contract-card__state" v-if="data.state !== 0">
+        <badge :color="data.state === 1 ? 'primary' : false">
+          {{ data.state === 1 ? "transferred" : "deleted" }}
+        </badge>
       </div>
     </div>
 

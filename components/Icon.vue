@@ -1,10 +1,6 @@
 <template>
   <div class="icon" :class="size ? `icon--${size}` : ''">
-    <i :class="`icon-${icon.toLowerCase()}`">
-      <span class="path1"></span>
-      <span class="path2"></span>
-      <span class="path3"></span>
-    </i>
+    <i :class="`icon-${icon.toLowerCase()}`" />
   </div>
 </template>
 

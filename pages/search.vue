@@ -1,12 +1,14 @@
 <template>
   <div class="page">
-    <div class="container container--wide">
-      <p>barrr</p>
+    <Header fixed>
+      <search-bar @q="setQuery" />
+    </Header>
 
+    <div class="container container--wide">
       <div class="grid">
         <div
           class="col-xs-12"
-          v-for="(contract, index) in $options.contracts"
+          v-for="(contract, index) in matchingContracts"
           :key="index"
         >
           <contract-card :data="contract" />
@@ -18,9 +20,45 @@
 
 <script>
 import contracts from "./../data/contracts.json";
+import { mapGetters } from "vuex";
 
 export default {
   contracts,
+
+  data() {
+    return {
+      q: "",
+    };
+  },
+
+  computed: {
+    ...mapGetters("contracts", ["getContracts"]),
+
+    contracts() {
+      console.log("conputed contracts");
+      console.log(this.getContracts());
+      return this.getContracts();
+    },
+
+    matchingContracts() {
+      // console.log(this.q);
+      if (this.q.length < 2) {
+        return this.$options.contracts;
+      } else {
+        let results = this.$options.contracts.filter((c) =>
+          c.name.toLowerCase().includes(this.q)
+        );
+        return results;
+      }
+    },
+  },
+
+  methods: {
+    setQuery(val) {
+      this.q = val;
+      // console.log(val);
+    },
+  },
 };
 </script>
 

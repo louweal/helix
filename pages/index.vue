@@ -27,7 +27,7 @@ export default {
   computed: {
     selectedContracts() {
       let selected = this.$store.state.currentCategory;
-      console.log(selected);
+      // console.log(selected);
       if (selected === "all") {
         return this.$options.contracts;
       } else {

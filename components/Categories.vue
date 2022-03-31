@@ -1,16 +1,19 @@
 <template>
   <div class="categories">
-    <Stack force-dir>
-      <Button :active="activeCat === 'all'" @click.native="setActiveCat('all')">
+    <Stack>
+      <Button
+        :active="$store.state.currentCategory === 'all'"
+        @click.native="setActiveCat('all')"
+      >
         All contracts
       </Button>
       <Button
         v-for="(cat, index) in categories"
         :key="index"
-        :active="cat === activeCat"
+        :active="cat === $store.state.currentCategory"
         @click.native="setActiveCat(cat)"
       >
-        {{ cat }}
+        {{ cat.charAt(0).toUpperCase() + cat.slice(1) }}
       </Button>
     </Stack>
   </div>
@@ -24,14 +27,18 @@ export default {
     return {
       activeCat: "all",
       categories: [
-        "Furniture",
-        "Books",
-        "Electronic devices",
-        "Utensils",
-        "Clothing",
-        "Vehicles",
+        "furniture",
+        "books",
+        "electronic devices",
+        "utensils",
+        "clothing",
+        "vehicles",
       ],
     };
+  },
+
+  created() {
+    this.activeCat = this.$store.state.currentCategory;
   },
 
   mounted() {},
@@ -41,7 +48,7 @@ export default {
       this.activeCat = clickedCat;
 
       // commit to store
-      this.$store.commit("setCurrentCategory", clickedCat.toLowerCase());
+      this.$store.commit("setCurrentCategory", clickedCat);
     },
   },
 };

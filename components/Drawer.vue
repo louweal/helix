@@ -5,7 +5,7 @@
       <div class="container">
         <div class="drawer__header">
           <heading size="m" level="2" class="bottom-xs-0" color="black">
-            title {{ heading }}
+            <slot name="header" />
           </heading>
         </div>
 
@@ -17,13 +17,13 @@
 
 <script>
 export default {
-  props: {
-    heading: {
-      type: String,
-      default: "",
-      required: true,
-    },
-  },
+  // props: {
+  //   heading: {
+  //     type: String,
+  //     default: "",
+  //     required: true,
+  //   },
+  // },
 };
 </script>
 
@@ -97,7 +97,7 @@ export default {
 export default {
   methods: {
     toggleDrawer() {
-      console.log("toggel");
+      // console.log("toggel");
       let drawer = this.$refs["drawer"];
       drawer.classList.toggle("drawer--active");
     },

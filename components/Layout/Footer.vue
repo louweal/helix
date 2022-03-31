@@ -3,7 +3,7 @@
     <div class="container">
       <!-- {{ $route.path }} -->
       <ul>
-        <li>
+        <li @click="showAllContracts">
           <nuxt-link to="/"
             ><img
               :src="
@@ -57,6 +57,10 @@ export default {
   methods: {
     isActive(link) {
       return link === this.$route.path;
+    },
+    showAllContracts() {
+      console.log("sohw all!");
+      this.$store.commit("setCurrentCategory", "all");
     },
   },
 };

@@ -8,7 +8,7 @@
       ref="header"
     >
       <div class="container container--wide">
-        <categories />
+        <slot><categories /></slot>
       </div>
     </header>
 

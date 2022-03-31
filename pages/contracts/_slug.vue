@@ -1,6 +1,7 @@
 <template>
   <div class="page page--white">
     <drawer :heading="'Transfer ownership'" id="transfer-drawer">
+      <template v-slot:header> Transfer ownership </template>
       <p>
         If you transfer the ownership of this contract to someone, the new owner
         receives 30% of the deposit (xxx h).
@@ -11,6 +12,7 @@
       </heading>
 
       <account-card
+        class="bottom-xs-1"
         :data="$options.accounts[1]"
         :list="
           $options.accounts.filter((a) => a.ID !== 1 && !a.seller && !a.charity)
@@ -28,6 +30,8 @@
     </drawer>
 
     <drawer :heading="'Delete contract'" id="delete-drawer">
+      <template v-slot:header> Delete contract </template>
+
       <p>
         Do you want to delete this contract? This action donates the complete
         remainder of the deposit to the charity selected below.
@@ -38,6 +42,7 @@
       </heading>
 
       <account-card
+        class="bottom-xs-1"
         :data="$options.accounts[3]"
         :list="$options.accounts.filter((a) => a.ID !== 3 && a.charity)"
         dropdown
@@ -70,11 +75,18 @@
         </heading>
 
         <badge color="label-b" class="bottom-xs-2">B</badge>
+        <badge
+          v-if="contract.state !== 0"
+          :color="contract.state === 1 ? 'primary' : false"
+        >
+          {{ contract.state === 1 ? "transferred" : "deleted" }}
+        </badge>
 
         <deposit :value="contract.deposit" class="bottom-xs-1" />
 
         <Stack :gap="0.5">
           <Button
+            v-if="contract.state === 0"
             @click="false"
             class="button--primary"
             @click.native="toggleDrawer('#transfer-drawer')"
@@ -82,6 +94,7 @@
             <icon icon="arrow-right" /> Transfer
           </Button>
           <Button
+            v-if="contract.state !== 2"
             @click="false"
             class="button--dark"
             @click.native="toggleDrawer('#delete-drawer')"
@@ -117,7 +130,7 @@
           <lorem :max="200" />
         </accordion-item>
 
-        <accordion-item label="Deposit table" icon="grid" level="2">
+        <accordion-item label="Deposit breakdown" icon="grid" level="2">
           <Table>
             <TR v-for="(row, index) in 5" :key="index">
               <TD> <lorem :min="2" :max="4" /> </TD>
@@ -158,12 +171,8 @@ export default {
   methods: {
     toggleDrawer(id) {
       let drawer = document.querySelector(id);
-      console.log(id);
+      // console.log(id);
       drawer.classList.toggle("drawer--active");
-
-      // let hamburger = document.querySelector(".hamburger");
-      // // console.log(hamburger);
-      // hamburger.classList.toggle("hamburger--active");
     },
   },
 };
