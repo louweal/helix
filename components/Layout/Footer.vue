@@ -43,7 +43,9 @@
           <nuxt-link to="/account"
             ><img
               :src="
-                require(isActive('/account')
+                require(isActive('/account') ||
+                  isActive('/settings') ||
+                  isActive('/about')
                   ? '@/assets/images/icons/ico-account-active.svg'
                   : '@/assets/images/icons/ico-account.svg')
               "

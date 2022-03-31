@@ -2,9 +2,15 @@
   position: relative;
   padding-bottom: 52px;
   min-height: 100vh; // calc(100vh - 52px);
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: space-between;
 
   &--white {
     background-color: #fff;
+  }
+
+  &__footer {
   }
 
   &--placeholder {
@@ -14,5 +20,9 @@
     justify-content: center;
     align-items: center;
     font-style: italic;
+
+    > div {
+      text-align: center;
+    }
   }
 }

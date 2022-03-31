@@ -1,6 +1,11 @@
 export const state = () => ({
   currentCategory: "all",
-  currentAccount: -1
+  currentAccount: {
+    ID: -1,
+    name: "",
+    accountId: "",
+    avatar: "",
+  },
 });
 
 // export const actions = {

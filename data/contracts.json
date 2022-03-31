@@ -11,10 +11,7 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": [
-      "oak wood",
-      "bio cotton"
-    ],
+    "materials": ["oak wood", "bio cotton"],
     "charityId": "PSF",
     "state": 0
   },
@@ -30,10 +27,7 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": [
-      "oak wood",
-      "bio cotton"
-    ],
+    "materials": ["oak wood", "bio cotton"],
     "charityId": "PSF",
     "state": 2
   },
@@ -49,10 +43,7 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": [
-      "oak wood",
-      "bio cotton"
-    ],
+    "materials": ["oak wood", "bio cotton"],
     "charityId": "PSF",
     "state": 1
   },
@@ -68,10 +59,7 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": [
-      "oak wood",
-      "bio cotton"
-    ],
+    "materials": ["oak wood", "bio cotton"],
     "charityId": "PSF",
     "state": 0
   },
@@ -79,18 +67,15 @@
     "ID": 4,
     "name": "Carriage",
     "visual": "carriage.png",
-    "category": "vehicles",
+    "category": "toys",
     "owner": 0,
-    "seller": "GreenStore Amsterdam",
+    "seller": "Susan's Handmade Toys",
     "deposit": "24.06",
     "startdate": "16-02-2022",
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": [
-      "oak wood",
-      "bio cotton"
-    ],
+    "materials": ["oak wood", "bio cotton"],
     "charityId": "PSF",
     "state": 0
   },
@@ -106,10 +91,7 @@
     "production_country": "Sweden",
     "intro": false,
     "material_description": "lorem lorem lorem",
-    "materials": [
-      "oak wood",
-      "bio cotton"
-    ],
+    "materials": ["oak wood", "bio cotton"],
     "charityId": "PSF",
     "state": 0
   }

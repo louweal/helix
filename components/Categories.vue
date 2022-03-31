@@ -32,7 +32,7 @@ export default {
         "electronic devices",
         "utensils",
         "clothing",
-        "vehicles",
+        "toys",
       ],
     };
   },

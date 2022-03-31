@@ -89,7 +89,7 @@ export default {
     signIn(id) {
       // console.log("todo update store");
 
-      this.$store.commit("setCurrentAccount", +id);
+      this.$store.commit("setCurrentAccount", this.data);
       this.$store.commit("setCurrentCategory", "all");
 
       this.$router.push({

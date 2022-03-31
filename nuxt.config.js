@@ -17,7 +17,11 @@ export default {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "Non-fungible Tokens (NFT) Hedera Hashgraph HBAR coins" },
+      {
+        hid: "description",
+        name: "description",
+        content: "Be a hero, trade products sustainably using Hedera Helix.",
+      },
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
@@ -43,7 +47,6 @@ export default {
     ],
   },
 
-
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [],
 
@@ -53,7 +56,8 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     html: {
-      minify: { // minifies code in production mode
+      minify: {
+        // minifies code in production mode
         collapseBooleanAttributes: true,
         decodeEntities: true,
         minifyCSS: true,

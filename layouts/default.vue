@@ -31,37 +31,19 @@ export default {
     };
   },
 
+  created() {
+    if (this.$store.state.currentAccount.ID === -1) {
+      this.$router.push({ path: "/login" });
+    }
+  },
+
   methods: {
-    aos() {
-      // console.log("aos");
-      let animTargets = document.querySelectorAll("[data-aos]");
-      [].forEach.call(animTargets, (target) => {
-        let startAt = parseInt(target.dataset.aos);
-        let rect = target.getBoundingClientRect();
-        let elemTop = rect.top;
-
-        target.style.opacity = "0"; // hide element by default
-
-        let startTrigger =
-          elemTop < window.innerHeight * (startAt / 100) && elemTop > 0;
-
-        if (startTrigger) {
-          if (!target.classList.contains("start-animation")) {
-            target.classList.add("start-animation");
-          }
-        }
-      });
-    },
-
     getWidth() {
       this.width = document.documentElement.clientWidth;
     },
   },
 
   mounted() {
-    this.aos();
-    window.addEventListener("scroll", this.aos);
-
     this.getWidth();
     window.addEventListener("resize", this.getWidth);
 
@@ -81,7 +63,6 @@ export default {
   },
 
   beforeDestroy() {
-    window.removeEventListener("scroll", this.sos);
     window.removeEventListener("resize", this.getWidth);
   },
 };

@@ -19,9 +19,11 @@
 
       <Stack dir="vertical">
         <account-card
-          v-for="i in 3"
-          :key="i"
-          :data="$options.accounts[i - 1]"
+          v-for="(account, index) in $options.accounts.filter(
+            (a) => !a.charity
+          )"
+          :key="index"
+          :data="$options.accounts[account.ID]"
           login
         />
       </Stack>

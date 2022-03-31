@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="add-button"
-    v-if="$options.accounts[$store.state.currentAccount].seller"
-  >
+  <div class="add-button" v-if="$store.state.currentAccount.seller">
     <div class="add-button__inner">
       <nuxt-link to="/add-contract"> + </nuxt-link>
     </div>
@@ -10,10 +7,10 @@
 </template>
 
 <script>
-import accounts from "~/data/accounts.json";
+// import accounts from "~/data/accounts.json";
 
 export default {
-  accounts,
+  // accounts,
 
   props: {
     to: {

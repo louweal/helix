@@ -14,7 +14,13 @@
       <!-- <lorem :max="300" /> -->
     </div>
     <div v-if="selectedContracts.length === 0" class="page--placeholder">
-      No contracts found
+      <div>
+        <p>No contracts found</p>
+
+        <p v-if="$store.state.currentAccount.seller">
+          Click '+' to add contracts for your products.
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -25,16 +31,10 @@ import contracts from "./../data/contracts.json";
 export default {
   contracts: contracts,
 
-  created() {
-    if (this.$store.state.currentAccount === -1) {
-      this.$router.push({ path: "/login" });
-    }
-  },
-
   computed: {
     selectedContracts() {
       let myContracts = this.$options.contracts.filter(
-        (c) => c.owner === this.$store.state.currentAccount
+        (c) => c.owner === this.$store.state.currentAccount.ID
       );
       let sortedContracts = myContracts.sort((a, b) =>
         a.state > b.state ? 1 : -1
