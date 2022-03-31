@@ -1,5 +1,5 @@
 <template>
-  <div class="categories">
+  <div class="categories" :style="{ maxWidth }">
     <Stack>
       <Button
         :active="$store.state.currentCategory === 'all'"
@@ -37,6 +37,14 @@ export default {
     };
   },
 
+  computed: {
+    maxWidth() {
+      return this.$store.state.currentAccount.seller
+        ? "calc(100% - 54px)"
+        : "100%";
+    },
+  },
+
   created() {
     this.activeCat = this.$store.state.currentCategory;
   },
@@ -57,6 +65,7 @@ export default {
 <style lang="scss" scoped>
 .categories {
   // width: 80%;
+  // max-width: 80%;
   padding: 4px;
   overflow-x: scroll;
   scrollbar-width: none;
