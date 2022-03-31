@@ -5,7 +5,7 @@
     </Header>
 
     <div class="container container--wide">
-      <div class="grid">
+      <div class="grid" v-if="matchingContracts.length > 0">
         <div
           class="col-xs-12"
           v-for="(contract, index) in matchingContracts"
@@ -13,6 +13,10 @@
         >
           <contract-card :data="contract" />
         </div>
+      </div>
+
+      <div v-if="matchingContracts.length === 0" class="page--placeholder">
+        No contracts found
       </div>
     </div>
   </div>
@@ -42,10 +46,13 @@ export default {
 
     matchingContracts() {
       // console.log(this.q);
+      let myContracts = this.$options.contracts.filter(
+        (c) => c.owner === this.$store.state.currentAccount
+      );
       if (this.q.length < 2) {
-        return this.$options.contracts;
+        return myContracts;
       } else {
-        let results = this.$options.contracts.filter((c) =>
+        let results = myContracts.filter((c) =>
           c.name.toLowerCase().includes(this.q)
         );
         return results;

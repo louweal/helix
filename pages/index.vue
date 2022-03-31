@@ -2,7 +2,7 @@
   <div class="page">
     <Header fixed />
     <div class="container container--wide">
-      <div class="grid">
+      <div class="grid" v-if="selectedContracts.length > 0">
         <div
           class="col-xs-12"
           v-for="(contract, index) in selectedContracts"
@@ -12,6 +12,9 @@
         </div>
       </div>
       <!-- <lorem :max="300" /> -->
+    </div>
+    <div v-if="selectedContracts.length === 0" class="page--placeholder">
+      No contracts found
     </div>
   </div>
 </template>
@@ -23,7 +26,10 @@ export default {
   contracts: contracts,
   computed: {
     selectedContracts() {
-      let sortedContracts = this.$options.contracts.sort((a, b) =>
+      let myContracts = this.$options.contracts.filter(
+        (c) => c.owner === this.$store.state.currentAccount
+      );
+      let sortedContracts = myContracts.sort((a, b) =>
         a.state > b.state ? 1 : -1
       );
       let selected = this.$store.state.currentCategory;

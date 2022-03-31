@@ -1,9 +1,18 @@
 .page {
   position: relative;
-  margin-bottom: 52px;
-  min-height: calc(100vh - 52px);
+  padding-bottom: 52px;
+  min-height: 100vh; // calc(100vh - 52px);
 
   &--white {
     background-color: #fff;
+  }
+
+  &--placeholder {
+    min-height: 80vh; // approx...
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
   }
 }

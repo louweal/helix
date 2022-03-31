@@ -18,7 +18,11 @@
         <li>
           <nuxt-link to="/search"
             ><img
-              src="@/assets/images/icons/ico-search.svg"
+              :src="
+                require(isActive('/search')
+                  ? '@/assets/images/icons/ico-search-active.svg'
+                  : '@/assets/images/icons/ico-search.svg')
+              "
               alt="search contracts"
               height="24"
           /></nuxt-link>
@@ -28,10 +32,10 @@
             ><img
               :src="
                 require(isActive('/faq')
-                  ? '@/assets/images/icons/ico-goals-active.svg'
-                  : '@/assets/images/icons/ico-goals.svg')
+                  ? '@/assets/images/icons/ico-faq-active.svg'
+                  : '@/assets/images/icons/ico-faq.svg')
               "
-              alt="personal goals"
+              alt="faq"
               height="24"
           /></nuxt-link>
         </li>
@@ -39,7 +43,7 @@
           <nuxt-link to="/account"
             ><img
               :src="
-                require(isActive('/account') || isActive('/faq')
+                require(isActive('/account')
                   ? '@/assets/images/icons/ico-account-active.svg'
                   : '@/assets/images/icons/ico-account.svg')
               "

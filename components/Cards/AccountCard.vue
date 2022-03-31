@@ -2,7 +2,9 @@
   <div class="account-card">
     <div
       class="account-card__inner"
-      @click="dropdown ? toggleList() : login ? signIn() : selectAccount()"
+      @click="
+        dropdown ? toggleList() : login ? signIn(data.ID) : selectAccount()
+      "
     >
       <div class="grid collapse no-bottom-margin-cols align-xs-middle">
         <div class="col-xs-3">
@@ -84,8 +86,10 @@ export default {
       dropdown ? toggleList() : signIn();
     },
 
-    signIn() {
+    signIn(id) {
       // console.log("todo update store");
+
+      this.$store.commit("setCurrentAccount", +id);
 
       this.$router.push({
         path: "/",

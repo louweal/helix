@@ -11,7 +11,7 @@
         <slot>
           <categories />
 
-          <add-button v-if="true" />
+          <add-button />
         </slot>
       </div>
     </header>

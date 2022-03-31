@@ -22,7 +22,10 @@
           placeholder="Product description (optional)"
         />
 
-        <div class="field field--light field--dropdown">
+        <div class="field field--light field--dropdown" @click="toggleDropdown">
+          {{ "Country of production" }}
+        </div>
+        <div class="field--dropdown--list">
           <ul>
             <li>China</li>
             <li>India</li>

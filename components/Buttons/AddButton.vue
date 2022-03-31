@@ -1,5 +1,8 @@
 <template>
-  <div class="add-button">
+  <div
+    class="add-button"
+    v-if="$options.accounts[$store.state.currentAccount].seller"
+  >
     <div class="add-button__inner">
       <nuxt-link to="/add-contract"> + </nuxt-link>
     </div>
@@ -7,7 +10,11 @@
 </template>
 
 <script>
+import accounts from "~/data/accounts.json";
+
 export default {
+  accounts,
+
   props: {
     to: {
       type: [String, Boolean],

@@ -2,7 +2,11 @@
   <div class="page page--white">
     <div class="container">
       <Section>
-        <account-card class="bottom-xs-1" :data="$options.accounts[0]" />
+        <!-- {{ $store.state.currentAccount }} -->
+        <account-card
+          class="bottom-xs-1"
+          :data="$options.accounts[$store.state.currentAccount]"
+        />
       </Section>
 
       <!-- <hr /> -->

@@ -2,25 +2,25 @@
   <div class="page page--white">
     <back-button to="/account" bg> FAQ </back-button>
 
+    &nbsp;
     <div class="bottom-xs-5"></div>
-    <Section>
-      <div class="container">
-        <!-- <Section class="bottom-xs-2"> </Section> -->
 
-        <hr />
-        <accordion-item
-          :label="faq.question"
-          level="2"
-          v-for="(faq, index) in $options.faqs"
-          :key="index"
-        >
-          <template v-if="faq.answer">
-            {{ faq.answer }}
-          </template>
-          <lorem v-else :max="45" />
-        </accordion-item>
-      </div>
-    </Section>
+    <div class="container">
+      <!-- <Section class="bottom-xs-2"> </Section> -->
+
+      <hr />
+      <accordion-item
+        :label="faq.question"
+        level="2"
+        v-for="(faq, index) in $options.faqs"
+        :key="index"
+      >
+        <template v-if="faq.answer">
+          {{ faq.answer }}
+        </template>
+        <lorem v-else :max="45" />
+      </accordion-item>
+    </div>
   </div>
 </template>
 

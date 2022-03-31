@@ -1,5 +1,6 @@
 export const state = () => ({
   currentCategory: "all",
+  currentAccount: 0
 });
 
 // export const actions = {
@@ -17,5 +18,8 @@ export const state = () => ({
 export const mutations = {
   setCurrentCategory(state, payload) {
     state.currentCategory = payload;
+  },
+  setCurrentAccount(state, payload) {
+    state.currentAccount = payload;
   },
 };
