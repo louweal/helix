@@ -1,7 +1,7 @@
 <template>
   <component
-    :is="true ? 'nuxt-link' : 'div'"
-    :to="href"
+    :is="to ? 'nuxt-link' : 'div'"
+    :to="to"
     class="button"
     :class="[
       `button--${state}`,
@@ -28,14 +28,14 @@ export default {
       type: String,
       default: "",
     },
-    href: {
-      type: String,
-      default: "",
+    to: {
+      type: [String, Boolean],
+      default: false,
     },
-    hash: {
-      type: String,
-      default: "",
-    },
+    // hash: {
+    //   type: String,
+    //   default: "",
+    // },
     active: {
       type: Boolean,
       default: false,

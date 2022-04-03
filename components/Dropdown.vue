@@ -1,46 +1,24 @@
-<!--- usage example 1:
-  <Dropdown
-    :options="[
-      { label: '10 km', value: 10 },
-      { label: '20 km', value: 20 },
-      { label: '50 km', value: 50, default: true },
-      { label: '80 km', value: 80 },
-      { label: 'Alles', value: 9999999999 },
-    ]"
-  />
-
-usage example 2 (using the named slots):<template>
-  
-  <dropdown>
-    <template #default>
-      <span>{{$i18n.locales.filter((l) => l.code == $i18n.locale)[0].name}}</span>
-    </template>
-
-    <template #options>
-      <lang-switcher />
-    </template>
-  </dropdown>
-</template>
--->
-
 <template>
-  <div class="dropdown" @click="toggle" ref="dropdown">
-    <slot name="default">
-      <span v-if="label" style="font-weight: 700">{{ label }}</span>
-      <span v-else>{{ defaultVal }}</span>
-    </slot>
-    <slot name="options">
-      <ul>
+  <div class="dropdown">
+    <div class="dropdown__current" @click="toggle">
+      <slot name="default">
+        <span v-if="label" style="font-weight: 700">{{ label }}</span>
+        <span v-else>{{ defaultVal }}</span>
+      </slot>
+    </div>
+    <ul ref="dropdown" v-if="active">
+      <slot name="options">
         <li
           v-for="(option, index) in options"
           :key="index"
+          :class="option.label === label ? 'active' : false"
           :data-value="option.value"
           @click="handleInput"
         >
           {{ option.label }}
         </li>
-      </ul>
-    </slot>
+      </slot>
+    </ul>
   </div>
 </template>
 
@@ -52,8 +30,8 @@ export default {
       default: () => {},
     },
     defaultVal: {
-      type: String,
-      default: "Select",
+      type: [String, Boolean],
+      default: false,
     },
     index: {
       // for material fields
@@ -66,21 +44,27 @@ export default {
     return {
       val: null,
       label: null,
+      active: false,
     };
   },
 
-  mounted() {
-    if (this.options) {
-      let defaultOption = this.options.filter((opt) => opt.default === true);
+  created() {
+    let defaultIndex = 0;
+
+    if (!this.defaultVal) {
+      let defaultOption = this.options.filter((o) => o.default === true);
+      console.log(defaultOption);
       if (defaultOption.length === 1) {
-        this.val = defaultOption[0].value;
-        this.label = defaultOption[0].label;
-        this.$emit("input", {
-          val: this.val,
-        });
-      } else if (defaultOption.length > 1) {
-        console.log("Too many default values provided");
+        defaultOption = defaultOption[0];
+      } else {
+        defaultOption = this.options[0]; //.set first option as default
       }
+
+      this.val = defaultOption.value;
+      this.label = defaultOption.label;
+      this.$emit("input", {
+        val: this.val,
+      });
     }
   },
 
@@ -93,46 +77,31 @@ export default {
       });
       this.val = e.target.innerText;
       this.label = e.target.innerText;
+      this.active = !this.active;
     },
     toggle() {
-      let dropdown = this.$refs["dropdown"];
-      if (dropdown) {
-        //   console.log("toggled!");
-        if (!dropdown.classList.contains("dropdown--active")) {
-          dropdown.classList.add("dropdown--active");
-        } else {
-          dropdown.classList.remove("dropdown--active");
-        }
-        this.active = !this.active;
-      }
+      this.active = !this.active;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.dropdown--active {
-  ::v-deep ul {
-    opacity: 1;
-    visibility: visible !important;
-    animation: slide-in 0.3s cubic-bezier(0.2, 0, 0.1, 1) both;
-  }
-}
-
 .dropdown {
   position: relative;
-  // min-width: 167px;
-  border: $input-border-width solid $input-border-color;
-  border-radius: $input-border-radius;
-  transition: all 0.3s ease-in;
-  background-color: $input-background-hover-color;
-  padding-top: $input-spacing !important; // * 0.42; // magic ...
-  padding-bottom: $input-spacing; // * 0.42; // more magic ...
   font-size: $input-font-size;
-  min-width: 106px;
+  min-width: 20px;
+  margin-bottom: 4px;
+
+  &__current {
+    border: $input-border-width solid $input-border-color;
+    border-radius: $input-border-radius;
+    background-color: $input-background-hover-color;
+    padding-top: $input-spacing;
+    padding-bottom: $input-spacing;
+  }
 
   &:hover {
-    // background-color: $input-background-color;
     cursor: pointer;
   }
 
@@ -144,48 +113,44 @@ export default {
     width: 100%;
     height: 100%;
     font-style: italic;
-
-    // padding-left: 1.5rem;
+    padding-left: 4px;
   }
 
   &::after {
     position: absolute;
     content: "\e90c";
     font-family: icomoon-helix;
-    right: 0;
+    right: 20px;
     top: $input-spacing * 0.1;
     height: 100%;
-    width: 30px;
+    width: 10px;
     line-height: 40px;
+    z-index: 0;
   }
 
   ::v-deep ul {
     display: block;
     width: 100%;
     height: 100%;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    opacity: 0;
-    // background-color: #fff;
-    // border: 1px solid red;
-    visibility: hidden;
-    z-index: 3;
-
-    // margin: 0;
 
     li {
-      // line-height: 40px;
-      background-color: rgba($input-background-color, 0.88);
-      padding-left: 1.5rem;
+      background-color: $input-background-color;
+      padding-left: 4px;
       padding-top: $input-spacing * 0.42; // magic ...
       padding-bottom: $input-spacing * 0.42; // more magic ...
-      // box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.29);
+      box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.09);
       margin-top: -1px; // because some browsers show a small gap
+
+      &.active {
+        color: rgba(get-color(base-text), 0.6);
+      }
 
       &:first-of-type {
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
+      }
+      &:not(:first-of-type) {
+        border-top: 1px solid get-color(line);
       }
 
       &:last-of-type {
@@ -194,7 +159,7 @@ export default {
       }
 
       &:hover {
-        background-color: $input-background-hover-color;
+        background-color: $input-background-color;
       }
     }
   }

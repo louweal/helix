@@ -44,6 +44,7 @@ export default {
   width: 100%;
   // padding-bottom: 7px;
   padding: 12px 4px 12px 4px;
+  height: 100%;
 
   &__visual {
     position: relative;

@@ -7,111 +7,147 @@
       <div class="bottom-xs-3"></div>
 
       <div class="add-form">
-        <input
-          class="field field--light"
-          type="text"
-          placeholder="Product name"
-        />
+        <Section>
+          <div
+            class="field field--light field--upload"
+            @click="toggleDrawer('#gallery-drawer')"
+          >
+            Upload image
+          </div>
+          <input
+            class="field field--light"
+            type="text"
+            placeholder="Product name"
+          />
 
-        <div
-          class="field field--light field--upload"
-          @click="toggleDrawer('#gallery-drawer')"
+          <textarea
+            class="field field--light field--textarea"
+            placeholder="Product description (optional)"
+          />
+        </Section>
+
+        <Section>
+          <heading size="l" level="2" class="bottom-xs-0">
+            Country of production
+          </heading>
+          <dropdown
+            @input="getProdCountry"
+            :options="[
+              { label: 'China', value: 'china' },
+              { label: 'India', value: 'india' },
+              { label: 'Vietnam', value: 'vietnam' },
+              { label: 'Germany', value: 'germany' },
+            ]"
+          />
+        </Section>
+
+        <Section>
+          <heading size="l" level="2" class="bottom-xs-0"> Materials </heading>
+          <dropdown
+            @input="getNumMaterials"
+            :options="[
+              { label: '1 material', value: 1 },
+              { label: '2 materials', value: 2 },
+              { label: '3 materials', value: 3, default: true },
+              { label: '4 materials', value: 4 },
+              { label: '5 materials', value: 5 },
+              { label: '6 materials', value: 6 },
+              { label: '7 materials', value: 7 },
+            ]"
+          />
+
+          <div class="grid no-bottom-margin-cols">
+            <template v-for="(material, index) in numMaterials">
+              <!-- <div class="col-xs-2" :key="'i' + index">{{ index + 1 }}</div> -->
+              <div class="col-xs-8" :key="index">
+                <dropdown
+                  @input="getMaterial"
+                  :index="index"
+                  :key="index"
+                  defaultVal="Group"
+                  :options="materialGroups"
+                />
+              </div>
+              <div class="col-xs-8" :key="'sub' + index">
+                <!-- <template v-if="subMaterials[index]"> -->
+                <!-- {{ subMaterials[index] }} -->
+                <dropdown
+                  @input="getSubMaterial"
+                  :index="index"
+                  :key="index"
+                  defaultVal="Type"
+                  :options="subMaterials[index]"
+                />
+                <!-- </template> -->
+              </div>
+              <div class="col-xs-8" :key="'source' + index">
+                <dropdown
+                  @input="getCountry"
+                  :index="index"
+                  :key="index"
+                  defaultVal="Origin"
+                  :options="$options.countries"
+                />
+              </div>
+            </template>
+          </div>
+
+          <textarea
+            class="field field--light field--textarea"
+            placeholder="Additional material information (optional)"
+          />
+        </Section>
+
+        <Section>
+          <heading size="l" level="2" class="bottom-xs-0">
+            Charity to support with this product
+          </heading>
+          <dropdown @input="getCharity" :options="allCharities" />
+        </Section>
+
+        <Section>
+          <heading size="l" level="2" class="bottom-xs-0">Deposits</heading>
+
+          <Table>
+            <TR>
+              <TD> Materials </TD>
+              <TD> <badge level="B" /> </TD>
+              <TD align="right"> ℏ 9.99 </TD>
+            </TR>
+            <TR v-for="(row, index) in 3" :key="'j' + index" :sub="true">
+              <TD> Material {{ index + 1 }} </TD>
+              <TD> <badge level="B" /> </TD>
+              <TD align="right"> ℏ 9.99 </TD>
+            </TR>
+            <TR>
+              <TD> Shipment </TD>
+              <TD> <badge level="B" /> </TD>
+              <TD align="right"> ℏ 9.99 </TD>
+            </TR>
+
+            <TR v-for="(row, index) in 3" :key="'k' + index" :sub="true">
+              <TD> Material {{ index + 1 }} shipment </TD>
+              <TD> <badge level="B" /> </TD>
+              <TD align="right"> ℏ 9.99 </TD>
+            </TR>
+            <TR sub>
+              <TD> Product shipment </TD>
+              <TD> <badge level="B" /> </TD>
+              <TD align="right"> ℏ 9.99 </TD>
+            </TR>
+          </Table>
+        </Section>
+
+        <deposit :value="'999.49'" class="bottom-xs-1" />
+
+        <Button
+          class="button--primary button--fullwidth bottom-xs-2"
+          @click.native="createContract"
         >
-          Upload image
-        </div>
-
-        <textarea
-          class="field field--light field--textarea"
-          placeholder="Product description (optional)"
-        />
-
-        <dropdown
-          @input="getCountry"
-          class="field field--light"
-          defaultVal="Country of production"
-          :options="[
-            { label: 'China', value: 'china' },
-            { label: 'India', value: 'india' },
-            { label: 'Vietnam', value: 'vietnam' },
-            { label: 'Germany', value: 'germany' },
-          ]"
-        />
-
-        <dropdown
-          @input="getNumMaterials"
-          class="field field--light"
-          defaultVal="Number of materials"
-          :options="[
-            { label: '1 material', value: 1 },
-            { label: '2 materials', value: 2 },
-            { label: '3 materials', value: 3 },
-            { label: '4 materials', value: 4 },
-            { label: '5 materials', value: 5 },
-            { label: '6 materials', value: 6 },
-            { label: '7 materials', value: 7 },
-          ]"
-        />
-
-        <div class="grid align-xs-middle">
-          <template v-for="(material, index) in numMaterials">
-            <div class="col-xs-2" :key="'i' + index">{{ index + 1 }}</div>
-            <div class="col-xs-10" :key="index">
-              <dropdown
-                @input="getMaterial"
-                :index="index"
-                :key="index"
-                class="field field--light"
-                :defaultVal="`Material ${index + 1}`"
-                :options="$options.materials"
-              />
-            </div>
-            <div class="col-xs-12" :key="'sub' + index">
-              <!-- <template v-if="subMaterials[index]"> -->
-              <!-- {{ subMaterials[index] }} -->
-              <dropdown
-                @input="getSubMaterial"
-                :index="index"
-                :key="index"
-                class="field field--light"
-                :defaultVal="`Specify`"
-                :options="subMaterials[index]"
-              />
-              <!-- </template> -->
-            </div>
-          </template>
-        </div>
-
-        <!-- <heading size="l" level="2" class="bottom-xs-0">Materials (2)</heading> -->
-
-        <!-- <categories />
-
-        <categories />
-
-        <Button class="button--primary">Add another material</Button> -->
-
-        <textarea
-          class="field field--light field--textarea"
-          placeholder="Additional material information (optional)"
-        />
-
-        <dropdown
-          @input="getCharity"
-          class="field field--light"
-          defaultVal="Choose charity to support"
-          :options="allCharities"
-        />
-
-        <heading size="l" level="2" class="bottom-xs-0"
-          >Contract summary</heading
-        >
-
-        <lorem :max="100" />
-
-        <Button class="button--primary button--fullwidth">
           Create contract
         </Button>
 
-        <div class="bottom-xs-5"></div>
+        <!-- <div class="bottom-xs-5"></div> -->
       </div>
     </div>
 
@@ -132,28 +168,16 @@
 <script>
 import Vue from "vue";
 import accounts from "~/data/accounts.json";
+import materials from "~/data/materials.json";
+import countries from "~/data/countries.json";
 
 export default {
   accounts,
-
-  materials: ["Wood", "Glass", "Textile", "Metal"].map((m) => ({
-    label: m,
-    value: m.toLowerCase(),
+  materials,
+  countries: countries.map(({ name }) => ({
+    label: name,
+    value: name.toLowerCase(),
   })),
-  wood: ["oak", "pine", "teak", "beech", "ash"].map((m) => ({
-    label: m,
-    value: m.toLowerCase(),
-  })),
-  metal: ["silver", "gold", "lithium"].map((m) => ({
-    label: m,
-    value: m.toLowerCase(),
-  })),
-  textile: ["cotton", "bio cotton", "silk", "wool", "nylon", "polyester"].map(
-    (m) => ({
-      label: m,
-      value: m.toLowerCase(),
-    })
-  ),
 
   data() {
     return {
@@ -169,9 +193,23 @@ export default {
         .filter((a) => a.charity)
         .map(({ name }) => ({ label: name, value: name.toLowerCase() }));
     },
+    materialGroups() {
+      return [
+        ...new Set(this.$options.materials.map((m) => m.parent).flat()),
+      ].map((m) => ({
+        label: m,
+        value: m.toLowerCase(),
+      }));
+    },
   },
 
   methods: {
+    createContract() {
+      console.log("todo create contract on hedera network");
+      this.$router.push({
+        path: "/",
+      });
+    },
     toggleDrawer(id) {
       let drawer = document.querySelector(id);
       // console.log(id);
@@ -186,23 +224,32 @@ export default {
       this.subMaterials = new Array(num);
     },
 
+    getAllFromGroup(group) {
+      return this.$options.materials
+        .filter((m) => m.parent === group)
+        .map(({ name }) => ({
+          label: name,
+          value: name.toLowerCase(),
+        }));
+    },
+
     getMaterial(data) {
-      console.log(data.val);
       this.materials[data.index] = data.val;
-
-      console.log(this.$options[data.val]);
-
-      Vue.set(this.subMaterials, data.index, this.$options[data.val]);
-      // this.subMaterials[data.index] = this.$options[data.val];
-
-      console.log(this.subMaterials);
+      Vue.set(
+        this.subMaterials,
+        data.index,
+        this.getAllFromGroup(this.materials[data.index])
+      );
     },
 
     getSubMaterial(data) {
       //todo
     },
-
     getCountry(data) {
+      console.log(data.val);
+    },
+
+    getProdCountry(data) {
       console.log(data.val);
     },
     getCharity(data) {

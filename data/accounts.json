@@ -21,6 +21,7 @@
   {
     "ID": 3,
     "name": "Susan's Handmade Toys",
+    "seller": true,
     "accountId": "0.0.36342466",
     "avatar": "avatar4.png"
   },

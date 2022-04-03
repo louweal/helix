@@ -1,0 +1,12 @@
+[
+  {
+    "ID": 0,
+    "name": "The Netherlands",
+    "distances": [0, 10, 1000, 1000, 1000]
+  },
+  {
+    "ID": 1,
+    "name": "Germany",
+    "distances": [10, 0, 1000, 1000, 1000]
+  }
+]

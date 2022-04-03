@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <drawer id="accounts-drawer" style="display: none">
+    <!-- <drawer id="accounts-drawer" style="display: none">
       <template v-slot:header> Select recepient </template>
       <Stack>
         <account-card
@@ -47,7 +47,7 @@
         />
       </Stack>
       <Button class="button--primary button--fullwidth"> Select </Button>
-    </drawer>
+    </drawer> -->
     <!-- <div v-if="dropdown && listActive" class="account-card__list">
       <account-card
         v-for="(item, i) in list"

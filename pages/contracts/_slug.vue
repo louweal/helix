@@ -1,60 +1,8 @@
 <template>
   <div class="page page--white">
-    <drawer id="transfer-drawer">
-      <template v-slot:header> Transfer ownership </template>
-      <p>
-        If you transfer the ownership of this contract to someone, the new owner
-        receives 30% of the deposit ({{ hbars(30) }}).
-      </p>
-
-      <heading size="m" level="3" class="bottom-xs-0">
-        Item recepient <badge color="primary">30%</badge>
-      </heading>
-
-      <account-card
-        class="bottom-xs-1"
-        :data="$options.accounts[1]"
-        :list="
-          $options.accounts.filter((a) => a.ID !== 1 && !a.seller && !a.charity)
-        "
-        dropdown
-      />
-
-      <p>
-        After transfering the ownership you will instantly receive the remaining
-        60% of your deposit ({{ hbars(60) }}) and you will donate 10% ({{
-          hbars(10)
-        }}) to The Plastic Soup Foundation.
-      </p>
-
-      <Button class="button--primary button--fullwidth"> Confirm </Button>
-    </drawer>
-
-    <drawer id="delete-drawer">
-      <template v-slot:header> Delete contract </template>
-
-      <p>
-        Do you want to delete this contract? This action donates the complete
-        remainder of the deposit to the charity selected below.
-      </p>
-
-      <heading size="m" level="3" class="bottom-xs-0">
-        Deposit recepient <badge color="primary">99%</badge>
-      </heading>
-
-      <account-card
-        class="bottom-xs-1"
-        :data="$options.accounts.filter((a) => a.charity)[0]"
-        :list="$options.accounts.filter((a) => a.charity)"
-        dropdown
-      />
-
-      <Button class="button--primary button--fullwidth"> Confirm </Button>
-    </drawer>
+    <back-button transparent />
 
     <div class="container container--full">
-      <back-button transparent />
-
       <div class="img--light" style="padding: 15%">
         <div
           v-if="contract.visual"
@@ -108,10 +56,16 @@
 
       <Section>
         <hr />
-        <list-item icon="gift"> Bought from {{ contract.seller }} </list-item>
+        <list-item icon="gift" v-if="contract.seller !== contract.owner">
+          Bought from {{ contract.seller }}
+        </list-item>
 
-        <list-item icon="calendar">
+        <list-item icon="calendar" v-if="contract.seller !== contract.owner">
           Owner since {{ contract.startdate }}
+        </list-item>
+
+        <list-item icon="calendar" v-if="contract.seller === contract.owner">
+          Listed on {{ contract.startdate }}
         </list-item>
 
         <list-item icon="pin">
@@ -147,8 +101,64 @@
         </accordion-item>
       </Section>
     </div>
+
+    <drawer id="transfer-drawer">
+      <template v-slot:header> Transfer ownership </template>
+      <p>
+        If you transfer the ownership of this contract to someone, the new owner
+        receives 30% of the deposit ({{ hbars(30) }}).
+      </p>
+
+      <heading size="m" level="3" class="bottom-xs-0">
+        Item recepient <badge color="primary">30%</badge>
+      </heading>
+
+      <dropdown @input="getItemRecepient" :options="allAccounts" />
+
+      <p>
+        After transfering the ownership you will instantly receive the remaining
+        60% of your deposit ({{ hbars(60) }}) and you will donate 10% ({{
+          hbars(10)
+        }}) to The Plastic Soup Foundation.
+      </p>
+
+      <Button
+        class="button--primary button--fullwidth"
+        @click.native="doTransfer"
+      >
+        Confirm
+      </Button>
+    </drawer>
+
+    <drawer id="delete-drawer">
+      <template v-slot:header> Delete contract </template>
+
+      <p>
+        Do you want to delete this contract? This action donates the complete
+        remainder of the deposit to the charity selected below.
+      </p>
+      <heading size="m" level="3" class="bottom-xs-0">
+        Deposit recepient <badge color="primary">99%</badge>
+      </heading>
+
+      <dropdown @input="getItemRecepient" :options="allCharities" />
+
+      <Button
+        class="button--primary button--fullwidth"
+        @click.native="doDelete"
+      >
+        Confirm
+      </Button>
+    </drawer>
+
+    <notification v-if="transferred">
+      <p>Transfer successful</p>
+    </notification>
+
+    <notification v-if="deleted">
+      <p>Deletion successful</p>
+    </notification>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -159,11 +169,28 @@ export default {
   contracts,
   accounts,
 
+  data() {
+    return {
+      transferred: false,
+      deleted: false,
+    };
+  },
+
   computed: {
     contract() {
       return this.$options.contracts.filter(
         (c) => c.ID === +this.$route.params.slug
       )[0];
+    },
+    allAccounts() {
+      return this.$options.accounts
+        .filter((a) => !a.seller && !a.charity)
+        .map(({ name, accountId }) => ({ label: name, value: accountId }));
+    },
+    allCharities() {
+      return this.$options.accounts
+        .filter((a) => a.charity)
+        .map(({ name, accountId }) => ({ label: name, value: accountId }));
     },
   },
 
@@ -177,6 +204,19 @@ export default {
       return (
         parseFloat(this.contract.deposit * (percentage / 100)).toFixed(2) + " ℏ"
       );
+    },
+    getItemRecepient(data) {
+      console.log(data.val);
+    },
+    doTransfer() {
+      //to do
+      this.transferred = true;
+      this.toggleDrawer("#transfer-drawer");
+    },
+    doDelete() {
+      // todo
+      this.deleted = true;
+      this.toggleDrawer("#delete-drawer");
     },
   },
 };

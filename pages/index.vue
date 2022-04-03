@@ -15,11 +15,14 @@
     </div>
     <div v-if="selectedContracts.length === 0" class="page--placeholder">
       <div>
-        <p>No contracts found</p>
+        <p class="bottom-xs-2">No contracts found</p>
 
-        <p v-if="$store.state.currentAccount.seller">
-          Click '+' to add contracts for your products.
-        </p>
+        <Button
+          v-if="$store.state.currentAccount.seller"
+          to="/add-contract"
+          class="button--primary"
+          >Add contract</Button
+        >
       </div>
     </div>
   </div>

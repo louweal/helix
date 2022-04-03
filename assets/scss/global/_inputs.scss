@@ -1,17 +1,21 @@
 // input[type="text"] {
 
 .field {
-  height: 40px;
+  min-height: 40px;
   box-sizing: border-box;
   border: none;
   width: 100%;
-  padding: 6px 4px 4px 40px !important;
+  padding: 6px 4px 4px 4px;
   outline: none;
   font-size: $input-font-size;
   border-radius: 4px;
 
   &::placeholder {
     font-style: italic;
+  }
+
+  &--search {
+    padding-left: 40px;
   }
 
   &--light {
@@ -25,7 +29,7 @@
 .add-form {
   .field {
     padding-left: 10px !important;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 
     &--upload {
       display: flex;

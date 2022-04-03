@@ -1,0 +1,117 @@
+[
+  {
+    "name": "cotton",
+    "parent": "textile",
+    "label": "F"
+  },
+  {
+    "name": "bio cotton",
+    "parent": "textile",
+    "label": "C"
+  },
+  {
+    "name": "silk",
+    "parent": "textile",
+    "label": "F"
+  },
+  {
+    "name": "wool",
+    "parent": "textile",
+    "label": "D"
+  },
+  {
+    "name": "nylon",
+    "parent": "textile",
+    "label": "F"
+  },
+  {
+    "name": "polyester",
+    "parent": "textile",
+    "label": "G"
+  },
+  {
+    "name": "oak",
+    "parent": "wood",
+    "label": "F"
+  },
+  {
+    "name": "pine",
+    "parent": "wood",
+    "label": "F"
+  },
+  {
+    "name": "teak",
+    "parent": "wood",
+    "label": "F"
+  },
+  {
+    "name": "beech",
+    "parent": "wood",
+    "label": "F"
+  },
+  {
+    "name": "glass",
+    "parent": "glass",
+    "label": "E"
+  },
+  {
+    "name": "PET / PETE",
+    "parent": "plastic",
+    "label": "G"
+  },
+  {
+    "name": "HDPE",
+    "parent": "plastic",
+    "label": "G"
+  },
+  {
+    "name": "LDPE",
+    "parent": "plastic",
+    "label": "G"
+  },
+  {
+    "name": "PVC / vinyl",
+    "parent": "plastic",
+    "label": "G"
+  },
+  {
+    "name": "polypropylene",
+    "parent": "plastic",
+    "label": "G"
+  },
+  {
+    "name": "styrofoam",
+    "parent": "plastic",
+    "label": "G"
+  },
+  {
+    "name": "lithium",
+    "parent": "metal",
+    "label": "G"
+  },
+  {
+    "name": "silver",
+    "parent": "metal",
+    "label": "E"
+  },
+  {
+    "name": "gold",
+    "parent": "metal",
+    "label": "G"
+  },
+  {
+    "name": "freon",
+    "parent": "gas",
+    "label": "G"
+  },
+  {
+    "name": "propane",
+    "parent": "gas",
+    "label": "G"
+  },
+  {
+    "name": "butane",
+    "parent": "gas",
+    "label": "G"
+  }
+]

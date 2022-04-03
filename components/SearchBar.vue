@@ -1,7 +1,7 @@
 <template>
   <div class="search-bar">
     <input
-      class="field"
+      class="field field--search"
       id="searchbar"
       autocomplete="off"
       required

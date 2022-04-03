@@ -38,10 +38,6 @@ export default {
   position: fixed;
   top: 0;
   padding: 12px 0;
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // min-height: 54px;
   z-index: 2;
   left: 0;
   width: 100%;
