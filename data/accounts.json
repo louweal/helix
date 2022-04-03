@@ -21,7 +21,6 @@
   {
     "ID": 3,
     "name": "Susan's Handmade Toys",
-    "seller": true,
     "accountId": "0.0.36342466",
     "avatar": "avatar4.png"
   },
@@ -30,6 +29,13 @@
     "name": "Plastic Soup Foundation",
     "charity": true,
     "accountId": "0.0.0034243",
+    "avatar": "avatar4.png"
+  },
+  {
+    "ID": 5,
+    "name": "350.org",
+    "charity": true,
+    "accountId": "0.0.0037423",
     "avatar": "avatar4.png"
   }
 ]

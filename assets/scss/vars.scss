@@ -77,12 +77,12 @@ $breakpoints: (
 
 $radius: 1rem;
 
-$input-background-color: transparent;
-$input-background-hover-color: $input-background-color;
+$input-background-color: #fff;
+$input-background-hover-color: #eee; // = light
 $input-spacing: .75rem;
 $input-border-hover-color: get-color(dark);
-$input-border-radius: 0;
-$input-border-width: 1px;
+$input-border-radius: 5px;
+$input-border-width: 0;
 $input-font-family: $base-font;
-$input-font-size: 19px;
+$input-font-size: 16px;
 $input-border-color: #0A006B; 

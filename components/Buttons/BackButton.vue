@@ -1,16 +1,18 @@
 <template>
   <div class="back-button" :class="bg ? 'back-button--bg' : false">
-    <div class="grid no-bottom-margin-cols align-xs-middle">
-      <div class="col-xs-4">
-        <nuxt-link :to="to"><icon icon="arrow-left" size="lg" /></nuxt-link>
-      </div>
-      <div class="col-xs-16 align-xs-center">
-        <heading size="4xl" level="1" class="bottom-xs-0" color="black">
-          <slot />
-        </heading>
-      </div>
-      <div class="col-xs-4">
-        <!-- empty-->
+    <div class="container">
+      <div class="grid no-bottom-margin-cols align-xs-middle">
+        <div class="col-xs-4">
+          <nuxt-link :to="to"><icon icon="arrow-left" size="lg" /></nuxt-link>
+        </div>
+        <div class="col-xs-16 align-xs-center">
+          <heading size="4xl" level="1" class="bottom-xs-0" color="black">
+            <slot />
+          </heading>
+        </div>
+        <div class="col-xs-4">
+          <!-- empty-->
+        </div>
       </div>
     </div>
   </div>
@@ -35,15 +37,17 @@ export default {
 .back-button {
   position: fixed;
   top: 0;
-  padding: 12px;
+  padding: 12px 0;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // min-height: 54px;
   z-index: 2;
-  width: min(calc(100%), 414px);
-  left: max(calc(((100% - 414px) / 2)), 0);
+  left: 0;
+  width: 100%;
 
   &--bg {
     background-color: #fff;
-    // height: 50px;
-    // border: 3px solid red;
   }
 }
 </style>

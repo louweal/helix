@@ -3,7 +3,11 @@
     <div
       class="account-card__inner"
       @click="
-        dropdown ? toggleList() : login ? signIn(data.ID) : selectAccount()
+        dropdown
+          ? showDrawer('#accounts-drawer')
+          : login
+          ? signIn(data.ID)
+          : selectAccount()
       "
     >
       <div class="grid collapse no-bottom-margin-cols align-xs-middle">
@@ -32,14 +36,26 @@
       </div>
     </div>
 
-    <div v-if="dropdown && listActive" class="account-card__list">
+    <drawer id="accounts-drawer" style="display: none">
+      <template v-slot:header> Select recepient </template>
+      <Stack>
+        <account-card
+          v-for="(item, i) in list"
+          :key="i"
+          :data="item"
+          @click="selectAccount(item)"
+        />
+      </Stack>
+      <Button class="button--primary button--fullwidth"> Select </Button>
+    </drawer>
+    <!-- <div v-if="dropdown && listActive" class="account-card__list">
       <account-card
         v-for="(item, i) in list"
         :key="i"
         :data="item"
         @click="selectAccount"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -53,6 +69,7 @@ export default {
       avatar: "",
       name: "",
       accountId: "",
+      selected: () => {},
     };
   },
 
@@ -76,16 +93,13 @@ export default {
   },
 
   created() {
+    //todo
     this.name = this.data.name;
     this.accountId = this.data.accountId;
     this.avatar = this.data.avatar;
   },
 
   methods: {
-    toggle() {
-      dropdown ? toggleList() : signIn();
-    },
-
     signIn(id) {
       // console.log("todo update store");
 
@@ -97,14 +111,27 @@ export default {
       });
     },
 
-    toggleList() {
-      // console.log("togglel list");
-      this.listActive = !this.listActive;
+    showDrawer(id) {
+      let drawer = document.querySelector(id);
+      console.log(id);
+      drawer.style.display = "block";
+      // drawer.classList.toggle("drawer--active");
     },
 
-    selectAccount() {
-      // console.log("selected!");
-      this.name = "hello";
+    hideDrawer(id) {
+      let drawer = document.querySelector(id);
+      console.log(id);
+      drawer.style.display = "none";
+    },
+
+    selectAccount(item) {
+      console.log(item);
+
+      this.selected = item;
+
+      this.name = item.name;
+      this.avatar = item.avatar;
+      this.hideDrawer("#accounts-drawer");
       // this.listActive = !this.listActive;
     },
   },

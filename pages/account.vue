@@ -4,19 +4,20 @@
       <Section>
         <account-card
           v-if="currentAccount.ID !== -1"
-          class="bottom-xs-1"
+          class="bottom-xs-4"
           :data="currentAccount"
         />
       </Section>
 
-      <hr />
+      <!-- <hr /> -->
+      <nav-item to="/about">About Helix</nav-item>
+
       <nav-item to="/settings">Settings</nav-item>
-      <nav-item to="/about">About</nav-item>
-      <nav-item to="/contact">Contact</nav-item>
+      <!-- <nav-item to="/contact">Contact</nav-item> -->
 
       <nav-item to="/login">Sign out</nav-item>
 
-      <div class="bottom-xs-3"></div>
+      <!-- <div class="bottom-xs-3"></div> -->
 
       <!-- <div class="align-xs-center bottom-xs-5">
         <img
@@ -26,14 +27,14 @@
           height="14.32"
         />
       </div> -->
-      <div class="align-xs-center bottom-xs-3">
+      <!-- <div class="align-xs-center bottom-xs-3">
         <img
           src="@/assets/images/logo.svg"
           alt="logo"
           width="106.66"
           height="49.84"
         />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

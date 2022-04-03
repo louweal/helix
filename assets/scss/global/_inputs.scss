@@ -1,64 +1,59 @@
-
-
 // input[type="text"] {
 
-    .field {
-        height: 40px;
-        box-sizing: border-box;
-        border: none;
-        width: 100%;
-        padding: 6px 4px 4px 40px !important;
-        outline: none;
-        font-size: 17px;
-        border-radius: 4px;
-    
-        &::placeholder {
-            font-style: italic;
-        }
+.field {
+  height: 40px;
+  box-sizing: border-box;
+  border: none;
+  width: 100%;
+  padding: 6px 4px 4px 40px !important;
+  outline: none;
+  font-size: $input-font-size;
+  border-radius: 4px;
 
-        &--light {
+  &::placeholder {
+    font-style: italic;
+  }
 
-            background-color: get-color(light);
-        }
-    }
+  &--light {
+    background-color: get-color(light);
+  }
+}
 
-// 
+//
 // }
 
 .add-form {
+  .field {
+    padding-left: 10px !important;
+    margin-bottom: 6px;
 
-    .field {
-        padding-left: 10px !important;
-        margin-bottom: 6px;
-
-        &--upload {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 111px;
-            border: 2px dashed rgba(#666, 0.5);
-        }
-
-        &--textarea {
-            min-height: 111px;
-            font-family: $base-font !important;
-        }
-
-        &--dropdown {
-            position: relative;
-            overflow: hidden;
-
-            &--list {
-
-            }
-
-            &::after {
-                position: absolute;
-                content: "\e90c";
-                font-family: 'icomoon-helix';
-                right: 8px;
-                top: 12px;
-            }
-        }
+    &--upload {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 111px;
+      border: 2px dashed rgba(#666, 0.5);
     }
+
+    &--textarea {
+      min-height: 111px;
+      font-family: $base-font !important;
+    }
+
+    &--dropdown {
+      position: relative;
+      overflow: hidden;
+
+      &--list {
+      }
+
+      &::after {
+        position: absolute;
+        content: "\e90c";
+        font-family: "icomoon-helix";
+        right: 8px;
+        top: 12px;
+      }
+    }
+  }
 }

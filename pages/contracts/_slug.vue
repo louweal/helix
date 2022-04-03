@@ -4,7 +4,7 @@
       <template v-slot:header> Transfer ownership </template>
       <p>
         If you transfer the ownership of this contract to someone, the new owner
-        receives 30% of the deposit (xxx h).
+        receives 30% of the deposit ({{ hbars(30) }}).
       </p>
 
       <heading size="m" level="3" class="bottom-xs-0">
@@ -22,8 +22,9 @@
 
       <p>
         After transfering the ownership you will instantly receive the remaining
-        60% of your deposit ({{ contract.deposit * 0.6 }} h) and you will donate
-        10% ({{ contract.deposit * 0.1 }} h) to The Plastic Soup Foundation.
+        60% of your deposit ({{ hbars(60) }}) and you will donate 10% ({{
+          hbars(10)
+        }}) to The Plastic Soup Foundation.
       </p>
 
       <Button class="button--primary button--fullwidth"> Confirm </Button>
@@ -43,8 +44,8 @@
 
       <account-card
         class="bottom-xs-1"
-        :data="$options.accounts[3]"
-        :list="$options.accounts.filter((a) => a.ID !== 3 && a.charity)"
+        :data="$options.accounts.filter((a) => a.charity)[0]"
+        :list="$options.accounts.filter((a) => a.charity)"
         dropdown
       />
 
@@ -155,9 +156,7 @@ import contracts from "~/data/contracts.json";
 import accounts from "~/data/accounts.json";
 
 export default {
-  // transition: "rtl",
-
-  contracts, //.sort((a, b) => (a.ID > b.ID ? 1 : -1)),
+  contracts,
   accounts,
 
   computed: {
@@ -171,8 +170,13 @@ export default {
   methods: {
     toggleDrawer(id) {
       let drawer = document.querySelector(id);
-      // console.log(id);
+      console.log(id);
       drawer.classList.toggle("drawer--active");
+    },
+    hbars(percentage) {
+      return (
+        parseFloat(this.contract.deposit * (percentage / 100)).toFixed(2) + " ℏ"
+      );
     },
   },
 };
