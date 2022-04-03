@@ -1,9 +1,11 @@
 <template>
   <div class="deposit">
-    <span class="integral">ℏ {{ integral }}.</span
+    <span class="integral"><span v-if="label">ℏ </span>{{ integral }}.</span
     ><span class="fractional">{{ fractional }}</span>
 
-    <heading level="0" size="m" weight="400" fstyle="italic">deposit</heading>
+    <heading level="0" size="m" weight="400" fstyle="italic" v-if="label">{{
+      label
+    }}</heading>
   </div>
 </template>
 
@@ -11,6 +13,10 @@
 export default {
   props: {
     value: {
+      type: [String, Boolean],
+      default: false,
+    },
+    label: {
       type: [String, Boolean],
       default: false,
     },

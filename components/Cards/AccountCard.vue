@@ -1,15 +1,6 @@
 <template>
   <div class="account-card">
-    <div
-      class="account-card__inner"
-      @click="
-        dropdown
-          ? showDrawer('#accounts-drawer')
-          : login
-          ? signIn(data.ID)
-          : selectAccount()
-      "
-    >
+    <div class="account-card__inner" @click="login ? signIn(data.ID) : false">
       <div class="grid collapse no-bottom-margin-cols align-xs-middle">
         <div class="col-xs-3">
           <div
@@ -26,36 +17,11 @@
         </div>
         <div class="col-xs-4">
           <div class="align-xs-end">
-            <icon
-              v-if="dropdown || login"
-              :icon="dropdown ? 'chevron-down' : 'chevron-right'"
-              size="lg"
-            />
+            <icon v-if="login" icon="chevron-right" size="lg" />
           </div>
         </div>
       </div>
     </div>
-
-    <!-- <drawer id="accounts-drawer" style="display: none">
-      <template v-slot:header> Select recepient </template>
-      <Stack>
-        <account-card
-          v-for="(item, i) in list"
-          :key="i"
-          :data="item"
-          @click="selectAccount(item)"
-        />
-      </Stack>
-      <Button class="button--primary button--fullwidth"> Select </Button>
-    </drawer> -->
-    <!-- <div v-if="dropdown && listActive" class="account-card__list">
-      <account-card
-        v-for="(item, i) in list"
-        :key="i"
-        :data="item"
-        @click="selectAccount"
-      />
-    </div> -->
   </div>
 </template>
 
@@ -77,10 +43,6 @@ export default {
     data: {
       type: Object,
       default: () => {},
-    },
-    dropdown: {
-      type: Boolean,
-      default: false,
     },
     login: {
       type: Boolean,

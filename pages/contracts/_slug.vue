@@ -31,7 +31,11 @@
           {{ contract.state === 1 ? "transferred" : "deleted" }}
         </badge>
 
-        <deposit :value="contract.deposit" class="bottom-xs-1" />
+        <deposit
+          :value="contract.deposit"
+          class="bottom-xs-1"
+          label="initial deposit"
+        />
 
         <Stack :gap="0.5">
           <Button
@@ -184,7 +188,12 @@ export default {
     },
     allAccounts() {
       return this.$options.accounts
-        .filter((a) => !a.seller && !a.charity)
+        .filter(
+          (a) =>
+            !a.seller &&
+            !a.charity &&
+            a.ID !== this.$store.state.currentAccount.ID
+        )
         .map(({ name, accountId }) => ({ label: name, value: accountId }));
     },
     allCharities() {

@@ -105,76 +105,13 @@ $btn-radius: 7px;
     color: #fff;
   }
 
-  // &:hover {
-  //   background-color: get-color(primary);
-  //   color: #fff;
-
-  //   i {
-  //     color: #fff;
-  //   }
-  // }
+  &--disabled {
+    background-color: get-color(line);
+    color: #fff; //get-color(light);
+  }
 
   &--fullwidth {
     width: 100%;
   }
-
-  // &--small {
-  //   min-width: 0px;
-  //   @include from(l) {
-  //     padding: 0.66rem 1.4rem;
-  //   }
-  // }
-
-  // &--large {
-  //   border-radius: 32px;
-  //   @include from(l) {
-  //     padding: 1rem 2.4rem;
-
-  //     i {
-  //       font-size: 2rem;
-  //     }
-  //   }
-  // }
-
-  // &--white-on-hover:hover {
-  //   background-color: #fff;
-  //   color: get-color(primary);
-
-  //   i {
-  //     color: get-color(primary);
-  //   }
-  // }
-
-  // &--secondary {
-  //   background-color: transparent;
-  //   box-shadow: inset 0px 0px 0px 2px get-color("primary");
-  //   color: get-color(base-text);
-
-  //   &--white {
-  //     background-color: transparent;
-  //     box-shadow: inset 0px 0px 0px 2px #fff;
-  //     color: #fff;
-
-  //     &:hover {
-  //       background-color: #fff;
-  //       color: get-color(primary);
-  //     }
-  //   }
-  // }
-
-  // &--white {
-  //   background-color: #fff;
-  //   color: get-color(base-text);
-
-  //   i {
-  //     color: get-color(base-text);
-  //   }
-
-  //   &:hover {
-  //     background-color: transparent;
-  //     box-shadow: inset 0px 0px 0px 2px #fff;
-  //     color: #fff;
-  //   }
-  // }
 }
 </style>

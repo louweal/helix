@@ -8,12 +8,27 @@
 
       <div class="add-form">
         <Section>
+          <div v-if="selectedImage">
+            <div
+              @click="toggleDrawer('#gallery-drawer')"
+              class="field--upload img ratio-1x1 xximg--light"
+              :style="{
+                marginBottom: '4px',
+                backgroundImage:
+                  `url(` +
+                  require(`~/assets/images/products/${selectedImage}`) +
+                  `)`,
+              }"
+            ></div>
+          </div>
           <div
+            v-else
             class="field field--light field--upload"
             @click="toggleDrawer('#gallery-drawer')"
           >
             Upload image
           </div>
+
           <input
             class="field field--light"
             type="text"
@@ -23,6 +38,16 @@
           <textarea
             class="field field--light field--textarea"
             placeholder="Product description (optional)"
+          />
+          <dropdown
+            @input="getProdCountry"
+            defaultVal="Product category"
+            :options="[{ label: 'Furniture', value: 'furniture' }]"
+          />
+          <dropdown
+            @input="getProdCountry"
+            defaultVal="Contract duration"
+            :options="[{ label: '15 years', value: 15 }]"
           />
         </Section>
 
@@ -99,9 +124,8 @@
         </Section>
 
         <Section>
-          <heading size="l" level="2" class="bottom-xs-0">
-            Charity to support with this product
-          </heading>
+          <heading size="l" level="2" class="bottom-xs-0"> Charity </heading>
+          <lorem :max="30" />
           <dropdown @input="getCharity" :options="allCharities" />
         </Section>
 
@@ -138,10 +162,10 @@
           </Table>
         </Section>
 
-        <deposit :value="'999.49'" class="bottom-xs-1" />
+        <deposit :value="'999.49'" class="bottom-xs-1" label="total deposit" />
 
         <Button
-          class="button--primary button--fullwidth bottom-xs-2"
+          class="button--primary button--disabled button--fullwidth bottom-xs-2"
           @click.native="createContract"
         >
           Create contract
@@ -155,12 +179,23 @@
       <template v-slot:header> Gallery (demo) </template>
 
       <div class="grid">
-        <div class="col-xs-6" v-for="index in 8" :key="index">
-          <div class="img ratio-1x1 img--light"></div>
+        <div
+          class="col-xs-6"
+          v-for="(image, index) in $options.images"
+          :key="index"
+        >
+          <div
+            @click="selectImage(image)"
+            class="img ratio-1x1 img--light"
+            :style="{
+              backgroundImage:
+                `url(` + require(`~/assets/images/products/${image}`) + `)`,
+            }"
+          ></div>
         </div>
       </div>
 
-      <Button class="button--primary button--fullwidth"> Confirm </Button>
+      <!-- <Button class="button--primary button--fullwidth"> Confirm </Button> -->
     </drawer>
   </div>
 </template>
@@ -178,12 +213,14 @@ export default {
     label: name,
     value: name.toLowerCase(),
   })),
+  images: ["bunny.png", "fruit-basket.png", "pies.png", "pizza.png"],
 
   data() {
     return {
       numMaterials: 0,
       materials: () => [],
       subMaterials: () => [],
+      selectedImage: false,
     };
   },
 
@@ -204,6 +241,10 @@ export default {
   },
 
   methods: {
+    selectImage(image) {
+      this.selectedImage = image;
+      this.toggleDrawer("#gallery-drawer");
+    },
     createContract() {
       console.log("todo create contract on hedera network");
       this.$router.push({

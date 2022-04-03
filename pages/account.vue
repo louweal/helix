@@ -8,43 +8,25 @@
           :data="currentAccount"
         />
       </Section>
+      <Section>
+        <!-- <hr /> -->
+        <nav-item to="/about">About</nav-item>
 
-      <!-- <hr /> -->
-      <nav-item to="/about">About Helix</nav-item>
-
-      <nav-item to="/settings">Settings</nav-item>
-      <!-- <nav-item to="/contact">Contact</nav-item> -->
-
-      <nav-item to="/login">Sign out</nav-item>
-
-      <!-- <div class="bottom-xs-3"></div> -->
-
-      <!-- <div class="align-xs-center bottom-xs-5">
-        <img
-          src="@/assets/images/logo-small.svg"
-          alt="logo helix"
-          width="39.1"
-          height="14.32"
-        />
-      </div> -->
-      <!-- <div class="align-xs-center bottom-xs-3">
-        <img
-          src="@/assets/images/logo.svg"
-          alt="logo"
-          width="106.66"
-          height="49.84"
-        />
-      </div> -->
+        <nav-item to="/settings">Settings</nav-item>
+        <!-- <nav-item to="/contact">Contact</nav-item> -->
+        <!-- <nav-item to="/login">Sign out</nav-item> -->
+      </Section>
+      <Section>
+        <div class="align-xs-center">
+          <Button to="/login" class="button--primary"> Switch account </Button>
+        </div>
+      </Section>
     </div>
   </div>
 </template>
 
 <script>
-// import accounts from "~/data/accounts.json";
-
 export default {
-  // accounts,
-
   computed: {
     currentAccount() {
       return this.$store.state.currentAccount;

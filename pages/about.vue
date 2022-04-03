@@ -14,9 +14,8 @@
           <a href="https://hedera22.devpost.com/" target="_blank"
             >Hedera 2022</a
           >
-          'Hello Smart Contracts' Hackathon on Devpost and was submitted as
-          project in the Sustainability Challenge sponsored by Avery Dennison,
-          Atma.io.
+          'Hello Smart Contracts' Hackathon on Devpost and was submitted to the
+          Sustainability Challenge sponsored by Atma.io, Avery Dennison.
         </p>
 
         <p>
@@ -30,7 +29,7 @@
     </div>
     <div class="page__footer">
       <div class="container">
-        <heading>Disclaimer</heading>
+        <heading size="s" level="3">Disclaimer</heading>
         <p class="fs-s">
           This app runs on the Hedera Testnet and all users and products in this
           app are fictional. All product images are courtesy of IKEA.

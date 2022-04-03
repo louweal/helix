@@ -16,14 +16,14 @@
     "name": "GreenStore Amsterdam",
     "seller": true,
     "accountId": "0.0.0034243",
-    "avatar": "avatar3.png"
+    "avatar": "products/pans.png"
   },
   {
     "ID": 3,
     "name": "Susan's Handmade Toys",
     "seller": true,
     "accountId": "0.0.36342466",
-    "avatar": "avatar4.png"
+    "avatar": "products/sandwich-friends.png"
   },
   {
     "ID": 4,
