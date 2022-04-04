@@ -32,7 +32,7 @@
         </badge>
 
         <deposit
-          :value="contract.deposit"
+          :val="contract.deposit"
           class="bottom-xs-1"
           label="initial deposit"
         />

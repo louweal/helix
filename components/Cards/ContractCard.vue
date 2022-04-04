@@ -25,7 +25,7 @@
       </heading>
     </div>
     <div class="contract-card__footer align-xs-end">
-      <deposit :value="data.deposit" />
+      <deposit :val="data.deposit" />
     </div>
   </nuxt-link>
 </template>

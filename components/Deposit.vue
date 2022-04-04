@@ -12,7 +12,7 @@
 <script>
 export default {
   props: {
-    value: {
+    val: {
       type: [String, Boolean],
       default: false,
     },
@@ -22,17 +22,14 @@ export default {
     },
   },
 
-  data() {
-    return {
-      integral: 9,
-      fractional: 99,
-    };
-  },
+  computed: {
+    integral() {
+      return this.val.split(".")[0];
+    },
 
-  created() {
-    let parts = this.value.split(".");
-    this.integral = parts[0];
-    this.fractional = parts[1];
+    fractional() {
+      return this.val.split(".")[1];
+    },
   },
 };
 </script>

@@ -158,11 +158,7 @@
             </TR>
           </Table>
 
-          <deposit
-            :value="totalFee"
-            class="bottom-xs-1"
-            label="total deposit"
-          />
+          <deposit :val="totalFee" class="bottom-xs-1" label="total deposit" />
 
           <Button
             class="button--primary button--fullwidth"
