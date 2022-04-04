@@ -56,6 +56,8 @@ export default {
       answer: false,
     },
   ],
+
+  computed: {},
 };
 </script>
 

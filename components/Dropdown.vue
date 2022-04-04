@@ -2,7 +2,7 @@
   <div class="dropdown">
     <div class="dropdown__current" @click="toggle">
       <slot name="default">
-        <span v-if="label" style="font-weight: 700">{{ label }}</span>
+        <span v-if="current" style="font-weight: 700">{{ current }}</span>
         <span v-else>{{ defaultVal }}</span>
       </slot>
     </div>
@@ -11,7 +11,7 @@
         <li
           v-for="(option, index) in options"
           :key="index"
-          :class="option.label === label ? 'active' : false"
+          :class="option.label === current ? 'active' : false"
           :data-value="option.value"
           @click="handleInput"
         >
@@ -43,14 +43,30 @@ export default {
   data() {
     return {
       val: null,
-      label: null,
+      current: null,
       active: false,
     };
   },
 
-  created() {
-    let defaultIndex = 0;
+  computed: {
+    theLabel() {
+      if (!this.defaultVal) {
+        let defaultOption = this.options.filter((o) => o.default === true);
+        // console.log(defaultOption);
+        if (defaultOption.length === 1) {
+          defaultOption = defaultOption[0];
+        } else {
+          defaultOption = this.options[0]; //.set first option as default
+        }
 
+        return defaultOption.label;
+      } else {
+        return false;
+      }
+    },
+  },
+
+  mounted() {
     if (!this.defaultVal) {
       let defaultOption = this.options.filter((o) => o.default === true);
       console.log(defaultOption);
@@ -61,7 +77,8 @@ export default {
       }
 
       this.val = defaultOption.value;
-      this.label = defaultOption.label;
+      this.current = defaultOption.label;
+      console.log("current: " + this.current);
       this.$emit("input", {
         val: this.val,
       });
@@ -76,7 +93,7 @@ export default {
         val: e.target.dataset.value,
       });
       this.val = e.target.innerText;
-      this.label = e.target.innerText;
+      this.current = e.target.innerText;
       this.active = !this.active;
     },
     toggle() {
@@ -92,6 +109,13 @@ export default {
   font-size: $input-font-size;
   min-width: 20px;
   margin-bottom: 4px;
+
+  &--white {
+    .dropdown__current {
+      background-color: #fff;
+      border: 1px solid get-color(line);
+    }
+  }
 
   &__current {
     border: $input-border-width solid $input-border-color;
@@ -142,7 +166,7 @@ export default {
       margin-top: -1px; // because some browsers show a small gap
 
       &.active {
-        color: rgba(get-color(base-text), 0.6);
+        color: get-color(primary); //rgba(get-color(base-text), 0.6);
       }
 
       &:first-of-type {

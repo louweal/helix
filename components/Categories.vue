@@ -8,32 +8,26 @@
         All contracts
       </Button>
       <Button
-        v-for="(cat, index) in categories"
+        v-for="(cat, index) in $options.categories"
         :key="index"
-        :active="cat === $store.state.currentCategory"
+        :active="cat.toLowerCase() === $store.state.currentCategory"
         @click.native="setActiveCat(cat)"
       >
-        {{ cat.charAt(0).toUpperCase() + cat.slice(1) }}
+        {{ cat }}
       </Button>
     </Stack>
   </div>
 </template>
 
 <script>
-// todo in store store: selectedCategory
+import categories from "~/data/categories.json";
 
 export default {
+  categories: categories.map((c) => c.name),
+
   data() {
     return {
       activeCat: "all",
-      categories: [
-        "furniture",
-        "books",
-        "electronic devices",
-        "utensils",
-        "clothing",
-        "toys",
-      ],
     };
   },
 
@@ -56,7 +50,7 @@ export default {
       this.activeCat = clickedCat;
 
       // commit to store
-      this.$store.commit("setCurrentCategory", clickedCat);
+      this.$store.commit("setCurrentCategory", clickedCat.toLowerCase());
     },
   },
 };

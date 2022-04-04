@@ -32,6 +32,10 @@ export default {
   },
 
   created() {
+    let data = require("~/data/contracts.json");
+    console.log(data);
+    this.$store.commit("SET_CONTRACTS", data);
+
     if (this.$store.state.currentAccount.ID === -1) {
       this.$router.push({ path: "/login" });
     }

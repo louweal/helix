@@ -3,27 +3,31 @@
     "ID": 0,
     "name": "Jane Doe",
     "accountId": "0.0.1234567",
-    "avatar": "avatar1.png"
+    "avatar": "avatar1.png",
+    "country": "The Netherlands"
   },
   {
     "ID": 1,
     "name": "John Doe",
     "accountId": "0.0.7654321",
-    "avatar": "avatar2.png"
+    "avatar": "avatar2.png",
+    "country": "The Netherlands"
   },
   {
     "ID": 2,
     "name": "GreenStore Amsterdam",
     "seller": true,
     "accountId": "0.0.0034243",
-    "avatar": "products/pans.png"
+    "avatar": "products/pans.png",
+    "country": "The Netherlands"
   },
   {
     "ID": 3,
     "name": "Susan's Handmade Toys",
     "seller": true,
     "accountId": "0.0.36342466",
-    "avatar": "products/sandwich-friends.png"
+    "avatar": "products/sandwich-friends.png",
+    "country": "Germany"
   },
   {
     "ID": 4,

@@ -117,7 +117,11 @@
         Item recepient <badge color="primary">30%</badge>
       </heading>
 
-      <dropdown @input="getItemRecepient" :options="allAccounts" />
+      <dropdown
+        class="dropdown--white"
+        @input="getItemRecepient"
+        :options="allAccounts"
+      />
 
       <p>
         After transfering the ownership you will instantly receive the remaining
@@ -145,7 +149,11 @@
         Deposit recepient <badge color="primary">99%</badge>
       </heading>
 
-      <dropdown @input="getItemRecepient" :options="allCharities" />
+      <dropdown
+        class="dropdown--white"
+        @input="getItemRecepient"
+        :options="allCharities"
+      />
 
       <Button
         class="button--primary button--fullwidth"
@@ -166,11 +174,11 @@
 </template>
 
 <script>
-import contracts from "~/data/contracts.json";
+// import contracts from "~/data/contracts.json";
 import accounts from "~/data/accounts.json";
 
 export default {
-  contracts,
+  // contracts,
   accounts,
 
   data() {
@@ -181,10 +189,11 @@ export default {
   },
 
   computed: {
+    contracts() {
+      return this.$store.state.contracts;
+    },
     contract() {
-      return this.$options.contracts.filter(
-        (c) => c.ID === +this.$route.params.slug
-      )[0];
+      return this.contracts.filter((c) => c.ID === +this.$route.params.slug)[0];
     },
     allAccounts() {
       return this.$options.accounts
@@ -206,7 +215,7 @@ export default {
   methods: {
     toggleDrawer(id) {
       let drawer = document.querySelector(id);
-      console.log(id);
+      // console.log(id);
       drawer.classList.toggle("drawer--active");
     },
     hbars(percentage) {

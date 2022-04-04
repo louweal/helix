@@ -52,8 +52,26 @@ export default {
     background-color: get-color(primary);
   }
 
+  &--label-a {
+    background-color: get-color(label-a);
+  }
   &--label-b {
     background-color: get-color(label-b);
+  }
+  &--label-c {
+    background-color: get-color(label-c);
+  }
+  &--label-d {
+    background-color: get-color(label-d);
+  }
+  &--label-e {
+    background-color: get-color(label-e);
+  }
+  &--label-f {
+    background-color: get-color(label-f);
+  }
+  &--label-g {
+    background-color: get-color(label-g);
   }
 }
 </style>

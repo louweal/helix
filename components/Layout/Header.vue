@@ -60,7 +60,7 @@ export default {
 
     aosHeader() {
       let header = this.$refs["header"];
-      let scrollY = window.pageYOffset; //window.scrollY || document.documentElement.scrollTop;
+      let scrollY = window.pageYOffset;
       let direction = scrollY > this.prevPosY ? "down" : "up";
 
       if (!header) {

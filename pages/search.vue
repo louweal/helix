@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import contracts from "./../data/contracts.json";
-import { mapGetters } from "vuex";
+// import contracts from "./../data/contracts.json";
+// import { mapGetters } from "vuex";
 
 export default {
-  contracts,
+  // contracts,
 
   data() {
     return {
@@ -36,17 +36,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters("contracts", ["getContracts"]),
-
     contracts() {
-      // console.log("conputed contracts");
-      // console.log(this.getContracts());
-      return this.getContracts();
+      return this.$store.state.contracts;
     },
 
     matchingContracts() {
       // console.log(this.q);
-      let myContracts = this.$options.contracts.filter(
+      let myContracts = this.contracts.filter(
         (c) => c.owner === this.$store.state.currentAccount.ID
       );
       let sortedContracts = myContracts.sort((a, b) =>

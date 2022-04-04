@@ -27,6 +27,7 @@ export default {
   display: flex;
   flex-basis: 1;
   width: 33%;
+  line-height: 1;
 
   &--center {
     justify-content: center;

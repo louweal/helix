@@ -29,14 +29,17 @@
 </template>
 
 <script>
-import contracts from "./../data/contracts.json";
+// import contracts from "./../data/contracts.json";
 
 export default {
-  contracts: contracts,
+  // contracts: contracts,
 
   computed: {
+    contracts() {
+      return this.$store.state.contracts;
+    },
     selectedContracts() {
-      let myContracts = this.$options.contracts.filter(
+      let myContracts = this.contracts.filter(
         (c) => c.owner === this.$store.state.currentAccount.ID
       );
       let sortedContracts = myContracts.sort((a, b) =>

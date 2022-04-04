@@ -2,11 +2,73 @@
   {
     "ID": 0,
     "name": "The Netherlands",
-    "distances": [0, 10, 1000, 1000, 1000]
+    "distances": [
+      "A",
+      "B",
+      "G",
+      "G",
+      "G",
+      "D"
+    ]
   },
   {
     "ID": 1,
     "name": "Germany",
-    "distances": [10, 0, 1000, 1000, 1000]
+    "distances": [
+      "B",
+      "A",
+      "G",
+      "G",
+      "G",
+      "D"
+    ]
+  },
+  {
+    "ID": 2,
+    "name": "China",
+    "distances": [
+      "G",
+      "F",
+      "A",
+      "A",
+      "A",
+      "D"
+    ]
+  },
+  {
+    "ID": 3,
+    "name": "India",
+    "distances": [
+      "G",
+      "F",
+      "A",
+      "A",
+      "A",
+      "D"
+    ]
+  },
+  {
+    "ID": 4,
+    "name": "Vietnam",
+    "distances": [
+      "G",
+      "F",
+      "A",
+      "A",
+      "A",
+      "D"
+    ]
+  },
+  {
+    "ID": 5,
+    "name": "Unknown",
+    "distances": [
+      "D",
+      "D",
+      "D",
+      "D",
+      "D",
+      "D"
+    ]
   }
 ]

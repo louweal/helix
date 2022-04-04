@@ -19,11 +19,11 @@ export default {
 .tr {
   width: 100%;
   display: flex;
-  padding: 8px 12px;
+  padding: 12px 12px;
 
   &--sub {
     opacity: 0.8;
-    padding: 8px 22px;
+    padding: 12px 22px;
   }
 }
 </style>

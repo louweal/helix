@@ -7,6 +7,7 @@
       `button--${state}`,
       size ? `button--${size}` : '',
       active ? 'button--active' : false,
+      disabled ? 'button--disabled' : false,
     ]"
   >
     <slot>i'm a button</slot>
@@ -32,35 +33,14 @@ export default {
       type: [String, Boolean],
       default: false,
     },
-    // hash: {
-    //   type: String,
-    //   default: "",
-    // },
     active: {
       type: Boolean,
       default: false,
     },
-  },
-
-  computed: {
-    // isNone() {
-    //   return this.href === "" && this.hash === "";
-    // },
-    // isInternal({ $store }) {
-    //   return (
-    //     this.href.startsWith("/") ||
-    //     this.href.startsWith($store.state.hostname) ||
-    //     this.href.startsWith(process.env.SITEMAP_HOSTNAME)
-    //   );
-    // },
-    // internalLink() {
-    //   if (this.href.startsWith("/")) {
-    //     return this.href;
-    //   }
-    //   return (
-    //     "/" + this.href.replace(/^[a-zA-Z]{3,5}:\/{2}[a-zA-Z0-9_.:-]+\//, "")
-    //   );
-    // },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
