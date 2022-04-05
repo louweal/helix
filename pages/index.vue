@@ -2,6 +2,8 @@
   <div class="page">
     <Header fixed />
     <div class="container container--wide">
+      <!-- {{ $store.state.currentCategory }} -->
+      <!-- {{ $store.state.contracts }} -->
       <div class="grid" v-if="selectedContracts.length > 0">
         <div
           class="col-xs-12"
@@ -47,11 +49,11 @@ export default {
       );
       let selected = this.$store.state.currentCategory;
       // console.log(selected);
-      if (selected === "all") {
+      if (selected === -1) {
         return sortedContracts;
       } else {
         return sortedContracts.filter(
-          (c) => c.category === this.$store.state.currentCategory
+          (c) => +c.category === this.$store.state.currentCategory
         );
       }
     },

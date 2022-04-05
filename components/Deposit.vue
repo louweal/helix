@@ -1,5 +1,5 @@
 <template>
-  <div class="deposit">
+  <div class="deposit" v-if="val">
     <span class="integral"><span v-if="label">ℏ </span>{{ integral }}.</span
     ><span class="fractional">{{ fractional }}</span>
 

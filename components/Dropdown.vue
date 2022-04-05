@@ -11,6 +11,7 @@
         <li
           v-for="(option, index) in options"
           :key="index"
+          :id="option.id"
           :class="option.label === current ? 'active' : false"
           :data-value="option.value"
           @click="handleInput"
@@ -28,6 +29,10 @@ export default {
     options: {
       type: [Array, Object, Boolean],
       default: () => {},
+    },
+    fieldName: {
+      type: String,
+      default: "test",
     },
     defaultVal: {
       type: [String, Boolean],
@@ -78,20 +83,32 @@ export default {
 
       this.val = defaultOption.value;
       this.current = defaultOption.label;
-      console.log("current: " + this.current);
-      this.$emit("input", {
-        val: this.val,
-      });
+      // console.log("current: " + this.current);
+
+      this.$emit(
+        "input",
+        {
+          ID: defaultOption.id,
+          index: this.index,
+          val: defaultOption.value,
+        },
+        this.fieldName
+      );
     }
   },
 
   methods: {
     handleInput(e) {
       // console.log(e.target.dataset.value);
-      this.$emit("input", {
-        index: this.index,
-        val: e.target.dataset.value,
-      });
+      this.$emit(
+        "input",
+        {
+          index: this.index,
+          ID: e.target.id,
+          val: e.target.dataset.value,
+        },
+        this.fieldName
+      );
       this.val = e.target.innerText;
       this.current = e.target.innerText;
       this.active = !this.active;

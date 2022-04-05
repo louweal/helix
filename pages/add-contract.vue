@@ -6,11 +6,11 @@
       &nbsp;
       <div class="bottom-xs-3"></div>
 
-      {{ makeContract }}
+      {{ contract }}
 
       <div class="add-form">
         <Section v-if="currentStep === 1">
-          <div v-if="selectedImage">
+          <div v-if="contract.visual">
             <div
               @click="toggleDrawer('#gallery-drawer')"
               class="field--upload img ratio-1x1 img--light"
@@ -18,7 +18,7 @@
                 marginBottom: '4px',
                 backgroundImage:
                   `url(` +
-                  require(`~/assets/images/products/${selectedImage}`) +
+                  require(`~/assets/images/products/${contract.visual.url}`) +
                   `)`,
               }"
             ></div>
@@ -35,29 +35,33 @@
             class="field field--light"
             type="text"
             placeholder="Product name"
-            @input="(e) => (title = e.target.value)"
+            @input="(e) => setValue('name', e.target.value)"
           />
 
           <textarea
+            key="0"
             class="field field--light field--textarea"
             placeholder="Product description (optional)"
+            @input="(e) => setValue('description', e.target.value)"
           />
           <dropdown
             key="1"
-            @input="getCategory"
+            fieldName="category"
+            @input="setDropdownValue"
             defaultVal="Product category"
             :options="$options.categories"
           />
           <dropdown
             key="2"
-            @input="getDuration"
+            fieldName="duration"
+            @input="setDropdownValue"
             defaultVal="Contract duration"
             :options="[{ label: '15 years', value: 15 }]"
           />
 
           <Button
             class="button--primary button--fullwidth"
-            @click.native="showNextStep"
+            @click.native="currentStep += 1"
           >
             Next
           </Button>
@@ -69,7 +73,8 @@
           </heading>
           <dropdown
             key="3"
-            @input="getProdCountry"
+            fieldName="production_country"
+            @input="setDropdownValue"
             :options="$options.countriesOpt"
           />
 
@@ -80,7 +85,7 @@
             :options="[
               { label: '1 material', value: 1 },
               { label: '2 materials', value: 2 },
-              { label: '3 materials', value: 3, default: true },
+              { label: '3 materials', value: 3 },
               { label: '4 materials', value: 4 },
               { label: '5 materials', value: 5 },
               { label: '6 materials', value: 6 },
@@ -90,10 +95,9 @@
 
           <div class="grid no-bottom-margin-cols">
             <template v-for="(material, index) in numMaterials">
-              <!-- <div class="col-xs-2" :key="'i' + index">{{ index + 1 }}</div> -->
               <div class="col-xs-12" :key="index">
                 <dropdown
-                  @input="getMaterial"
+                  @input="getMaterialType"
                   :index="index"
                   :key="index"
                   defaultVal="Group"
@@ -102,31 +106,62 @@
               </div>
               <div class="col-xs-12" :key="'sub' + index">
                 <dropdown
-                  @input="getSubMaterial"
+                  v-if="subMaterials[index]"
+                  @input="getSelectedMaterial"
                   :index="index"
                   :key="index"
-                  defaultVal="Type"
+                  :defaultVal="subMaterials[index].length > 1 ? 'Type' : false"
                   :options="subMaterials[index]"
                 />
+                <dropdown v-else :options="false" defaultVal="Type" />
               </div>
             </template>
           </div>
 
           <textarea
+            key="1"
             class="field field--light field--textarea"
             placeholder="Additional material information (optional)"
+            @input="(e) => setValue('material_description', e.target.value)"
           />
 
-          <Button
-            v-if="selectedMaterials.length === numMaterials"
-            class="button--primary button--fullwidth"
-            @click.native="showNextStep"
-          >
-            Next
-          </Button>
+          <div class="grid">
+            <div class="col-xs-12">
+              <Button
+                class="button--dark button--fullwidth"
+                @click.native="currentStep -= 1"
+              >
+                Back
+              </Button>
+            </div>
+            <div class="col-xs-12">
+              <Button
+                v-if="selectedMaterials.length === numMaterials"
+                class="button--primary button--fullwidth"
+                @click.native="currentStep += 1"
+              >
+                Next
+              </Button>
+            </div>
+          </div>
         </Section>
 
         <Section v-if="currentStep === 3">
+          <heading size="l" level="2" class="bottom-xs-0">
+            Select charity
+          </heading>
+          <p>
+            10% of the deposit will be donated monthly to a charity. If the
+            buyer of this product prefers to support another charity, he can
+            change this after obtaining ownership of this contract.
+          </p>
+          <dropdown
+            fieldName="charity"
+            @input="setDropdownValue"
+            :options="allCharities"
+          />
+
+          <div class="bottom-xs-2"></div>
           <heading size="l" level="2" class="bottom-xs-0"
             >Deposit summary</heading
           >
@@ -144,13 +179,17 @@
             >
               <TD> {{ row.name }} </TD>
               <TD>
-                <badge :level="row.label.name" />
+                <badge
+                  :level="$options.labels.find((l) => l.ID === row.label).name"
+                />
               </TD>
-              <TD align="right"> ℏ {{ row.label.fee }} </TD>
+              <TD align="right">
+                ℏ {{ $options.labels.find((l) => l.ID === row.label).fee }}
+              </TD>
             </TR>
             <TR>
               <TD> Product shipment </TD>
-              <TD> <badge :level="productionCountryLabel" /> </TD>
+              <TD> <badge :level="distanceLabel" /> </TD>
               <TD align="right">
                 ℏ
                 {{ shipmentFee }}
@@ -160,25 +199,24 @@
 
           <deposit :val="totalFee" class="bottom-xs-1" label="total deposit" />
 
-          <Button
-            class="button--primary button--fullwidth"
-            @click.native="showNextStep"
-          >
-            Next
-          </Button>
-        </Section>
-
-        <Section v-if="currentStep === 4">
-          <heading size="l" level="2" class="bottom-xs-0"> Charity </heading>
-          <lorem :max="30" />
-          <dropdown @input="getCharity" :options="allCharities" />
-
-          <Button
-            class="button--primary button--fullwidth bottom-xs-2"
-            @click.native="createContract"
-          >
-            Create contract
-          </Button>
+          <div class="grid">
+            <div class="col-xs-12">
+              <Button
+                class="button--dark button--fullwidth"
+                @click.native="currentStep -= 1"
+              >
+                Back
+              </Button>
+            </div>
+            <div class="col-xs-12">
+              <Button
+                class="button--primary button--fullwidth"
+                @click.native="createContract"
+              >
+                Create contract
+              </Button>
+            </div>
+          </div>
         </Section>
       </div>
     </div>
@@ -195,21 +233,21 @@
           <div
             @click="selectImage(image)"
             class="img ratio-1x1 img--light"
+            :id="image.ID"
             :style="{
               backgroundImage:
-                `url(` + require(`~/assets/images/products/${image}`) + `)`,
+                `url(` + require(`~/assets/images/products/${image.url}`) + `)`,
             }"
           ></div>
         </div>
       </div>
-
-      <!-- <Button class="button--primary button--fullwidth"> Confirm </Button> -->
     </drawer>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
+import images from "~/data/images.json";
 import accounts from "~/data/accounts.json";
 import materials from "~/data/materials.json";
 import countries from "~/data/countries.json";
@@ -219,62 +257,88 @@ import labels from "~/data/labels.json";
 export default {
   labels,
   accounts,
+  images,
   materials,
   countries: countries,
   countriesOpt: [...countries]
     .sort((a, b) => (a.name > b.name ? 1 : -1))
-    .map(({ name }) => ({
+    .map(({ name, ID }) => ({
+      id: ID,
       label: name,
       value: name.toLowerCase(),
     })),
-  categories: categories.map(({ name }) => ({
+  categories: categories.map(({ name, ID }) => ({
+    id: ID,
     label: name,
     value: name.toLowerCase(),
   })),
-
-  images: ["bunny.png", "fruit-basket.png", "pies.png", "pizza.png"],
 
   data() {
     return {
       currentStep: 1,
       numMaterials: 0,
-      materials: () => [],
-      subMaterials: () => [],
-      selectedImage: false,
-      title: false,
-      category: false,
+      subMaterials: [],
       productionCountry: false,
       selectedMaterials: [],
-
       contract: {},
     };
   },
 
   computed: {
     makeContract() {
-      let allContracts = this.$store.state.contracts;
       let contract = {};
+      // meta info
+      contract["ID"] = this.newId;
+      contract["startdate"] = this.todayDate;
+      contract["seller"] = +this.$store.state.currentAccount.ID;
+      contract["owner"] = +this.$store.state.currentAccount.ID;
+      contract["state"] = 0;
+      // input
+      contract["visual"] = +this.contract.visual.ID;
+      contract["name"] = this.contract.name;
+      contract["description"] = this.contract.description;
+      contract["category"] = +this.contract.category.ID;
+      contract["duration"] = +this.contract.duration.value;
+      contract["production_country"] = +this.contract.production_country.ID;
+      contract["materials"] = this.contract.materials.map(({ ID }) => +ID);
+      contract["material_description"] = this.contract.material_description;
+      contract["charity"] = +this.contract.charity.ID;
+      contract["deposit"] = this.contract.deposit;
 
-      contract.ID = Math.max(...allContracts.map((c) => c.ID)) + 1;
-      console.log(contract.ID);
-
+      // console.log(contract.ID);
       return contract;
     },
 
+    newId() {
+      let allContracts = this.$store.state.contracts;
+
+      return allContracts.length === 0
+        ? 0
+        : Math.max(...allContracts.map((c) => +c.ID)) + 1;
+    },
+
+    todayDate() {
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, "0");
+      var mm = String(today.getMonth() + 1).padStart(2, "0");
+      var yyyy = today.getFullYear();
+
+      return dd + "-" + mm + "-" + yyyy;
+    },
+
     shipmentFee() {
-      return this.$options.labels.find(
-        (l) => l.name == this.productionCountryLabel
-      ).fee;
+      return this.$options.labels.find((l) => l.name == this.distanceLabel).fee;
     },
 
     totalFee() {
       let sum = this.shipmentFee + this.materialsFeeSum;
+      Vue.set(this.contract, "deposit", parseFloat(sum).toFixed(2).toString());
       return parseFloat(sum).toFixed(2).toString();
     },
 
     materialsAverageLabel() {
       let sum = this.selectedMaterials
-        .map((m) => m.label.ID)
+        .map((m) => m.label)
         .reduce((a, b) => a + b, 0);
       let avg = parseInt(sum / this.numMaterials);
 
@@ -283,7 +347,7 @@ export default {
 
     materialsFeeSum() {
       let sum = this.selectedMaterials
-        .map((m) => m.label.fee)
+        .map((m) => m.label)
         .reduce((a, b) => a + b, 0);
       return sum;
     },
@@ -291,7 +355,11 @@ export default {
     allCharities() {
       return this.$options.accounts
         .filter((a) => a.charity)
-        .map(({ name }) => ({ label: name, value: name.toLowerCase() }));
+        .map(({ name, ID }) => ({
+          id: ID,
+          label: name,
+          value: name.toLowerCase(),
+        }));
     },
     materialGroups() {
       return [...new Set(this.$options.materials.map((m) => m.parent).flat())]
@@ -307,22 +375,29 @@ export default {
         (c) => c.name == this.$store.state.currentAccount.country
       );
     },
+    distanceLabel() {
+      let pid = this.contract.production_country.ID;
+      return pid ? this.currentCountry.distances[pid] : "?";
+    },
   },
 
   methods: {
-    showNextStep() {
-      this.currentStep += 1;
+    setValue(field, value) {
+      Vue.set(this.contract, field, value);
+    },
+    setDropdownValue(data, fieldName) {
+      Vue.set(this.contract, fieldName, data);
     },
     selectImage(image) {
-      this.selectedImage = image;
+      Vue.set(this.contract, "visual", image);
       this.toggleDrawer("#gallery-drawer");
     },
     createContract() {
       console.log("todo create contract on hedera network");
 
       // add contract directly to store
-      // let newContract = {};
-      // this.$store.commit("addContract", newContract);
+      let newContract = this.makeContract;
+      this.$store.commit("addContract", newContract);
 
       this.$router.push({
         path: "/",
@@ -330,92 +405,37 @@ export default {
     },
     toggleDrawer(id) {
       let drawer = document.querySelector(id);
-      // console.log(id);
       drawer.classList.toggle("drawer--active");
     },
 
     getNumMaterials(data) {
-      console.log(data.val);
-      let num = +data.val;
-      this.numMaterials = num;
-      this.materials = new Array(num);
-      this.subMaterials = new Array(num);
-      // this.selectedMaterials = this.selectedMaterials.slice(0, num);
+      this.numMaterials = +data.val;
     },
 
     getAllFromGroup(group) {
+      console.log("group: " + group);
       return this.$options.materials
         .filter((m) => m.parent === group)
         .sort((a, b) => (a.name > b.name ? 1 : -1))
-        .map(({ name }) => ({
+        .map(({ name, ID }) => ({
+          id: ID,
           label: name,
           value: name.toLowerCase(),
         }));
     },
 
-    getMaterial(data) {
-      this.materials[data.index] = data.val;
-      Vue.set(
-        this.subMaterials,
-        data.index,
-        this.getAllFromGroup(this.materials[data.index])
-      );
+    getMaterialType(data) {
+      Vue.set(this.subMaterials, data.index, this.getAllFromGroup(data.val));
     },
 
-    getCategory(data) {
-      this.category = data.val;
-    },
+    getSelectedMaterial(data) {
+      let material = this.$options.materials.find((m) => m.ID === +data.ID);
+      Vue.set(this.selectedMaterials, data.index, material);
 
-    getSubMaterial(data) {
-      let index = data.index;
-      let name = data.val;
-      console.log(name);
-
-      let labelName = this.$options.materials.find(
-        (m) => m.name.toLowerCase() == name
-      ).label;
-
-      let label = this.$options.labels.find((l) => l.name == labelName);
-
-      // let fee = this.$options.labels.find((l) => l.name == label).fee;
-
-      // console.log(label);
-      // console.log(fee);
-
-      Vue.set(this.selectedMaterials, index, {
-        name: name,
-        label: label,
-      });
-
-      console.log(this.selectedMaterials);
-    },
-
-    getDuration(data) {},
-
-    getProdCountry(data) {
-      this.productionCountry = data.val;
-
-      let currentCountryId = this.currentCountry.ID;
-      console.log(currentCountryId);
-
-      let prodCountry = this.$options.countries.find(
-        (c) => c.name.toLowerCase() === data.val
-      );
-
-      if (prodCountry) {
-        let prodCountryId = prodCountry.ID;
-
-        console.log(prodCountryId);
-
-        let distanceLabel = this.currentCountry.distances[prodCountryId];
-
-        console.log(distanceLabel);
-
-        this.productionCountryLabel = distanceLabel;
+      if (this.selectedMaterials.length === this.numMaterials) {
+        // update materials property in contract
+        Vue.set(this.contract, "materials", this.selectedMaterials);
       }
-    },
-    getCharity(data) {
-      console.log(data.val);
     },
   },
 };

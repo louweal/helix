@@ -2,18 +2,18 @@
   <div class="categories" :style="{ maxWidth }">
     <Stack>
       <Button
-        :active="$store.state.currentCategory === 'all'"
-        @click.native="setActiveCat('all')"
+        :active="+$store.state.currentCategory === -1"
+        @click.native="setActiveCat(-1)"
       >
         All contracts
       </Button>
       <Button
         v-for="(cat, index) in $options.categories"
         :key="index"
-        :active="cat.toLowerCase() === $store.state.currentCategory"
-        @click.native="setActiveCat(cat)"
+        :active="cat.ID === $store.state.currentCategory"
+        @click.native="setActiveCat(cat.ID)"
       >
-        {{ cat }}
+        {{ cat.name }}
       </Button>
     </Stack>
   </div>
@@ -23,11 +23,11 @@
 import categories from "~/data/categories.json";
 
 export default {
-  categories: categories.map((c) => c.name),
+  categories, //: categories.map((c) => c.name),
 
   data() {
     return {
-      activeCat: "all",
+      activeCat: -1,
     };
   },
 
@@ -40,7 +40,7 @@ export default {
   },
 
   created() {
-    this.activeCat = this.$store.state.currentCategory;
+    this.activeCat == this.$store.state.currentCategory;
   },
 
   mounted() {},
@@ -50,7 +50,7 @@ export default {
       this.activeCat = clickedCat;
 
       // commit to store
-      this.$store.commit("setCurrentCategory", clickedCat.toLowerCase());
+      this.$store.commit("setCurrentCategory", clickedCat);
     },
   },
 };
@@ -58,8 +58,6 @@ export default {
 
 <style lang="scss" scoped>
 .categories {
-  // width: 80%;
-  // max-width: 80%;
   padding: 4px;
   overflow-x: scroll;
   scrollbar-width: none;

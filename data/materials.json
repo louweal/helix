@@ -1,117 +1,140 @@
 [
   {
+    "ID": 0,
     "name": "cotton",
     "parent": "textile",
-    "label": "F"
+    "label": 5
   },
   {
+    "ID": 1,
     "name": "bio cotton",
     "parent": "textile",
-    "label": "C"
+    "label": 2
   },
   {
+    "ID": 2,
     "name": "silk",
     "parent": "textile",
-    "label": "F"
+    "label": 5
   },
   {
+    "ID": 3,
     "name": "wool",
     "parent": "textile",
-    "label": "D"
+    "label": 3
   },
   {
+    "ID": 4,
     "name": "nylon",
     "parent": "textile",
-    "label": "F"
+    "label": 5
   },
   {
+    "ID": 5,
     "name": "polyester",
     "parent": "textile",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 6,
     "name": "oak",
     "parent": "wood",
-    "label": "F"
+    "label": 5
   },
   {
+    "ID": 7,
     "name": "pine",
     "parent": "wood",
-    "label": "F"
+    "label": 5
   },
   {
+    "ID": 8,
     "name": "teak",
     "parent": "wood",
-    "label": "F"
+    "label": 5
   },
   {
+    "ID": 9,
     "name": "beech",
     "parent": "wood",
-    "label": "F"
+    "label": 5
   },
   {
+    "ID": 10,
     "name": "glass",
     "parent": "glass",
-    "label": "E"
+    "label": 4
   },
   {
+    "ID": 11,
     "name": "PET / PETE",
     "parent": "plastic",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 12,
     "name": "HDPE",
     "parent": "plastic",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 13,
     "name": "LDPE",
     "parent": "plastic",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 14,
     "name": "PVC / vinyl",
     "parent": "plastic",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 15,
     "name": "polypropylene",
     "parent": "plastic",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 16,
     "name": "styrofoam",
     "parent": "plastic",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 17,
     "name": "lithium",
     "parent": "metal",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 18,
     "name": "silver",
     "parent": "metal",
-    "label": "E"
+    "label": 4
   },
   {
+    "ID": 19,
     "name": "gold",
     "parent": "metal",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 20,
     "name": "freon",
     "parent": "gas",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 21,
     "name": "propane",
     "parent": "gas",
-    "label": "G"
+    "label": 6
   },
   {
+    "ID": 22,
     "name": "butane",
     "parent": "gas",
-    "label": "G"
+    "label": 6
   }
 ]

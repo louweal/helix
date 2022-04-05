@@ -66,7 +66,7 @@ export default {
       // console.log("todo update store");
 
       this.$store.commit("setCurrentAccount", this.data);
-      this.$store.commit("setCurrentCategory", "all");
+      this.$store.commit("setCurrentCategory", -1);
 
       this.$router.push({
         path: "/",

@@ -1,5 +1,5 @@
 export const state = () => ({
-  currentCategory: "all",
+  currentCategory: -1,
   currentAccount: {
     ID: -1,
     name: "",
@@ -9,12 +9,8 @@ export const state = () => ({
   contracts: []
 });
 
-export const actions = {
-}
-
 export const mutations = {
   SET_CONTRACTS(state, payload) {
-    // console.log(payload);
     state.contracts = payload
   },
   setCurrentCategory(state, payload) {
@@ -28,8 +24,3 @@ export const mutations = {
     state.contracts.push(payload)
   }
 };
-
-
-export const getters = {
-
-}

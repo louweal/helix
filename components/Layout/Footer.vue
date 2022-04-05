@@ -65,7 +65,7 @@ export default {
       return link === this.$route.path;
     },
     showAllContracts() {
-      this.$store.commit("setCurrentCategory", "all");
+      this.$store.commit("setCurrentCategory", -1);
     },
   },
 };

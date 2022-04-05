@@ -9,9 +9,7 @@
           class="img ratio-1x1"
           :style="{
             backgroundImage:
-              `url(` +
-              require(`~/assets/images/products/${contract.visual}`) +
-              `)`,
+              `url(` + require(`~/assets/images/products/${visual}`) + `)`,
           }"
         ></div>
       </div>
@@ -23,7 +21,7 @@
           {{ contract.name }}
         </heading>
 
-        <badge color="label-b" class="bottom-xs-2">B</badge>
+        <badge :level="contract.label" class="bottom-xs-2" />
         <badge
           v-if="contract.state !== 0"
           :color="contract.state === 1 ? 'primary' : false"
@@ -73,20 +71,32 @@
         </list-item>
 
         <list-item icon="pin">
-          Produced in {{ contract.production_country }}
+          Produced in
+          {{
+            $options.countries.find(
+              (c) => +c.ID === +contract.production_country
+            ).name
+          }}
         </list-item>
       </Section>
 
       <Section>
-        <p v-if="contract.intro">{{ contract.intro }}</p>
+        <p v-if="contract.description">{{ contract.description }}</p>
         <lorem v-else :max="50" />
       </Section>
 
       <Section>
         <hr />
 
-        <accordion-item label="Materials" icon="tools" level="2">
-          <lorem :max="200" />
+        <accordion-item
+          label="Materials"
+          icon="tools"
+          level="2"
+          v-if="contract.material_description !== false"
+        >
+          <p v-if="contract.material_description">
+            {{ contract.material_description }}
+          </p>
         </accordion-item>
 
         <accordion-item label="Deposit breakdown" icon="grid" level="2">
@@ -176,10 +186,14 @@
 <script>
 // import contracts from "~/data/contracts.json";
 import accounts from "~/data/accounts.json";
+import images from "~/data/images.json";
+import countries from "~/data/countries.json";
 
 export default {
   // contracts,
   accounts,
+  images,
+  countries,
 
   data() {
     return {
@@ -194,6 +208,10 @@ export default {
     },
     contract() {
       return this.contracts.filter((c) => c.ID === +this.$route.params.slug)[0];
+    },
+    visual() {
+      return this.$options.images.find((i) => i.ID === this.contract.visual)
+        .url;
     },
     allAccounts() {
       return this.$options.accounts

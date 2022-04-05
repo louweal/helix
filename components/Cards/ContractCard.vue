@@ -3,10 +3,11 @@
     <div class="contract-card__body">
       <div class="contract-card__visual bottom-xs-1">
         <div
+          v-if="data.visual"
           class="img ratio-1x1"
           :style="{
             backgroundImage:
-              `url(` + require(`~/assets/images/products/${data.visual}`) + `)`,
+              `url(` + require(`~/assets/images/products/${visual}`) + `)`,
           }"
         ></div>
 
@@ -20,8 +21,8 @@
       <heading size="l" level="2" weight="400" class="bottom-xs-0">
         {{ data.name }}
       </heading>
-      <heading size="s" level="0" weight="400" fstyle="italic">
-        {{ data.seller }}
+      <heading size="s" level="0" weight="400" fstyle="italic" v-if="seller">
+        {{ seller }}
       </heading>
     </div>
     <div class="contract-card__footer align-xs-end">
@@ -31,11 +32,32 @@
 </template>
 
 <script>
+import images from "~/data/images.json";
+import labels from "~/data/labels.json";
+import accounts from "~/data/accounts.json";
+
 export default {
+  images,
+  labels,
+  accounts,
+
   props: {
     data: {
       type: Object,
       default: () => {},
+    },
+  },
+
+  computed: {
+    visual() {
+      return this.$options.images.find((i) => i.ID === this.data.visual).url;
+    },
+
+    seller() {
+      let seller = this.$options.accounts.find(
+        (a) => a.ID === this.data.seller
+      ).name;
+      return seller !== this.$store.state.currentAccount.name ? seller : false;
     },
   },
 };
