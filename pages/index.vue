@@ -31,11 +31,7 @@
 </template>
 
 <script>
-// import contracts from "./../data/contracts.json";
-
 export default {
-  // contracts: contracts,
-
   computed: {
     contracts() {
       return this.$store.state.contracts;

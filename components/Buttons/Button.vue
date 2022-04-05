@@ -1,7 +1,7 @@
 <template>
   <component
     :is="to ? 'nuxt-link' : 'div'"
-    :to="to"
+    :to="disabled ? false : to"
     class="button"
     :class="[
       `button--${state}`,

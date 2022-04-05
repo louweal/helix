@@ -44,27 +44,46 @@
             placeholder="Product description (optional)"
             @input="(e) => setValue('description', e.target.value)"
           />
+          <heading size="l" level="2" class="bottom-xs-0">
+            Product category
+          </heading>
           <dropdown
             key="1"
             fieldName="category"
             @input="setDropdownValue"
-            defaultVal="Product category"
-            :options="$options.categories"
+            :options="categories"
           />
+          <heading size="l" level="2" class="bottom-xs-0">
+            Contract duration
+          </heading>
           <dropdown
             key="2"
             fieldName="duration"
             @input="setDropdownValue"
-            defaultVal="Contract duration"
             :options="[{ label: '15 years', value: 15 }]"
           />
 
-          <Button
-            class="button--primary button--fullwidth"
-            @click.native="currentStep += 1"
+          <template
+            v-if="
+              contract.visual &&
+              contract.name &&
+              contract.duration &&
+              contract.category
+            "
           >
-            Next
-          </Button>
+            <Button
+              class="button--primary button--fullwidth"
+              @click.native="currentStep += 1"
+            >
+              Next
+            </Button>
+          </template>
+
+          <template v-else>
+            <Button class="button--primary button--fullwidth" disabled>
+              Next
+            </Button>
+          </template>
         </Section>
 
         <Section v-if="currentStep === 2">
@@ -75,10 +94,12 @@
             key="3"
             fieldName="production_country"
             @input="setDropdownValue"
-            :options="$options.countriesOpt"
+            :options="countriesOpt"
           />
 
-          <heading size="l" level="2" class="bottom-xs-0"> Materials </heading>
+          <heading size="l" level="2" class="bottom-xs-0">
+            Number of materials
+          </heading>
           <dropdown
             key="4"
             @input="getNumMaterials"
@@ -92,6 +113,8 @@
               { label: '7 materials', value: 7 },
             ]"
           />
+
+          <heading size="l" level="2" class="bottom-xs-0"> Materials </heading>
 
           <div class="grid no-bottom-margin-cols">
             <template v-for="(material, index) in numMaterials">
@@ -248,30 +271,13 @@
 <script>
 import Vue from "vue";
 import images from "~/data/images.json";
-import accounts from "~/data/accounts.json";
 import materials from "~/data/materials.json";
-import countries from "~/data/countries.json";
-import categories from "~/data/categories.json";
 import labels from "~/data/labels.json";
 
 export default {
   labels,
-  accounts,
   images,
   materials,
-  countries: countries,
-  countriesOpt: [...countries]
-    .sort((a, b) => (a.name > b.name ? 1 : -1))
-    .map(({ name, ID }) => ({
-      id: ID,
-      label: name,
-      value: name.toLowerCase(),
-    })),
-  categories: categories.map(({ name, ID }) => ({
-    id: ID,
-    label: name,
-    value: name.toLowerCase(),
-  })),
 
   data() {
     return {
@@ -285,6 +291,30 @@ export default {
   },
 
   computed: {
+    accounts() {
+      return this.$store.state.accounts;
+    },
+    countries() {
+      return this.$store.state.countries;
+    },
+
+    countriesOpt() {
+      return [...this.countries]
+        .sort((a, b) => (a.name > b.name ? 1 : -1))
+        .map(({ name, ID }) => ({
+          id: ID,
+          label: name,
+          value: name.toLowerCase(),
+        }));
+    },
+
+    categories() {
+      return this.$store.state.categories.map(({ name, ID }) => ({
+        id: ID,
+        label: name,
+        value: name.toLowerCase(),
+      }));
+    },
     makeContract() {
       let contract = {};
       // meta info
@@ -353,7 +383,7 @@ export default {
     },
 
     allCharities() {
-      return this.$options.accounts
+      return this.accounts
         .filter((a) => a.charity)
         .map(({ name, ID }) => ({
           id: ID,
@@ -371,7 +401,7 @@ export default {
         .sort((a, b) => (a.label > b.label ? 1 : -1));
     },
     currentCountry() {
-      return this.$options.countries.find(
+      return this.countries.find(
         (c) => c.name == this.$store.state.currentAccount.country
       );
     },

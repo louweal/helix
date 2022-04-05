@@ -32,9 +32,13 @@ export default {
   },
 
   created() {
-    let data = require("~/data/contracts.json");
-    console.log(data);
-    this.$store.commit("SET_CONTRACTS", data);
+    this.$store.commit("SET_CONTRACTS", require("~/data/contracts.json"));
+    this.$store.commit("SET_ACCOUNTS", require("~/data/accounts.json"));
+    this.$store.commit("SET_CATEGORIES", require("~/data/categories.json"));
+    this.$store.commit("SET_COUNTRIES", require("~/data/countries.json"));
+    this.$store.commit("SET_IMAGES", require("~/data/images.json"));
+    this.$store.commit("SET_LABELS", require("~/data/labels.json"));
+    this.$store.commit("SET_MATERIALS", require("~/data/materials.json"));
 
     if (this.$store.state.currentAccount.ID === -1) {
       this.$router.push({ path: "/login" });

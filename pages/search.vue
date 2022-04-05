@@ -23,12 +23,7 @@
 </template>
 
 <script>
-// import contracts from "./../data/contracts.json";
-// import { mapGetters } from "vuex";
-
 export default {
-  // contracts,
-
   data() {
     return {
       q: "",

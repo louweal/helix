@@ -34,12 +34,10 @@
 <script>
 import images from "~/data/images.json";
 import labels from "~/data/labels.json";
-import accounts from "~/data/accounts.json";
 
 export default {
   images,
   labels,
-  accounts,
 
   props: {
     data: {
@@ -53,10 +51,12 @@ export default {
       return this.$options.images.find((i) => i.ID === this.data.visual).url;
     },
 
+    accounts() {
+      return this.$store.state.accounts;
+    },
+
     seller() {
-      let seller = this.$options.accounts.find(
-        (a) => a.ID === this.data.seller
-      ).name;
+      let seller = this.accounts.find((a) => a.ID === this.data.seller).name;
       return seller !== this.$store.state.currentAccount.name ? seller : false;
     },
   },

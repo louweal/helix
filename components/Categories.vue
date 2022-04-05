@@ -8,7 +8,7 @@
         All contracts
       </Button>
       <Button
-        v-for="(cat, index) in $options.categories"
+        v-for="(cat, index) in categories"
         :key="index"
         :active="cat.ID === $store.state.currentCategory"
         @click.native="setActiveCat(cat.ID)"
@@ -20,11 +20,7 @@
 </template>
 
 <script>
-import categories from "~/data/categories.json";
-
 export default {
-  categories, //: categories.map((c) => c.name),
-
   data() {
     return {
       activeCat: -1,
@@ -32,6 +28,9 @@ export default {
   },
 
   computed: {
+    categories() {
+      return this.$store.state.categories;
+    },
     maxWidth() {
       return this.$store.state.currentAccount.seller
         ? "calc(100% - 54px)"

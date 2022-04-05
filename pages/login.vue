@@ -19,11 +19,9 @@
 
       <Stack dir="vertical">
         <account-card
-          v-for="(account, index) in $options.accounts.filter(
-            (a) => !a.charity
-          )"
+          v-for="(account, index) in accounts.filter((a) => !a.charity)"
           :key="index"
-          :data="$options.accounts[account.ID]"
+          :data="account"
           login
         />
       </Stack>
@@ -32,12 +30,12 @@
 </template>
 
 <script>
-import accounts from "./../data/accounts.json";
-
 export default {
-  // transition: "rtl",
-
-  accounts: accounts,
+  computed: {
+    accounts() {
+      return this.$store.state.accounts;
+    },
+  },
 };
 </script>
 

@@ -6,12 +6,36 @@ export const state = () => ({
     accountId: "",
     avatar: "",
   },
-  contracts: []
+  contracts: [],
+  accounts: [],
+  categories: [],
+  countries: [],
+  images: [],
+  labels: [],
+  materials: []
 });
 
 export const mutations = {
   SET_CONTRACTS(state, payload) {
     state.contracts = payload
+  },
+  SET_ACCOUNTS(state, payload) {
+    state.accounts = payload
+  },
+  SET_CATEGORIES(state, payload) {
+    state.categories = payload
+  },
+  SET_COUNTRIES(state, payload) {
+    state.countries = payload
+  },
+  SET_IMAGES(state, payload) {
+    state.images = payload
+  },
+  SET_LABELS(state, payload) {
+    state.labels = payload
+  },
+  SET_MATERIALS(state, payload) {
+    state.materials = payload
   },
   setCurrentCategory(state, payload) {
     state.currentCategory = payload;

@@ -7,11 +7,7 @@
 </template>
 
 <script>
-// import accounts from "~/data/accounts.json";
-
 export default {
-  // accounts,
-
   props: {
     to: {
       type: [String, Boolean],

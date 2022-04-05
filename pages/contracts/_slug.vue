@@ -73,9 +73,7 @@
         <list-item icon="pin">
           Produced in
           {{
-            $options.countries.find(
-              (c) => +c.ID === +contract.production_country
-            ).name
+            countries.find((c) => +c.ID === +contract.production_country).name
           }}
         </list-item>
       </Section>
@@ -186,16 +184,10 @@
 </template>
 
 <script>
-// import contracts from "~/data/contracts.json";
-import accounts from "~/data/accounts.json";
 import images from "~/data/images.json";
-import countries from "~/data/countries.json";
 
 export default {
-  // contracts,
-  accounts,
   images,
-  countries,
 
   data() {
     return {
@@ -212,12 +204,18 @@ export default {
     contract() {
       return this.contracts.filter((c) => c.ID === +this.$route.params.slug)[0];
     },
+    countries() {
+      return this.$store.state.countries;
+    },
+    accounts() {
+      return this.$store.state.accounts;
+    },
     visual() {
       return this.$options.images.find((i) => i.ID === this.contract.visual)
         .url;
     },
     allAccounts() {
-      return this.$options.accounts
+      return this.accounts
         .filter(
           (a) =>
             !a.seller &&
@@ -231,7 +229,7 @@ export default {
         }));
     },
     allCharities() {
-      return this.$options.accounts
+      return this.accounts
         .filter((a) => a.charity)
         .map(({ ID, name, accountId }) => ({
           id: ID,
