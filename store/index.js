@@ -22,5 +22,9 @@ export const mutations = {
 
   addContract(state, payload) {
     state.contracts.push(payload)
+  },
+  transferContract(state, payload) {
+    // { id , newOwner }
+    state.contracts.forEach(c => c.owner = c.ID === payload.ID ? payload.newOwner : c.owner)
   }
 };

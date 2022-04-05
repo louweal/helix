@@ -128,6 +128,7 @@
       </heading>
 
       <dropdown
+        key="0"
         class="dropdown--white"
         @input="getItemRecepient"
         :options="allAccounts"
@@ -160,8 +161,9 @@
       </heading>
 
       <dropdown
+        key="1"
         class="dropdown--white"
-        @input="getItemRecepient"
+        @input="getDepositRecepient"
         :options="allCharities"
       />
 
@@ -199,6 +201,7 @@ export default {
     return {
       transferred: false,
       deleted: false,
+      newOwner: false,
     };
   },
 
@@ -221,12 +224,20 @@ export default {
             !a.charity &&
             a.ID !== this.$store.state.currentAccount.ID
         )
-        .map(({ name, accountId }) => ({ label: name, value: accountId }));
+        .map(({ ID, name, accountId }) => ({
+          id: ID,
+          label: name,
+          value: accountId,
+        }));
     },
     allCharities() {
       return this.$options.accounts
         .filter((a) => a.charity)
-        .map(({ name, accountId }) => ({ label: name, value: accountId }));
+        .map(({ ID, name, accountId }) => ({
+          id: ID,
+          label: name,
+          value: accountId,
+        }));
     },
   },
 
@@ -242,10 +253,18 @@ export default {
       );
     },
     getItemRecepient(data) {
-      console.log(data.val);
+      this.newOwner = data.ID;
+      console.log(data.ID);
+    },
+    getDepositRecepient(data) {
+      // todo
     },
     doTransfer() {
-      //to do
+      this.$store.commit("transferContract", {
+        ID: +this.contract.ID,
+        newOwner: +this.newOwner,
+      });
+
       this.transferred = true;
       this.toggleDrawer("#transfer-drawer");
     },

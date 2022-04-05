@@ -6,7 +6,7 @@
       &nbsp;
       <div class="bottom-xs-3"></div>
 
-      {{ contract }}
+      <!-- {{ contract }} -->
 
       <div class="add-form">
         <Section v-if="currentStep === 1">
