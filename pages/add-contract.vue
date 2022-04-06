@@ -60,7 +60,7 @@
             key="2"
             fieldName="duration"
             @input="setDropdownValue"
-            :options="[{ label: '15 years', value: 15 }]"
+            :options="[{ id: 15, label: '15 years', value: 15 }]"
           />
 
           <template

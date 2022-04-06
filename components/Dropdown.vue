@@ -74,7 +74,6 @@ export default {
   mounted() {
     if (!this.defaultVal) {
       let defaultOption = this.options.filter((o) => o.default === true);
-      console.log(defaultOption);
       if (defaultOption.length === 1) {
         defaultOption = defaultOption[0];
       } else {

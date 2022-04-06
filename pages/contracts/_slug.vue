@@ -16,7 +16,7 @@
     </div>
 
     <div class="container">
-      {{ contract }}
+      <!-- {{ contract }} -->
       <Section>
         <heading size="3xl" level="1" weight="400" class="bottom-xs-0">
           {{ contract.name }}
@@ -76,8 +76,6 @@
           {{
             countries.find((c) => +c.ID === +contract.production_country).name
           }}
-
-          <badge level="D" />
         </list-item>
       </Section>
 

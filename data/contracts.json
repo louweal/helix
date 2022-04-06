@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "ID": 0,
+        "startdate": "06-04-2022",
+        "seller": 2,
+        "owner": 2,
+        "state": 0,
+        "deposit": "10",
+        "visual": 7,
+        "name": "Dining chair",
+        "description": "...",
+        "category": 0,
+        "duration": 15,
+        "production_country": 2,
+        "materials": [
+            6,
+            5
+        ],
+        "material_description": "Solid oak, Tinted clear acrylic lacquer, fibreboard, Polyurethane foam 35 kg/cu.m.\n75% viscose/rayon, 25% polyester, 76% cotton, 24 % polyester (100% recycled)",
+        "charity": 4,
+        "label": "G"
+    }
+]

@@ -29,7 +29,7 @@ export default {
 
     fractional() {
       let frac = this.val.split(".")[1];
-      if (typeof frac === undefined) {
+      if (frac == undefined) {
         return "00";
       }
       if (frac.length === 0) {
