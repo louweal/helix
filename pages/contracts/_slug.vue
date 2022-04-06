@@ -16,6 +16,7 @@
     </div>
 
     <div class="container">
+      {{ contract }}
       <Section>
         <heading size="3xl" level="1" weight="400" class="bottom-xs-0">
           {{ contract.name }}
@@ -37,7 +38,7 @@
 
         <Stack :gap="0.5">
           <Button
-            v-if="contract.state === 0"
+            v-if="contract.state === 0 && !sold"
             @click="false"
             class="button--primary"
             @click.native="toggleDrawer('#transfer-drawer')"
@@ -45,7 +46,7 @@
             <icon icon="arrow-right" /> Transfer
           </Button>
           <Button
-            v-if="contract.state !== 2"
+            v-if="contract.state !== 2 && !sold"
             @click="false"
             class="button--dark"
             @click.native="toggleDrawer('#delete-drawer')"
@@ -58,15 +59,15 @@
 
       <Section>
         <hr />
-        <list-item icon="gift" v-if="contract.seller !== contract.owner">
+        <list-item icon="gift" v-if="!isShop">
           Bought from {{ contract.seller }}
         </list-item>
 
-        <list-item icon="calendar" v-if="contract.seller !== contract.owner">
+        <list-item icon="calendar" v-if="!isShop">
           Owner since {{ contract.startdate }}
         </list-item>
 
-        <list-item icon="calendar" v-if="contract.seller === contract.owner">
+        <list-item icon="calendar" v-if="isShop">
           Listed on {{ contract.startdate }}
         </list-item>
 
@@ -75,6 +76,8 @@
           {{
             countries.find((c) => +c.ID === +contract.production_country).name
           }}
+
+          <badge level="D" />
         </list-item>
       </Section>
 
@@ -98,18 +101,10 @@
         </accordion-item>
 
         <accordion-item label="Deposit breakdown" icon="grid" level="2">
-          <Table>
-            <TR v-for="(row, index) in 5" :key="index">
-              <TD> <lorem :min="2" :max="4" /> </TD>
-              <TD> <badge level="B" /> </TD>
-              <TD align="right"> ℏ 9.99 </TD>
-            </TR>
-            <TR v-for="(row, index) in 1" :key="'j' + index" :sub="true">
-              <TD> <lorem :min="2" :max="4" /> </TD>
-              <TD> <badge level="B" /> </TD>
-              <TD align="right"> ℏ 9.99 </TD>
-            </TR>
-          </Table>
+          <deposit-table
+            :materials="contract.materials"
+            :country="contract.production_country"
+          />
         </accordion-item>
       </Section>
     </div>
@@ -184,11 +179,7 @@
 </template>
 
 <script>
-import images from "~/data/images.json";
-
 export default {
-  images,
-
   data() {
     return {
       transferred: false,
@@ -210,10 +201,25 @@ export default {
     accounts() {
       return this.$store.state.accounts;
     },
-    visual() {
-      return this.$options.images.find((i) => i.ID === this.contract.visual)
-        .url;
+    images() {
+      return this.$store.state.images;
     },
+    visual() {
+      return this.images.find((i) => i.ID === this.contract.visual).url;
+    },
+    me() {
+      return +this.$store.state.currentAccount.ID;
+    },
+    isShop() {
+      return this.$store.state.currentAccount.seller === true;
+    },
+
+    sold() {
+      return (
+        this.contract.owner !== this.me && this.contract.seller === this.me
+      );
+    },
+
     allAccounts() {
       return this.accounts
         .filter(

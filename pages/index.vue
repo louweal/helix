@@ -36,9 +36,12 @@ export default {
     contracts() {
       return this.$store.state.contracts;
     },
+    me() {
+      return +this.$store.state.currentAccount.ID;
+    },
     selectedContracts() {
       let myContracts = this.contracts.filter(
-        (c) => +c.owner === +this.$store.state.currentAccount.ID
+        (c) => +c.owner === this.me || +c.seller === this.me
       );
       let sortedContracts = myContracts.sort((a, b) =>
         a.state > b.state ? 1 : -1

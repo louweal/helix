@@ -16,6 +16,10 @@
             {{ data.state === 1 ? "transferred" : "deleted" }}
           </badge>
         </div>
+
+        <div class="contract-card__state" v-if="sold">
+          <badge color="primary"> sold </badge>
+        </div>
       </div>
 
       <heading size="l" level="2" weight="400" class="bottom-xs-0">
@@ -32,13 +36,7 @@
 </template>
 
 <script>
-import images from "~/data/images.json";
-import labels from "~/data/labels.json";
-
 export default {
-  images,
-  labels,
-
   props: {
     data: {
       type: Object,
@@ -48,11 +46,25 @@ export default {
 
   computed: {
     visual() {
-      return this.$options.images.find((i) => i.ID === this.data.visual).url;
+      return this.images.find((i) => i.ID === this.data.visual).url;
     },
 
     accounts() {
       return this.$store.state.accounts;
+    },
+    images() {
+      return this.$store.state.images;
+    },
+
+    me() {
+      return +this.$store.state.currentAccount.ID;
+    },
+    // labels() {
+    //   return this.$store.state.labels;
+    // },
+
+    sold() {
+      return this.data.owner !== this.me && this.data.seller === this.me;
     },
 
     seller() {

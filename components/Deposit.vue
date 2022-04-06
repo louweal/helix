@@ -28,7 +28,17 @@ export default {
     },
 
     fractional() {
-      return this.val.split(".")[1];
+      let frac = this.val.split(".")[1];
+      if (typeof frac === undefined) {
+        return "00";
+      }
+      if (frac.length === 0) {
+        return "00";
+      }
+      if (frac.length === 1) {
+        return frac + "0";
+      }
+      return frac;
     },
   },
 };

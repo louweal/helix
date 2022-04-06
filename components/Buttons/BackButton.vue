@@ -37,7 +37,7 @@ export default {
 .back-button {
   position: fixed;
   top: 0;
-  padding: 12px 0;
+  padding: 12px;
   z-index: 2;
   left: 0;
   width: 100%;

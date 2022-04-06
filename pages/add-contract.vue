@@ -94,7 +94,7 @@
             key="3"
             fieldName="production_country"
             @input="setDropdownValue"
-            :options="countriesOpt"
+            :options="countries"
           />
 
           <heading size="l" level="2" class="bottom-xs-0">
@@ -161,7 +161,7 @@
               <Button
                 v-if="selectedMaterials.length === numMaterials"
                 class="button--primary button--fullwidth"
-                @click.native="currentStep += 1"
+                @click.native="computeDeposit"
               >
                 Next
               </Button>
@@ -189,38 +189,17 @@
             >Deposit summary</heading
           >
 
-          <Table>
-            <TR>
-              <TD> Materials </TD>
-              <TD> <badge :level="materialsAverageLabel" /> </TD>
-              <TD align="right"> ℏ {{ materialsFeeSum }} </TD>
-            </TR>
-            <TR
-              v-for="(row, index) in selectedMaterials"
-              :key="'j' + index"
-              :sub="true"
-            >
-              <TD> {{ row.name }} </TD>
-              <TD>
-                <badge
-                  :level="$options.labels.find((l) => l.ID === row.label).name"
-                />
-              </TD>
-              <TD align="right">
-                ℏ {{ $options.labels.find((l) => l.ID === row.label).fee }}
-              </TD>
-            </TR>
-            <TR>
-              <TD> Product shipment </TD>
-              <TD> <badge :level="distanceLabel" /> </TD>
-              <TD align="right">
-                ℏ
-                {{ shipmentFee }}
-              </TD>
-            </TR>
-          </Table>
+          <deposit-table
+            :materials="this.selectedMaterials.map((m) => m.ID)"
+            :country="this.contract.production_country.ID"
+            show-total
+          />
 
-          <deposit :val="totalFee" class="bottom-xs-1" label="total deposit" />
+          <deposit
+            :val="this.contract.deposit"
+            class="bottom-xs-1"
+            label="total deposit"
+          />
 
           <div class="grid">
             <div class="col-xs-12">
@@ -248,11 +227,7 @@
       <template v-slot:header> Gallery (demo) </template>
 
       <div class="grid">
-        <div
-          class="col-xs-6"
-          v-for="(image, index) in $options.images"
-          :key="index"
-        >
+        <div class="col-xs-6" v-for="(image, index) in images" :key="index">
           <div
             @click="selectImage(image)"
             class="img ratio-1x1 img--light"
@@ -270,15 +245,8 @@
 
 <script>
 import Vue from "vue";
-import images from "~/data/images.json";
-import materials from "~/data/materials.json";
-import labels from "~/data/labels.json";
 
 export default {
-  labels,
-  images,
-  materials,
-
   data() {
     return {
       currentStep: 1,
@@ -291,21 +259,27 @@ export default {
   },
 
   computed: {
-    accounts() {
-      return this.$store.state.accounts;
-    },
     countries() {
-      return this.$store.state.countries;
-    },
-
-    countriesOpt() {
-      return [...this.countries]
+      return [...this.$store.state.countries]
         .sort((a, b) => (a.name > b.name ? 1 : -1))
         .map(({ name, ID }) => ({
           id: ID,
           label: name,
           value: name.toLowerCase(),
         }));
+    },
+
+    accounts() {
+      return this.$store.state.accounts;
+    },
+    labels() {
+      return this.$store.state.labels;
+    },
+    images() {
+      return this.$store.state.images;
+    },
+    materials() {
+      return this.$store.state.materials;
     },
 
     categories() {
@@ -323,6 +297,8 @@ export default {
       contract["seller"] = +this.$store.state.currentAccount.ID;
       contract["owner"] = +this.$store.state.currentAccount.ID;
       contract["state"] = 0;
+      contract["deposit"] = this.contract.deposit;
+
       // input
       contract["visual"] = +this.contract.visual.ID;
       contract["name"] = this.contract.name;
@@ -333,7 +309,6 @@ export default {
       contract["materials"] = this.contract.materials.map(({ ID }) => +ID);
       contract["material_description"] = this.contract.material_description;
       contract["charity"] = +this.contract.charity.ID;
-      contract["deposit"] = this.contract.deposit;
 
       // console.log(contract.ID);
       return contract;
@@ -356,32 +331,6 @@ export default {
       return dd + "-" + mm + "-" + yyyy;
     },
 
-    shipmentFee() {
-      return this.$options.labels.find((l) => l.name == this.distanceLabel).fee;
-    },
-
-    totalFee() {
-      let sum = this.shipmentFee + this.materialsFeeSum;
-      Vue.set(this.contract, "deposit", parseFloat(sum).toFixed(2).toString());
-      return parseFloat(sum).toFixed(2).toString();
-    },
-
-    materialsAverageLabel() {
-      let sum = this.selectedMaterials
-        .map((m) => m.label)
-        .reduce((a, b) => a + b, 0);
-      let avg = parseInt(sum / this.numMaterials);
-
-      return this.$options.labels.find((l) => l.ID === avg).name;
-    },
-
-    materialsFeeSum() {
-      let sum = this.selectedMaterials
-        .map((m) => m.label)
-        .reduce((a, b) => a + b, 0);
-      return sum;
-    },
-
     allCharities() {
       return this.accounts
         .filter((a) => a.charity)
@@ -392,22 +341,13 @@ export default {
         }));
     },
     materialGroups() {
-      return [...new Set(this.$options.materials.map((m) => m.parent).flat())]
+      return [...new Set(this.materials.map((m) => m.parent).flat())]
 
         .map((m) => ({
           label: m,
           value: m.toLowerCase(),
         }))
         .sort((a, b) => (a.label > b.label ? 1 : -1));
-    },
-    currentCountry() {
-      return this.countries.find(
-        (c) => c.name == this.$store.state.currentAccount.country
-      );
-    },
-    distanceLabel() {
-      let pid = this.contract.production_country.ID;
-      return pid ? this.currentCountry.distances[pid] : "?";
     },
   },
 
@@ -444,7 +384,7 @@ export default {
 
     getAllFromGroup(group) {
       console.log("group: " + group);
-      return this.$options.materials
+      return this.materials
         .filter((m) => m.parent === group)
         .sort((a, b) => (a.name > b.name ? 1 : -1))
         .map(({ name, ID }) => ({
@@ -459,13 +399,37 @@ export default {
     },
 
     getSelectedMaterial(data) {
-      let material = this.$options.materials.find((m) => m.ID === +data.ID);
+      let material = this.materials.find((m) => m.ID === +data.ID);
       Vue.set(this.selectedMaterials, data.index, material);
 
       if (this.selectedMaterials.length === this.numMaterials) {
         // update materials property in contract
         Vue.set(this.contract, "materials", this.selectedMaterials);
       }
+    },
+
+    computeDeposit() {
+      let materialSum = +this.selectedMaterials
+        .map((m) => +this.labels.find((l) => l.ID === m.label).fee)
+        .reduce((a, b) => a + b, 0);
+
+      console.log("materi : " + materialSum);
+      let ccname = this.$store.state.currentAccount.country;
+      let countryData = this.$store.state.countries.find(
+        (c) => c.name === ccname
+      );
+      let ccid = countryData.ID;
+      let dist = countryData.distances[this.contract.production_country.ID];
+      let shipmentDeposit = +this.labels.find((l) => l.name == dist).fee;
+
+      console.log(materialSum + shipmentDeposit);
+      Vue.set(
+        this.contract,
+        "deposit",
+        (materialSum + shipmentDeposit).toString()
+      );
+
+      this.currentStep += 1;
     },
   },
 };
