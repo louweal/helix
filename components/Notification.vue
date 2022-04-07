@@ -1,12 +1,12 @@
 <template>
-  <div class="notification" @click="hide" ref="notification">
+  <div class="notification" ref="notification">
     <div class="container">
       <div class="notification__inner">
         <div class="grid align-xs-middle">
           <div class="col-xs-22">
             <slot />
           </div>
-          <div class="col-xs-2">
+          <div class="col-xs-2" @click="hide">
             <icon icon="chevron-down" size="lg" />
           </div>
         </div>

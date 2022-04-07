@@ -3,7 +3,7 @@
     <Header fixed />
     <div class="container container--wide">
       <!-- {{ $store.state.currentCategory }} -->
-      <!-- {{ $store.state.contracts }} -->
+      {{ $store.state.contracts }}
       <div class="grid" v-if="selectedContracts.length > 0">
         <div
           class="col-xs-12"
@@ -17,11 +17,11 @@
     </div>
     <div v-if="selectedContracts.length === 0" class="page--placeholder">
       <div>
-        <p class="bottom-xs-2">No contracts found</p>
+        <p class="bottom-xs-2">No active contracts found</p>
 
         <Button
           v-if="$store.state.currentAccount.seller"
-          to="/add-contract"
+          to="/new"
           class="button--primary"
           >Add contract</Button
         >
@@ -40,18 +40,12 @@ export default {
       return +this.$store.state.currentAccount.ID;
     },
     selectedContracts() {
-      let myContracts = this.contracts.filter(
-        (c) => +c.owner === this.me || +c.seller === this.me
-      );
-      let sortedContracts = myContracts.sort((a, b) =>
-        a.state > b.state ? 1 : -1
-      );
+      let myContracts = this.contracts.filter((c) => +c.owner === this.me);
       let selected = this.$store.state.currentCategory;
-      // console.log(selected);
       if (selected === -1) {
-        return sortedContracts;
+        return myContracts;
       } else {
-        return sortedContracts.filter(
+        return myContracts.filter(
           (c) => +c.category === this.$store.state.currentCategory
         );
       }

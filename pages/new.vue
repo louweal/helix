@@ -294,9 +294,9 @@ export default {
       // meta info
       contract["ID"] = this.newId;
       contract["startdate"] = this.todayDate;
+      contract["store"] = +this.$store.state.currentAccount.ID;
       contract["seller"] = +this.$store.state.currentAccount.ID;
       contract["owner"] = +this.$store.state.currentAccount.ID;
-      contract["state"] = 0;
       contract["deposit"] = this.contract.deposit;
 
       // input

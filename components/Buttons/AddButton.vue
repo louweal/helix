@@ -1,7 +1,7 @@
 <template>
   <div class="add-button" v-if="$store.state.currentAccount.seller">
     <div class="add-button__inner">
-      <nuxt-link to="/add-contract"> + </nuxt-link>
+      <nuxt-link to="/new"> + </nuxt-link>
     </div>
   </div>
 </template>

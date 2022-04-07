@@ -47,8 +47,33 @@ export const mutations = {
   addContract(state, payload) {
     state.contracts.push(payload)
   },
+
+  deleteContract(state, payload) {
+    // { ID }
+    state.contracts = state.contracts.filter(c => c.ID !== payload.ID)
+  },
   transferContract(state, payload) {
-    // { id , newOwner }
-    state.contracts.forEach(c => c.owner = c.ID === payload.ID ? payload.newOwner : c.owner)
+    // { ID , seller, buyer }
+    state.contracts.forEach(c => {
+      c.owner = c.ID === payload.ID ? payload.buyer : c.owner,
+        c.seller = c.ID === payload.ID ? payload.seller : c.seller,
+        c.startdate = c.ID === payload.ID ? todayDate() : c.startdate
+    })
+  },
+  sellContract(state, payload) {
+    // { ID , buyer }
+    state.contracts.forEach(c => {
+      c.owner = c.ID === payload.ID ? payload.buyer : c.owner,
+        c.startdate = c.ID === payload.ID ? todayDate() : c.startdate
+    })
   }
 };
+
+function todayDate() {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0");
+  var yyyy = today.getFullYear();
+
+  return dd + "-" + mm + "-" + yyyy;
+}

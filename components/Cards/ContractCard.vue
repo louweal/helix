@@ -11,15 +11,15 @@
           }"
         ></div>
 
-        <div class="contract-card__state" v-if="data.state !== 0">
+        <!-- <div class="contract-card__state" v-if="data.state !== 0">
           <badge :color="data.state === 1 ? 'primary' : false">
             {{ data.state === 1 ? "transferred" : "deleted" }}
           </badge>
-        </div>
+        </div> -->
 
-        <div class="contract-card__state" v-if="sold">
+        <!-- <div class="contract-card__state" v-if="sold">
           <badge color="primary"> sold </badge>
-        </div>
+        </div> -->
       </div>
 
       <heading size="l" level="2" weight="400" class="bottom-xs-0">

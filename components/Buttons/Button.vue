@@ -80,6 +80,11 @@ $btn-radius: 7px;
     color: #fff; //get-color(base-text);
   }
 
+  &--secondary {
+    background: get-color(secondary);
+    color: #fff; //get-color(base-text);
+  }
+
   &--dark {
     background: get-color(dark);
     color: #fff;

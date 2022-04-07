@@ -16,7 +16,7 @@
       </div>
 
       <div v-if="matchingContracts.length === 0" class="page--placeholder">
-        No contracts found
+        No active contracts found
       </div>
     </div>
   </div>
@@ -40,13 +40,10 @@ export default {
       let myContracts = this.contracts.filter(
         (c) => c.owner === this.$store.state.currentAccount.ID
       );
-      let sortedContracts = myContracts.sort((a, b) =>
-        a.state > b.state ? 1 : -1
-      );
       if (this.q.length < 2) {
-        return sortedContracts;
+        return myContracts;
       } else {
-        let results = sortedContracts.filter((c) =>
+        let results = myContracts.filter((c) =>
           c.name.toLowerCase().includes(this.q)
         );
         return results;

@@ -23,12 +23,7 @@
         </heading>
 
         <badge :level="contract.label" class="bottom-xs-2" />
-        <badge
-          v-if="contract.state !== 0"
-          :color="contract.state === 1 ? 'primary' : false"
-        >
-          {{ contract.state === 1 ? "transferred" : "deleted" }}
-        </badge>
+        <badge v-if="contract.state === 1" color="primary"> transferred </badge>
 
         <deposit
           :val="contract.deposit"
@@ -38,7 +33,6 @@
 
         <Stack :gap="0.5">
           <Button
-            v-if="contract.state === 0 && !sold"
             @click="false"
             class="button--primary"
             @click.native="toggleDrawer('#transfer-drawer')"
@@ -46,7 +40,6 @@
             <icon icon="arrow-right" /> Transfer
           </Button>
           <Button
-            v-if="contract.state !== 2 && !sold"
             @click="false"
             class="button--dark"
             @click.native="toggleDrawer('#delete-drawer')"
@@ -168,6 +161,7 @@
 
     <notification v-if="transferred">
       <p>Transfer successful</p>
+      <p><nuxt-link to="/login">Switch to another account</nuxt-link></p>
     </notification>
 
     <notification v-if="deleted">
@@ -182,7 +176,7 @@ export default {
     return {
       transferred: false,
       deleted: false,
-      newOwner: false,
+      buyer: false,
     };
   },
 
@@ -255,25 +249,41 @@ export default {
       );
     },
     getItemRecepient(data) {
-      this.newOwner = data.ID;
+      this.buyer = data.ID;
       console.log(data.ID);
     },
     getDepositRecepient(data) {
       // todo
     },
     doTransfer() {
-      this.$store.commit("transferContract", {
-        ID: +this.contract.ID,
-        newOwner: +this.newOwner,
-      });
+      if (this.isShop) {
+        this.$store.commit("sellContract", {
+          ID: +this.contract.ID,
+          buyer: +this.buyer,
+        });
+      } else {
+        if (this.contract.owner !== this.buyer) {
+          this.$store.commit("transferContract", {
+            ID: +this.contract.ID,
+            seller: +this.me,
+            buyer: +this.buyer,
+          });
+        }
+      }
 
       this.transferred = true;
       this.toggleDrawer("#transfer-drawer");
     },
     doDelete() {
-      // todo
+      this.$store.commit("deleteContract", {
+        ID: +this.contract.ID,
+      });
+
       this.deleted = true;
       this.toggleDrawer("#delete-drawer");
+      this.$router.push({
+        path: "/",
+      });
     },
   },
 };
