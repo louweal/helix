@@ -2,10 +2,7 @@
   <div class="page page--white">
     <back-button bg> Add contract </back-button>
 
-    <div class="container">
-      &nbsp;
-      <div class="bottom-xs-3"></div>
-
+    <div class="container" style="margin-top: 42px">
       <!-- {{ contract }} -->
 
       <div class="add-form">
@@ -304,11 +301,12 @@ export default {
       contract["name"] = this.contract.name;
       contract["description"] = this.contract.description;
       contract["category"] = +this.contract.category.ID;
-      contract["duration"] = +this.contract.duration.value;
+      contract["duration"] = +this.contract.duration.ID;
       contract["production_country"] = +this.contract.production_country.ID;
       contract["materials"] = this.contract.materials.map(({ ID }) => +ID);
       contract["material_description"] = this.contract.material_description;
       contract["charity"] = +this.contract.charity.ID;
+      contract["label"] = this.contract.label;
 
       // console.log(contract.ID);
       return contract;
@@ -413,21 +411,29 @@ export default {
         .map((m) => +this.labels.find((l) => l.ID === m.label).fee)
         .reduce((a, b) => a + b, 0);
 
-      console.log("materi : " + materialSum);
+      let materialAvg = parseInt(materialSum / this.selectedMaterials.length);
+
+      // console.log("materi : " + materialSum);
       let ccname = this.$store.state.currentAccount.country;
       let countryData = this.$store.state.countries.find(
         (c) => c.name === ccname
       );
-      let ccid = countryData.ID;
       let dist = countryData.distances[this.contract.production_country.ID];
       let shipmentDeposit = +this.labels.find((l) => l.name == dist).fee;
 
-      console.log(materialSum + shipmentDeposit);
+      let totalAvg = parseInt((1.0 * materialAvg + 1.0 * shipmentDeposit) / 2);
+      // console.log(totalAvg);
+      let totalLabel = this.labels.find((l) => l.ID === totalAvg).name;
+
+      // console.log(materialSum + shipmentDeposit);
+
       Vue.set(
         this.contract,
         "deposit",
         (materialSum + shipmentDeposit).toString()
       );
+
+      Vue.set(this.contract, "label", totalLabel);
 
       this.currentStep += 1;
     },
