@@ -1,5 +1,6 @@
 export const state = () => ({
   currentCategory: -1,
+  action: false,
   currentAccount: {
     ID: -1,
     name: "",
@@ -42,6 +43,9 @@ export const mutations = {
   },
   setCurrentAccount(state, payload) {
     state.currentAccount = payload;
+  },
+  setAction(state, payload) {
+    state.action = payload
   },
 
   addContract(state, payload) {

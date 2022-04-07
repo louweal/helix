@@ -26,6 +26,8 @@ export default {
 
   methods: {
     hide() {
+      this.$store.commit("setAction", false);
+
       let note = this.$refs["notification"];
       note.style.transform = "translateY(100px)";
     },

@@ -30,11 +30,19 @@
           class="bottom-xs-0"
           color="black"
         >
-          {{ this.$store.state.currentAccount.name }}
+          {{ account.name }}
         </heading>
 
+        <template v-if="account.city && account.country">
+          <heading size="m" level="0" weight="400" fstyle="italic">
+            {{ account.city }},
+            {{ account.country }}
+          </heading>
+          <br />
+        </template>
+
         <heading size="m" level="0" weight="400" color="black">
-          {{ this.$store.state.currentAccount.accountId }}
+          {{ account.accountId }}
         </heading>
       </Section>
 
@@ -95,6 +103,10 @@ export default {
 
     isShop() {
       return this.$store.state.currentAccount.seller === true;
+    },
+
+    account() {
+      return this.$store.state.currentAccount;
     },
 
     me() {

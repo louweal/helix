@@ -5,7 +5,8 @@
     "seller": true,
     "accountId": "0.0.36342466",
     "avatar": "products/sandwich-friends.png",
-    "country": "Germany"
+    "country": "Germany",
+    "city": "Berlin"
   },
   {
     "ID": 2,
@@ -13,7 +14,8 @@
     "seller": true,
     "accountId": "0.0.0034243",
     "avatar": "products/pans.png",
-    "country": "The Netherlands"
+    "country": "The Netherlands",
+    "city": "Amsterdam"
   },
   {
     "ID": 0,

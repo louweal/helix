@@ -15,6 +15,15 @@
 
     <Nuxt />
 
+    <notification v-if="$store.state.action === 'transferSuccess'">
+      <p>Transfer successful</p>
+      <p><nuxt-link to="/login">Switch to another account</nuxt-link></p>
+    </notification>
+
+    <notification v-if="$store.state.action === 'deleteSuccess'">
+      <p>Deletion successful</p>
+    </notification>
+
     <Footer v-if="$route.path !== '/login'" />
   </main>
 </template>

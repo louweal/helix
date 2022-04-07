@@ -33,7 +33,7 @@
         "description": "12 pieces",
         "category": 5,
         "duration": 15,
-        "production_country": 2,
+        "production_country": 1,
         "materials": [
             23
         ],
@@ -52,13 +52,13 @@
         "description": "6 pieces",
         "category": 5,
         "duration": 15,
-        "production_country": 2,
+        "production_country": 1,
         "materials": [
             23
         ],
-        "material_description": "...",
+        "material_description": "100% polyester",
         "charity": 4,
-        "label": "B"
+        "label": "A"
     },
     {
         "ID": 3,
@@ -72,13 +72,13 @@
         "description": "24 pieces",
         "category": 5,
         "duration": 15,
-        "production_country": 2,
+        "production_country": 1,
         "materials": [
             23
         ],
-        "material_description": "...",
+        "material_description": "100% polyester",
         "charity": 4,
-        "label": "B"
+        "label": "A"
     },
     {
         "ID": 4,
@@ -92,13 +92,13 @@
         "description": "14 pieces",
         "category": 5,
         "duration": 15,
-        "production_country": 2,
+        "production_country": 1,
         "materials": [
             23
         ],
-        "material_description": "...",
+        "material_description": "100% polyester",
         "charity": 4,
-        "label": "B"
+        "label": "A"
     },
     {
         "ID": 5,
@@ -112,13 +112,13 @@
         "description": "9 pieces",
         "category": 5,
         "duration": 15,
-        "production_country": 2,
+        "production_country": 1,
         "materials": [
             23
         ],
-        "material_description": "...",
+        "material_description": "100% polyester",
         "charity": 4,
-        "label": "B"
+        "label": "A"
     },
     {
         "ID": 6,
@@ -132,12 +132,12 @@
         "description": "2 pieces",
         "category": 5,
         "duration": 15,
-        "production_country": 2,
+        "production_country": 1,
         "materials": [
             23
         ],
-        "material_description": "...",
+        "material_description": "100% polyester",
         "charity": 4,
-        "label": "B"
+        "label": "A"
     }
 ]

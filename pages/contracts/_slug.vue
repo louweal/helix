@@ -158,15 +158,6 @@
         Confirm
       </Button>
     </drawer>
-
-    <notification v-if="transferred">
-      <p>Transfer successful</p>
-      <p><nuxt-link to="/login">Switch to another account</nuxt-link></p>
-    </notification>
-
-    <notification v-if="deleted">
-      <p>Deletion successful</p>
-    </notification>
   </div>
 </template>
 
@@ -271,15 +262,21 @@ export default {
         }
       }
 
+      this.$store.commit("setAction", "transferSuccess");
+
       this.transferred = true;
       this.toggleDrawer("#transfer-drawer");
+      this.$router.push({
+        path: "/",
+      });
     },
     doDelete() {
       this.$store.commit("deleteContract", {
         ID: +this.contract.ID,
       });
 
-      this.deleted = true;
+      this.$store.commit("setAction", "deleteSuccess");
+
       this.toggleDrawer("#delete-drawer");
       this.$router.push({
         path: "/",
