@@ -17,7 +17,13 @@
     </div>
     <div v-if="selectedContracts.length === 0" class="page--placeholder">
       <div>
-        <p class="bottom-xs-2">No active contracts found</p>
+        <p class="bottom-xs-2">No active contracts found in your account</p>
+
+        <template v-if="!$store.state.currentAccount.seller">
+          <Button to="/login" class="button--secondary">
+            Switch account
+          </Button>
+        </template>
 
         <Button
           v-if="$store.state.currentAccount.seller"
