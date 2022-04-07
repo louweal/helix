@@ -3,7 +3,7 @@
     <Header fixed />
     <div class="container container--wide">
       <!-- {{ $store.state.currentCategory }} -->
-      {{ $store.state.contracts }}
+      <!-- {{ $store.state.contracts }} -->
       <div class="grid" v-if="selectedContracts.length > 0">
         <div
           class="col-xs-12"
