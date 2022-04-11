@@ -16,6 +16,7 @@
         {{ cat.name }}
       </Button>
     </Stack>
+    <div class="overflow-margin-right"></div>
   </div>
 </template>
 
@@ -64,11 +65,17 @@ export default {
   background-color: #fff;
   border-radius: 6px;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.09);
+  display: flex;
 
   &::-webkit-scrollbar {
     width: 0 !important;
     height: 0 !important;
     background: transparent;
   }
+}
+
+.overflow-margin-right {
+  height: 100%;
+  width: 4px;
 }
 </style>
