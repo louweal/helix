@@ -43,6 +43,8 @@
 
         <heading size="m" level="0" weight="400" color="black">
           {{ account.accountId }}
+
+          {{ test }}
         </heading>
       </Section>
 
@@ -107,6 +109,29 @@ export default {
 
     account() {
       return this.$store.state.currentAccount;
+    },
+
+    test() {
+      return "0.0.0000";
+      let { JANES_ID, JOHNS_ID } = process.env;
+
+      // console.log(JANES_ID);
+
+      switch (this.account.prefix) {
+        case "JANES":
+          return JANES_ID;
+        case "JOHNS":
+          return JOHNS_ID;
+        default:
+          return "0000";
+      }
+      // let t = "JOHNS_ID";
+      // console.log(process.env[t]);
+      // let id = this.account.prefix + "_ID";
+      // console.log(id);
+      // console.log(process.env[id.toString()]);
+      // console.log(process.env["JANES_ID"]);
+      // return "353533"; // process.env[id];
     },
 
     me() {

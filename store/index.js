@@ -1,3 +1,7 @@
+import { accountCreate } from "../service/accountCreate";
+import { accountGetInfo } from "../service/accountGetInfo";
+import { tokenGetInfo } from "../service/tokenService";
+
 export const state = () => ({
   currentCategory: -1,
   action: false,
@@ -15,6 +19,12 @@ export const state = () => ({
   labels: [],
   materials: []
 });
+
+// export const actions = {
+//   async setup() {
+//     console.log("doing setup");
+//   }
+// };
 
 export const mutations = {
   SET_CONTRACTS(state, payload) {
