@@ -1,5 +1,5 @@
 <template>
-  <div class="categories" :style="{ maxWidth }">
+  <div class="categories" :style="{ maxWidth }" v-if="myCategories.length > 0">
     <Stack>
       <Button
         :active="+$store.state.currentCategory === -1"
@@ -7,8 +7,9 @@
       >
         All contracts
       </Button>
+
       <Button
-        v-for="(cat, index) in categories"
+        v-for="(cat, index) in myCategories"
         :key="index"
         :active="cat.ID === $store.state.currentCategory"
         @click.native="setActiveCat(cat.ID)"
@@ -29,9 +30,21 @@ export default {
   },
 
   computed: {
+    contracts() {
+      return this.$store.state.contracts;
+    },
     categories() {
       return this.$store.state.categories;
     },
+
+    myCategories() {
+      return this.categories.filter((cat) => this.numContracts(cat.ID) > 0);
+    },
+
+    me() {
+      return +this.$store.state.currentAccount.ID;
+    },
+
     maxWidth() {
       return this.$store.state.currentAccount.seller
         ? "calc(100% - 54px)"
@@ -43,9 +56,11 @@ export default {
     this.activeCat == this.$store.state.currentCategory;
   },
 
-  mounted() {},
-
   methods: {
+    numContracts(cat) {
+      let myContracts = this.contracts.filter((c) => +c.owner === this.me);
+      return myContracts.filter((c) => +c.category === +cat).length;
+    },
     setActiveCat(clickedCat) {
       this.activeCat = clickedCat;
 

@@ -49,12 +49,16 @@ export const mutations = {
   },
 
   addContract(state, payload) {
-    state.contracts.push(payload)
+    //payload = contract
+    state.contracts.push(payload);
+    state.images.forEach(i => i.used = i.ID === payload.visual ? true : i.used)
   },
 
   deleteContract(state, payload) {
-    // { ID }
+    //payload = contract
+    state.images.forEach(i => i.used = i.ID === payload.visual ? false : i.used)
     state.contracts = state.contracts.filter(c => c.ID !== payload.ID)
+
   },
   transferContract(state, payload) {
     // { ID , seller, buyer }

@@ -1,5 +1,5 @@
 <template>
-  <div class="page page--white">
+  <div class="page page--white" v-if="contract">
     <back-button transparent />
 
     <div class="container container--full">
@@ -176,7 +176,7 @@ export default {
       return this.$store.state.contracts;
     },
     contract() {
-      return this.contracts.filter((c) => c.ID === +this.$route.params.slug)[0];
+      return this.contracts.find((c) => c.ID === +this.$route.params.slug);
     },
     countries() {
       return this.$store.state.countries;
@@ -271,9 +271,7 @@ export default {
       });
     },
     doDelete() {
-      this.$store.commit("deleteContract", {
-        ID: +this.contract.ID,
-      });
+      this.$store.commit("deleteContract", this.contract);
 
       this.$store.commit("setAction", "deleteSuccess");
 

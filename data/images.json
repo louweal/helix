@@ -1,54 +1,67 @@
 [
     {
         "ID": 0,
-        "url": "bunny.png"
+        "url": "bunny.png",
+        "used": false
     },
     {
         "ID": 1,
-        "url": "fruit-basket.png"
+        "url": "fruit-basket.png",
+        "used": true
     },
     {
         "ID": 2,
-        "url": "pies.png"
+        "url": "pies.png",
+        "used": true
     },
     {
         "ID": 3,
-        "url": "pizza.png"
+        "url": "pizza.png",
+        "used": true
     },
     {
         "ID": 4,
-        "url": "sandwich-friends.png"
+        "url": "sandwich-friends.png",
+        "used": true
     },
     {
         "ID": 5,
-        "url": "book.png"
+        "url": "book.png",
+        "used": false
     },
     {
         "ID": 6,
-        "url": "carriage.png"
+        "url": "carriage.png",
+        "used": false
     },
     {
         "ID": 7,
-        "url": "chair.png"
+        "url": "chair.png",
+        "used": true
     },
     {
         "ID": 8,
-        "url": "fridge.png"
+        "url": "fridge.png",
+        "used": false
     },
     {
         "ID": 9,
-        "url": "groceries-basket.png"
+        "url": "groceries-basket.png",
+        "used": true
     },
     {
         "ID": 10,
-        "url": "pans.png"
+        "url": "pans.png",
+        "used": false
     },
     {
         "ID": 11,
-        "url": "slippers.png"
+        "url": "slippers.png",
+        "used": false
     },
     {
         "ID": 12,
-        "url": "veggie-basket.png"
+        "url": "veggie-basket.png",
+        "used": true
     }
 ]

@@ -224,7 +224,11 @@
       <template v-slot:header> Gallery (demo) </template>
 
       <div class="grid">
-        <div class="col-xs-6" v-for="(image, index) in images" :key="index">
+        <div
+          class="col-xs-6"
+          v-for="(image, index) in images.filter((i) => !i.used)"
+          :key="index"
+        >
           <div
             @click="selectImage(image)"
             class="img ratio-1x1 img--light"
@@ -370,7 +374,14 @@ export default {
 
       // add contract directly to store
       let newContract = this.makeContract;
+
+      console.log("image id" + this.contract.visual.ID);
       this.$store.commit("addContract", newContract);
+
+      // this.$store.commit("setImageUsed", {
+      //   ID: this.contract.visual.ID,
+      //   used: true,
+      // });
 
       this.$router.push({
         path: "/",
