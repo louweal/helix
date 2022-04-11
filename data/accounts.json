@@ -3,7 +3,7 @@
     "ID": 3,
     "name": "Susan's Handmade Toys",
     "seller": true,
-    "accountId": "0.0.36342466",
+    "accountId": "0.0.34174205",
     "avatar": "products/sandwich-friends.png",
     "country": "Germany",
     "city": "Berlin"
@@ -12,7 +12,7 @@
     "ID": 2,
     "name": "GreenStore Amsterdam",
     "seller": true,
-    "accountId": "0.0.0034243",
+    "accountId": "0.0.34174224",
     "avatar": "products/pans.png",
     "country": "The Netherlands",
     "city": "Amsterdam"
@@ -20,14 +20,14 @@
   {
     "ID": 0,
     "name": "Jane Doe",
-    "accountId": "0.0.1234567",
+    "accountId": "0.0.34174211",
     "avatar": "avatar1.png",
     "country": "The Netherlands"
   },
   {
     "ID": 1,
     "name": "John Doe",
-    "accountId": "0.0.7654321",
+    "accountId": "0.0.34174207",
     "avatar": "avatar2.png",
     "country": "The Netherlands"
   },
@@ -35,14 +35,14 @@
     "ID": 4,
     "name": "Plastic Soup Foundation",
     "charity": true,
-    "accountId": "0.0.0034243",
+    "accountId": "0.0.34179214",
     "avatar": "avatar4.png"
   },
   {
     "ID": 5,
     "name": "350.org",
     "charity": true,
-    "accountId": "0.0.0037423",
+    "accountId": "0.0.34179216",
     "avatar": "avatar4.png"
   }
 ]

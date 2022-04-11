@@ -360,8 +360,13 @@ export default {
       Vue.set(this.contract, "visual", image);
       this.toggleDrawer("#gallery-drawer");
     },
+    newHederaContract() {
+      // todo
+    },
     createContract() {
       console.log("todo create contract on hedera network");
+
+      this.newHederaContract();
 
       // add contract directly to store
       let newContract = this.makeContract;
