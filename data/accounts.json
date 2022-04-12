@@ -3,8 +3,8 @@
     "ID": 3,
     "name": "Susan's Handmade Toys",
     "seller": true,
-    "prefix": "SUSANS",
     "accountId": "0.0.34174205",
+    "pvkey": "302e020100300506032b6570042204205c4404d48973d3d9b3b27141f4e21db0ce5259ffb4e2d52f200ed786e560e078",
     "avatar": "products/sandwich-friends.png",
     "country": "Germany",
     "city": "Berlin"
@@ -12,9 +12,9 @@
   {
     "ID": 2,
     "name": "GreenStore Amsterdam",
-    "prefix": "STORE",
     "seller": true,
     "accountId": "0.0.34174224",
+    "pvkey": "302e020100300506032b6570042204206e1155ff9c76cbe297d5de6920f535edc1302996775eba73cf2f171e712af105",
     "avatar": "products/pans.png",
     "country": "The Netherlands",
     "city": "Amsterdam"
@@ -22,32 +22,33 @@
   {
     "ID": 0,
     "name": "Jane Doe",
-    "prefix": "JANES",
+    "accountId": "0.0.34174211",
+    "pvkey": "302e020100300506032b6570042204201d09dee4680c077cebbb26fbc25f03932d0fb958be51c9a4b00d551f75d8db3c",
     "avatar": "avatar1.png",
     "country": "The Netherlands"
   },
   {
     "ID": 1,
     "name": "John Doe",
-    "prefix": "JOHNS",
     "accountId": "0.0.34174207",
+    "pvkey": "302e020100300506032b6570042204202554bbc6fd55e31f8ddb235da3e2cbe7b1017f3d95f7081efba6b9b03ee1769f",
     "avatar": "avatar2.png",
     "country": "The Netherlands"
   },
   {
     "ID": 4,
     "name": "Plastic Soup Foundation",
-    "prefix": "PLASTIC",
     "charity": true,
     "accountId": "0.0.34179214",
+    "pvkey": "302e020100300506032b6570042204205f46ff1c8e8176ce4c9827070f41f2aa315179539eec5c5964a1432735df9d63",
     "avatar": "avatar4.png"
   },
   {
     "ID": 5,
     "name": "350.org",
-    "prefix": "350",
     "charity": true,
     "accountId": "0.0.34179216",
+    "pvkey": "302e020100300506032b657004220420a6e90d255c28231082a607e70b5578d1b9976c4fcbd0c2dacc521b872b1e6fd9",
     "avatar": "avatar4.png"
   }
 ]
