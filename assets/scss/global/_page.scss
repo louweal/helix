@@ -10,8 +10,7 @@
     background-color: #fff;
   }
 
-  &__footer {
-  }
+  &__footer {}
 
   &--placeholder {
     min-height: 80vh; // approx...
@@ -19,9 +18,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-style: italic;
 
-    > div {
+    p {
+      font-style: italic;
+    }
+
+    >div {
       text-align: center;
     }
   }
