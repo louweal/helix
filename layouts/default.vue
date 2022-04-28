@@ -68,6 +68,8 @@ export default {
     this.getWidth();
     window.addEventListener("resize", this.getWidth);
 
+    this.$store.commit("addSmartContract", { token: null });
+
     // let gaScript = document.createElement("script");
     // gaScript.setAttribute(
     //   "src",

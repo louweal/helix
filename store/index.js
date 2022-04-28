@@ -1,6 +1,4 @@
-import { accountCreate } from "../service/accountCreate";
-import { accountGetInfo } from "../service/accountGetInfo";
-import { tokenGetInfo } from "../service/tokenService";
+import { contractCreate } from "../utils/contractService";
 
 export const state = () => ({
   currentCategory: -1,
@@ -84,6 +82,12 @@ export const mutations = {
       c.owner = c.ID === payload.ID ? payload.buyer : c.owner,
         c.startdate = c.ID === payload.ID ? todayDate() : c.startdate
     })
+  },
+
+  // hedera smart contracts
+  addSmartContract(state, payload) {
+    // { token }
+    contractCreate(payload.token);
   }
 };
 

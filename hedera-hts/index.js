@@ -31,7 +31,7 @@ const client = Client.forTestnet().setOperator(operatorId, operatorKey);
 async function main() {
 	// STEP 1 ===================================
 	console.log(`STEP 1 ===================================`);
-	const bytecode = fs.readFileSync("./MintAssociateTransferHTS_sol_MintAssoTransHTS.bin");
+	const bytecode = require("./MintAssociateTransferHTS_sol_MintAssoTransHTS.bin");
 	console.log(`- Done \n`);
 
 	// STEP 2 ===================================

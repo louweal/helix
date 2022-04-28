@@ -366,10 +366,9 @@ export default {
     },
     newHederaContract() {
       // todo
+      this.$store.commit("addSmartContract", {});
     },
     createContract() {
-      console.log("todo create contract on hedera network");
-
       this.newHederaContract();
 
       // add contract directly to store

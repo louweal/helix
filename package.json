@@ -13,6 +13,7 @@
     "@hashgraph/sdk": "2.11",
     "@nuxtjs/dotenv": "^1.4.1",
     "core-js": "^3.19.3",
+    "nft.storage": "^6.2.0",
     "nuxt": "^2.15.7"
   },
   "devDependencies": {
