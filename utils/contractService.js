@@ -28,8 +28,18 @@ const aliceyKey = PrivateKey.fromString(process.env.JANES_PVKEY);
 const client = Client.forTestnet().setOperator(operatorId, operatorKey);
 
 export async function contractCreate(token) {
+
+    var input = {
+        'strings.sol': fs.readFileSync('strings.sol', 'utf8'),
+        'StringLib.sol': fs.readFileSync('StringLib.sol', 'utf8'),
+        'Killable.sol': fs.readFileSync('Killable.sol', 'utf8'),
+        'Ownable.sol': fs.readFileSync('Ownable.sol', 'utf8'),
+        'LMS.sol': fs.readFileSync('LMS.sol', 'utf8')
+    };
+    let compiledContract = solc.compile({ sources: input }, 1);
+
     // STEP 2 ===================================
-    console.log(`STEP 1 ===================================`);
+    console.log(`STEP 2 ===================================`);
     const htsContract = require("./HTS.json");
 
     const bytecode = htsContract.data.bytecode.object;

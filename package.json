@@ -14,7 +14,8 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "core-js": "^3.19.3",
     "nft.storage": "^6.2.0",
-    "nuxt": "^2.15.7"
+    "nuxt": "^2.15.7",
+    "solc": "^0.8.8"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.2.1",
