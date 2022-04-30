@@ -11,6 +11,23 @@
           <contract-card :data="contract" />
         </div>
       </div>
+      <notification>
+        <p>{{ $store.state.currentAccount.name }}'s account on Dragonglass:</p>
+        <a
+          target="_blank"
+          :href="`https://testnet.dragonglass.me/hedera/accounts/${$store.state.currentAccount.accountId}`"
+        >
+          https://testnet.dragonglass.me/hedera/accounts/
+          {{ $store.state.currentAccount.accountId }}
+        </a>
+      </notification>
+
+      <notification v-if="$store.state.currentContractId !== -1">
+        <p>
+          The smart contract with ID {{ $store.state.currentContractId }} was
+          successfully created!
+        </p>
+      </notification>
     </div>
     <div v-if="selectedContracts.length === 0" class="page--placeholder">
       <div>

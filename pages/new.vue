@@ -31,7 +31,8 @@
           <input
             class="field field--light"
             type="text"
-            placeholder="Product name"
+            :placeholder="'Product name'"
+            :value="contract.visual ? contract.visual.alt : ''"
             @input="(e) => setValue('name', e.target.value)"
           />
 
@@ -61,12 +62,7 @@
           />
 
           <template
-            v-if="
-              contract.visual &&
-              contract.name &&
-              contract.duration &&
-              contract.category
-            "
+            v-if="contract.visual && contract.duration && contract.category"
           >
             <Button
               class="button--primary button--fullwidth"
@@ -365,8 +361,7 @@ export default {
       this.toggleDrawer("#gallery-drawer");
     },
     newHederaContract() {
-      // todo
-      this.$store.commit("addSmartContract", {});
+      this.$store.dispatch("addSmartContract", { initialBalance: null });
     },
     createContract() {
       this.newHederaContract();

@@ -1,83 +1,60 @@
-
 const {
-    Client,
-    AccountId,
-    PrivateKey,
-    TokenCreateTransaction,
-    FileCreateTransaction,
-    FileAppendTransaction,
-    ContractCreateTransaction,
-    ContractFunctionParameters,
-    TokenUpdateTransaction,
-    ContractExecuteTransaction,
-    TokenInfoQuery,
-    AccountBalanceQuery,
-    Hbar,
+  Client,
+  AccountId,
+  PrivateKey,
+  TokenCreateTransaction,
+  FileCreateTransaction,
+  FileAppendTransaction,
+  ContractCreateTransaction,
+  ContractFunctionParameters,
+  TokenUpdateTransaction,
+  ContractExecuteTransaction,
+  TokenInfoQuery,
+  AccountBalanceQuery,
+  Hbar,
 } = require("@hashgraph/sdk");
-// const fs = require("fs");
 
-// console.log($store.currentAccount.accountId);
+//export async
+export async function contractCreate(accountId, pvKey, initialBalance) {
+  const operatorId = AccountId.fromString(accountId);
+  const operatorKey = PrivateKey.fromString(pvKey);
+  //   const treasuryId = AccountId.fromString(accountId);
+  const treasuryKey = PrivateKey.fromString(pvKey);
 
-const operatorId = AccountId.fromString(process.env.MY_ACCOUNT_ID);
-const operatorKey = PrivateKey.fromString(process.env.MY_PRIVATE_KEY);
-const treasuryId = AccountId.fromString(process.env.MY_ACCOUNT_ID);
-const treasuryKey = PrivateKey.fromString(process.env.MY_PRIVATE_KEY);
-const aliceId = AccountId.fromString(process.env.JANES_ID);
-const aliceyKey = PrivateKey.fromString(process.env.JANES_PVKEY);
+  const client = Client.forTestnet().setOperator(operatorId, operatorKey);
 
-const client = Client.forTestnet().setOperator(operatorId, operatorKey);
+  const htsContract = require("./Contract.json");
+  const bytecode = htsContract.data.bytecode.object;
 
-export async function contractCreate(token) {
+  const fileCreateTx = new FileCreateTransaction()
+    .setKeys([treasuryKey])
+    .freezeWith(client);
+  const fileCreateSign = await fileCreateTx.sign(treasuryKey);
+  const fileCreateSubmit = await fileCreateSign.execute(client);
+  const fileCreateRx = await fileCreateSubmit.getReceipt(client);
+  const bytecodeFileId = fileCreateRx.fileId;
+  console.log(`- The smart contract bytecode file ID is ${bytecodeFileId}`);
 
-    var input = {
-        'strings.sol': fs.readFileSync('strings.sol', 'utf8'),
-        'StringLib.sol': fs.readFileSync('StringLib.sol', 'utf8'),
-        'Killable.sol': fs.readFileSync('Killable.sol', 'utf8'),
-        'Ownable.sol': fs.readFileSync('Ownable.sol', 'utf8'),
-        'LMS.sol': fs.readFileSync('LMS.sol', 'utf8')
-    };
-    let compiledContract = solc.compile({ sources: input }, 1);
+  // Append contents to the file
+  const fileAppendTx = new FileAppendTransaction()
+    .setFileId(bytecodeFileId)
+    .setContents(bytecode)
+    .setMaxChunks(10)
+    .freezeWith(client);
+  const fileAppendSign = await fileAppendTx.sign(treasuryKey);
+  const fileAppendSubmit = await fileAppendSign.execute(client);
+  const fileAppendRx = await fileAppendSubmit.getReceipt(client);
+  console.log(`- Content added: ${fileAppendRx.status} \n`);
 
-    // STEP 2 ===================================
-    console.log(`STEP 2 ===================================`);
-    const htsContract = require("./HTS.json");
+  //Deploy the contract instance
+  const contractTx = await new ContractCreateTransaction()
+    .setBytecodeFileId(bytecodeFileId)
+    .setInitialBalance(new Hbar(initialBalance))
+    .setGas(2000000);
+  const contractResponse = await contractTx.execute(client);
+  const contractReceipt = await contractResponse.getReceipt(client);
+  const newContractId = contractReceipt.contractId;
+  console.log("The smart contract ID is " + newContractId);
 
-    const bytecode = htsContract.data.bytecode.object;
-
-    //Create a file on Hedera and store the hex-encoded bytecode
-    const fileCreateTx = new FileCreateTransaction()
-        .setContents(bytecode);
-
-    //Submit the file to the Hedera test network signing with the transaction fee payer key specified with the client
-    const submitTx = await fileCreateTx.execute(client);
-
-    //Get the receipt of the file create transaction
-    const fileReceipt = await submitTx.getReceipt(client);
-
-    //Get the file ID from the receipt
-    const bytecodeFileId = fileReceipt.fileId;
-
-    //Log the file ID
-    console.log("The smart contract bytecode file ID is " + bytecodeFileId)
-
-    // STEP 3 ===================================
-    //Deploy the contract instance
-    const contractTx = await new ContractCreateTransaction()
-        //The bytecode file ID
-        .setBytecodeFileId(bytecodeFileId)
-        //The max gas to reserve
-        .setGas(2000000);
-
-    //Submit the transaction to the Hedera test network
-    const contractResponse = await contractTx.execute(client);
-
-    //Get the receipt of the file create transaction
-    const contractReceipt = await contractResponse.getReceipt(client);
-
-    //Get the smart contract ID
-    const newContractId = contractReceipt.contractId;
-
-    //Log the smart contract ID
-    console.log("The smart contract ID is " + newContractId);
-
+  return newContractId;
 }

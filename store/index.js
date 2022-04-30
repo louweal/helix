@@ -9,13 +9,14 @@ export const state = () => ({
     accountId: "",
     avatar: "",
   },
+  currentContractId: -1,
   contracts: [],
   accounts: [],
   categories: [],
   countries: [],
   images: [],
   labels: [],
-  materials: []
+  materials: [],
 });
 
 // export const actions = {
@@ -24,27 +25,43 @@ export const state = () => ({
 //   }
 // };
 
+export const actions = {
+  // hedera smart contracts
+  async addSmartContract({ commit, state }, payload) {
+    // { initialBalance }
+    let contractId = await contractCreate(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      payload.initialBalance
+    );
+    console.log(contractId);
+    // state.currentContractId = contractId;
+
+    commit("updateContractId", contractId);
+  },
+};
+
 export const mutations = {
   SET_CONTRACTS(state, payload) {
-    state.contracts = payload
+    state.contracts = payload;
   },
   SET_ACCOUNTS(state, payload) {
-    state.accounts = payload
+    state.accounts = payload;
   },
   SET_CATEGORIES(state, payload) {
-    state.categories = payload
+    state.categories = payload;
   },
   SET_COUNTRIES(state, payload) {
-    state.countries = payload
+    state.countries = payload;
   },
   SET_IMAGES(state, payload) {
-    state.images = payload
+    state.images = payload;
   },
   SET_LABELS(state, payload) {
-    state.labels = payload
+    state.labels = payload;
   },
   SET_MATERIALS(state, payload) {
-    state.materials = payload
+    state.materials = payload;
   },
   setCurrentCategory(state, payload) {
     state.currentCategory = payload;
@@ -53,42 +70,43 @@ export const mutations = {
     state.currentAccount = payload;
   },
   setAction(state, payload) {
-    state.action = payload
+    state.action = payload;
   },
 
   addContract(state, payload) {
     //payload = contract
     state.contracts.push(payload);
-    state.images.forEach(i => i.used = i.ID === payload.visual ? true : i.used)
+    state.images.forEach(
+      (i) => (i.used = i.ID === payload.visual ? true : i.used)
+    );
   },
 
   deleteContract(state, payload) {
     //payload = contract
-    state.images.forEach(i => i.used = i.ID === payload.visual ? false : i.used)
-    state.contracts = state.contracts.filter(c => c.ID !== payload.ID)
-
+    state.images.forEach(
+      (i) => (i.used = i.ID === payload.visual ? false : i.used)
+    );
+    state.contracts = state.contracts.filter((c) => c.ID !== payload.ID);
   },
   transferContract(state, payload) {
     // { ID , seller, buyer }
-    state.contracts.forEach(c => {
-      c.owner = c.ID === payload.ID ? payload.buyer : c.owner,
-        c.seller = c.ID === payload.ID ? payload.seller : c.seller,
-        c.startdate = c.ID === payload.ID ? todayDate() : c.startdate
-    })
+    state.contracts.forEach((c) => {
+      (c.owner = c.ID === payload.ID ? payload.buyer : c.owner),
+        (c.seller = c.ID === payload.ID ? payload.seller : c.seller),
+        (c.startdate = c.ID === payload.ID ? todayDate() : c.startdate);
+    });
   },
   sellContract(state, payload) {
     // { ID , buyer }
-    state.contracts.forEach(c => {
-      c.owner = c.ID === payload.ID ? payload.buyer : c.owner,
-        c.startdate = c.ID === payload.ID ? todayDate() : c.startdate
-    })
+    state.contracts.forEach((c) => {
+      (c.owner = c.ID === payload.ID ? payload.buyer : c.owner),
+        (c.startdate = c.ID === payload.ID ? todayDate() : c.startdate);
+    });
   },
 
-  // hedera smart contracts
-  addSmartContract(state, payload) {
-    // { token }
-    contractCreate(payload.token);
-  }
+  updateContractId(state, payload) {
+    state.currentContractId = payload;
+  },
 };
 
 function todayDate() {

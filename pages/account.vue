@@ -42,9 +42,11 @@
         </template>
 
         <heading size="m" level="0" weight="400" color="black">
-          {{ account.accountId }}
-
-          {{ test }}
+          <a
+            target="_blank"
+            :href="`https://testnet.dragonglass.me/hedera/accounts/${account.accountId}`"
+            >{{ account.accountId }}
+          </a>
         </heading>
       </Section>
 

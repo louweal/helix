@@ -83,7 +83,13 @@
         <Section>
           <hr />
 
-          <accordion-item
+          <accordion-item label="Collect deposit" icon="graph" level="2">
+            <p><lorem /></p>
+
+            todo
+          </accordion-item>
+
+          <!-- <accordion-item
             label="Materials"
             icon="tools"
             level="2"
@@ -99,7 +105,7 @@
               :materials="contract.materials"
               :country="contract.production_country"
             />
-          </accordion-item>
+          </accordion-item> -->
         </Section>
       </div>
 
