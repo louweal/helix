@@ -361,7 +361,9 @@ export default {
       this.toggleDrawer("#gallery-drawer");
     },
     newHederaContract() {
-      this.$store.dispatch("addSmartContract", { initialBalance: null });
+      this.$store.dispatch("addSmartContract", {
+        initialBalance: parseFloat(this.contract.deposit),
+      });
     },
     createContract() {
       this.newHederaContract();
