@@ -19,12 +19,6 @@ export const state = () => ({
   materials: [],
 });
 
-// export const actions = {
-//   async setup() {
-//     console.log("doing setup");
-//   }
-// };
-
 export const actions = {
   // hedera smart contracts
   async addSmartContract({ commit, state }, payload) {
@@ -34,7 +28,8 @@ export const actions = {
       state.currentAccount.pvkey,
       payload.initialBalance
     );
-    console.log(contractId);
+    // console.log(contractId);
+    // console.log(contractId.num);
     // state.currentContractId = contractId;
 
     commit("updateContractId", contractId);
@@ -68,6 +63,9 @@ export const mutations = {
   },
   setCurrentAccount(state, payload) {
     state.currentAccount = payload;
+  },
+  resetCurrentContractId(state) {
+    state.currentAccount = -1;
   },
   setAction(state, payload) {
     state.action = payload;

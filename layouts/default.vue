@@ -2,7 +2,7 @@
   <main>
     <pre-loader />
 
-    <template v-if="width >= 800">
+    <!-- <template v-if="width >= 800">
       <div class="container container--wide">
         <notification>
           <p>Switch to a mobile device for better user experience.</p>
@@ -11,7 +11,7 @@
           </p>
         </notification>
       </div>
-    </template>
+    </template> -->
 
     <Nuxt />
 

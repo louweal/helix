@@ -22,11 +22,14 @@
           <heading size="3xl" level="1" weight="400" class="bottom-xs-0">
             {{ contract.name }}
           </heading>
+          <span v-if="contract.contractId === -1">{{
+            contract.contractId
+          }}</span>
 
-          <badge :level="contract.label" class="bottom-xs-2" />
+          <!-- <badge :level="contract.label" class="bottom-xs-2" />
           <badge v-if="contract.state === 1" color="primary">
             transferred
-          </badge>
+          </badge> -->
 
           <deposit
             :val="contract.deposit"

@@ -6,8 +6,6 @@ contract LookupContract {
     address owner;
 
     mapping(string => uint256) public store;
-    mapping(string => uint256) public seller;
-    mapping(string => uint256) public buyer;
 
     constructor(string memory _contractId, uint256 _store) {
         owner = msg.sender;

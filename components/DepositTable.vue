@@ -93,6 +93,7 @@ export default {
     },
 
     distanceLabel() {
+      console.log("country: " + this.country);
       let pid = this.country;
       return pid ? this.currentCountry.distances[pid] : "?";
     },
@@ -106,5 +107,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -184,7 +184,7 @@
 
           <deposit-table
             :materials="this.selectedMaterials.map((m) => m.ID)"
-            :country="this.contract.production_country.ID"
+            :country="parseInt(this.contract.production_country.ID)"
             show-total
           />
 
@@ -290,6 +290,7 @@ export default {
       let contract = {};
       // meta info
       contract["ID"] = this.newId;
+      contract["contractId"] = this.$store.state.currentContractId;
       contract["startdate"] = this.todayDate;
       contract["store"] = +this.$store.state.currentAccount.ID;
       contract["seller"] = +this.$store.state.currentAccount.ID;
@@ -307,6 +308,8 @@ export default {
       contract["material_description"] = this.contract.material_description;
       contract["charity"] = +this.contract.charity.ID;
       contract["label"] = this.contract.label;
+
+      this.contract;
 
       // console.log(contract.ID);
       return contract;
@@ -358,14 +361,16 @@ export default {
     },
     selectImage(image) {
       Vue.set(this.contract, "visual", image);
+      Vue.set(this.contract, "name", image.alt);
       this.toggleDrawer("#gallery-drawer");
     },
-    newHederaContract() {
-      this.$store.dispatch("addSmartContract", {
+    async newHederaContract() {
+      await this.$store.dispatch("addSmartContract", {
         initialBalance: parseFloat(this.contract.deposit),
       });
     },
     createContract() {
+      this.$store.commit("resetCurrentContractId");
       this.newHederaContract();
 
       // add contract directly to store
@@ -442,7 +447,7 @@ export default {
       Vue.set(
         this.contract,
         "deposit",
-        (materialSum + shipmentDeposit).toString()
+        (materialSum + shipmentDeposit).toFixed(2).toString()
       );
 
       Vue.set(this.contract, "label", totalLabel);

@@ -53,7 +53,7 @@ export async function contractCreate(accountId, pvKey, initialBalance) {
     .setGas(2000000);
   const contractResponse = await contractTx.execute(client);
   const contractReceipt = await contractResponse.getReceipt(client);
-  const newContractId = contractReceipt.contractId;
+  const newContractId = await contractReceipt.contractId;
   console.log("The smart contract ID is " + newContractId);
 
   return newContractId;
