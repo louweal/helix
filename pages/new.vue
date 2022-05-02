@@ -181,12 +181,12 @@
           <heading size="l" level="2" class="bottom-xs-0"
             >Deposit summary</heading
           >
-
+          <!-- 
           <deposit-table
             :materials="this.selectedMaterials.map((m) => m.ID)"
             :country="parseInt(this.contract.production_country.ID)"
             show-total
-          />
+          /> -->
 
           <deposit
             :val="this.contract.deposit"

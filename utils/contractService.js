@@ -15,6 +15,8 @@ const {
 } = require("@hashgraph/sdk");
 
 //export async
+// to do: add params name_ deposit_ duration_ charity_
+
 export async function contractCreate(accountId, pvKey, initialBalance) {
   const operatorId = AccountId.fromString(accountId);
   const operatorKey = PrivateKey.fromString(pvKey);
@@ -47,6 +49,9 @@ export async function contractCreate(accountId, pvKey, initialBalance) {
   console.log(`- Content added: ${fileAppendRx.status} \n`);
 
   //Deploy the contract instance
+
+  // add here .setConstructorParameters(new ContractFunctionParameters().addString("Alice").addUint256(111111));
+
   const contractTx = await new ContractCreateTransaction()
     .setBytecodeFileId(bytecodeFileId)
     .setInitialBalance(new Hbar(initialBalance))

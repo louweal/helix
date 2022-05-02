@@ -130,10 +130,21 @@
           :options="allAccounts"
         />
 
+        <heading size="m" level="3" class="bottom-xs-0">
+          Donation recepient <badge color="primary">10%</badge>
+        </heading>
+
+        <dropdown
+          key="1"
+          class="dropdown--white"
+          @input="getDepositRecepient"
+          :options="allCharities"
+        />
+
         <p>
           After transfering the ownership you will instantly receive the
           remaining 60% of your deposit ({{ hbars(60) }}) and you will donate
-          10% ({{ hbars(10) }}) to The Plastic Soup Foundation.
+          10% ({{ hbars(10) }}) to {{ "todo" }} The Plastic Soup Foundation.
         </p>
 
         <Button
@@ -152,7 +163,7 @@
           remainder of the deposit to the charity selected below.
         </p>
         <heading size="m" level="3" class="bottom-xs-0">
-          Deposit recepient <badge color="primary">99%</badge>
+          Deposit recepient <badge color="primary">10%</badge>
         </heading>
 
         <dropdown
@@ -183,6 +194,7 @@ export default {
       transferred: false,
       deleted: false,
       buyer: false,
+      charity: false,
     };
   },
 
@@ -256,10 +268,11 @@ export default {
     },
     getItemRecepient(data) {
       this.buyer = data.ID;
-      console.log(data.ID);
+      // console.log(data.ID);
     },
     getDepositRecepient(data) {
-      // todo
+      this.charity = this.allCharities.find((c) => c.id == +data.ID).label;
+      // console.log(this.charity);
     },
     doTransfer() {
       if (this.isShop) {
