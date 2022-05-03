@@ -7,6 +7,7 @@ contract PurchaseAgreement {
     address payable public charity;
     string public name;
     uint public deposit;
+    uint public initialDepositB;
     uint public depositB;
     uint public depositB2;
     uint public depositC;
@@ -23,6 +24,7 @@ contract PurchaseAgreement {
         charity = payable(charity_);
         
         duration = duration_ * 86400; //  in seconds 86400
+        initialDepositB = (deposit_ * 60) / 100;
         depositB = (deposit_ * 60) / 100;
         depositB2 = (deposit_ * 30) / 100;
         depositC = (deposit_ * 10) / 100;
@@ -43,6 +45,10 @@ contract PurchaseAgreement {
     function getCurrentTimestamp() public view returns (uint256) {
         return block.timestamp;
     }
+
+    function getMaxAmount() public view returns (uint256) {
+        return (((initialDepositB * (block.timestamp - buyDate))/ duration)) - (initialDepositB - depositB);
+    } 
 
     // confirm buying the new item 
     function confirmPurchase() external inState(State.Created) onlyBuyer() payable {
@@ -79,6 +85,12 @@ contract PurchaseAgreement {
         seller.transfer(depositB); // seller gets 60%
         buyer.transfer(depositB2); // buyer get 30%
         charity.transfer(depositC); // charity gets 10%
+    }
+
+    function collect(uint amount) external inState(State.Sold) onlySeller payable {
+        require(amount <= (((initialDepositB * (block.timestamp - buyDate))/ duration)) - (initialDepositB - depositB), "You can't collect this amount at this time");
+        depositB = depositB - amount;
+        seller.transfer(amount);
     }
 
     function abort() external onlySeller() inState(State.Created) {

@@ -3,12 +3,7 @@ import { contractCreate } from "../utils/contractService";
 export const state = () => ({
   currentCategory: -1,
   action: false,
-  currentAccount: {
-    ID: -1,
-    name: "",
-    accountId: "",
-    avatar: "",
-  },
+  currentAccount: {},
   currentContractId: -1,
   contracts: [],
   accounts: [],
@@ -22,16 +17,14 @@ export const state = () => ({
 export const actions = {
   // hedera smart contracts
   async addSmartContract({ commit, state }, payload) {
-    // { initialBalance }
     let contractId = await contractCreate(
       state.currentAccount.accountId,
       state.currentAccount.pvkey,
-      payload.initialBalance
+      payload.name,
+      payload.duration,
+      payload.deposit,
+      payload.charityAccountId // this is not the Account ID!!!!
     );
-    // console.log(contractId);
-    // console.log(contractId.num);
-    // state.currentContractId = contractId;
-
     commit("updateContractId", contractId);
   },
 };
@@ -65,7 +58,7 @@ export const mutations = {
     state.currentAccount = payload;
   },
   resetCurrentContractId(state) {
-    state.currentAccount = -1;
+    state.currentContractId = -1;
   },
   setAction(state, payload) {
     state.action = payload;

@@ -2,22 +2,24 @@ const {
   Client,
   AccountId,
   PrivateKey,
-  TokenCreateTransaction,
   FileCreateTransaction,
   FileAppendTransaction,
   ContractCreateTransaction,
   ContractFunctionParameters,
-  TokenUpdateTransaction,
   ContractExecuteTransaction,
-  TokenInfoQuery,
   AccountBalanceQuery,
   Hbar,
 } = require("@hashgraph/sdk");
 
-//export async
-// to do: add params name_ deposit_ duration_ charity_
-
-export async function contractCreate(accountId, pvKey, initialBalance) {
+export async function contractCreate(
+  accountId,
+  pvKey,
+  name,
+  duration,
+  deposit,
+  charity
+) {
+  console.log("the accountId is: " + accountId);
   const operatorId = AccountId.fromString(accountId);
   const operatorKey = PrivateKey.fromString(pvKey);
   //   const treasuryId = AccountId.fromString(accountId);
@@ -51,10 +53,17 @@ export async function contractCreate(accountId, pvKey, initialBalance) {
   //Deploy the contract instance
 
   // add here .setConstructorParameters(new ContractFunctionParameters().addString("Alice").addUint256(111111));
-
+  //    .setInitialBalance(new Hbar(initialBalance))
   const contractTx = await new ContractCreateTransaction()
     .setBytecodeFileId(bytecodeFileId)
-    .setInitialBalance(new Hbar(initialBalance))
+    .setConstructorParameters(
+      new ContractFunctionParameters()
+        .addString(name)
+        .addUint256(duration)
+        .addUint256(deposit)
+        .addUint256(duration)
+        .addAddress(charity.toSolidityAddress())
+    )
     .setGas(2000000);
   const contractResponse = await contractTx.execute(client);
   const contractReceipt = await contractResponse.getReceipt(client);
@@ -62,4 +71,8 @@ export async function contractCreate(accountId, pvKey, initialBalance) {
   console.log("The smart contract ID is " + newContractId);
 
   return newContractId;
+}
+
+export async function contractSetBuyer(buyerAccountId) {
+  // todo
 }

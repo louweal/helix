@@ -49,10 +49,6 @@ export default {
     this.$store.commit("SET_LABELS", require("~/data/labels.json"));
     this.$store.commit("SET_MATERIALS", require("~/data/materials.json"));
 
-    console.log(
-      "todo for demo contracts: mint and associate [only once! -> manually from other script?? ]"
-    );
-
     if (this.$store.state.currentAccount.ID === -1) {
       this.$router.push({ path: "/login" });
     }

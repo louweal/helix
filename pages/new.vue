@@ -3,7 +3,8 @@
     <back-button bg> Add contract </back-button>
 
     <div class="container" style="margin-top: 42px">
-      <!-- {{ contract }} -->
+      <br />
+      {{ $store.state.currentAccount.accountId }}
 
       <div class="add-form">
         <Section v-if="currentStep === 1">
@@ -366,7 +367,10 @@ export default {
     },
     async newHederaContract() {
       await this.$store.dispatch("addSmartContract", {
-        initialBalance: parseFloat(this.contract.deposit),
+        name: this.contract.name,
+        duration: this.contract.duration,
+        deposit: parseInt(this.contract.deposit), // string to int tinybar
+        charityAccountId: this.contract.charity,
       });
     },
     createContract() {
@@ -447,7 +451,7 @@ export default {
       Vue.set(
         this.contract,
         "deposit",
-        (materialSum + shipmentDeposit).toFixed(2).toString()
+        parseInt((materialSum + shipmentDeposit) * 100000000).toString()
       );
 
       Vue.set(this.contract, "label", totalLabel);

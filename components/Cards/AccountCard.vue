@@ -63,8 +63,6 @@ export default {
 
   methods: {
     signIn(id) {
-      // console.log("todo update store");
-
       this.$store.commit("setCurrentAccount", this.data);
       this.$store.commit("setCurrentCategory", -1);
 
