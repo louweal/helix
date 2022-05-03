@@ -2,7 +2,7 @@
   <div class="page">
     <Header fixed />
     <div class="container container--wide">
-      {{ selectedContracts }}
+      <!-- {{ selectedContracts }} -->
       <div class="grid" v-if="selectedContracts.length > 0">
         <div
           class="col-xs-12"
