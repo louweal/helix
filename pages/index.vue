@@ -67,10 +67,12 @@ export default {
   },
 
   async mounted() {
-    this.$store.commit("toggleFetchState");
-    let data = await this.$store.dispatch("getSmartContracts");
-    this.selectedContracts = data;
-    this.$store.commit("toggleFetchState");
+    if (this.$store.state.currentAccount.ID) {
+      this.$store.commit("toggleFetchState");
+      let data = await this.$store.dispatch("getSmartContracts");
+      this.selectedContracts = data;
+      this.$store.commit("toggleFetchState");
+    }
   },
 
   computed: {
