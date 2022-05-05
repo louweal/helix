@@ -23,12 +23,16 @@ export default {
   },
 
   computed: {
+    deposit() {
+      return this.val / 100000000;
+    },
+
     integral() {
-      return this.val.split(".")[0];
+      return this.deposit.split(".")[0];
     },
 
     fractional() {
-      let frac = this.val.split(".")[1];
+      let frac = this.deposit.split(".")[1];
       if (frac == undefined) {
         return "00";
       }

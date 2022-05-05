@@ -1,6 +1,10 @@
 <template>
-  <nuxt-link class="contract-card" :to="'/contracts/' + data.ID">
+  <nuxt-link
+    class="contract-card"
+    :to="data.ID ? '/contracts/' + data.ID : '/'"
+  >
     <div class="contract-card__body">
+      {{ data.ID }}
       <div class="contract-card__visual bottom-xs-1">
         <div
           v-if="data.visual"
@@ -22,14 +26,20 @@
         </div> -->
       </div>
 
-      <heading size="l" level="2" weight="400" class="bottom-xs-0">
+      <heading
+        size="l"
+        level="2"
+        weight="400"
+        class="bottom-xs-0"
+        v-if="data.name"
+      >
         {{ data.name }}
       </heading>
       <heading size="s" level="0" weight="400" fstyle="italic" v-if="seller">
         {{ seller }}
       </heading>
     </div>
-    <div class="contract-card__footer align-xs-end">
+    <div class="contract-card__footer align-xs-end" v-if="data.deposit">
       <deposit :val="data.deposit" />
     </div>
   </nuxt-link>
@@ -68,7 +78,10 @@ export default {
     },
 
     seller() {
-      let seller = this.accounts.find((a) => a.ID === this.data.seller).name;
+      // let seller = this.accounts.find((a) => a.ID === this.data.seller).name;
+      let seller = this.accounts.find(
+        (a) => a.accountId === this.data.seller
+      ).name;
       return seller !== this.$store.state.currentAccount.name ? seller : false;
     },
   },

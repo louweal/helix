@@ -2,6 +2,9 @@
   <div class="page">
     <Header fixed />
     <div class="container container--wide">
+      <div v-if="$store.state.fetching">
+        Fetching your contracts from Hedera network ...
+      </div>
       <!-- {{ selectedContracts }} -->
       <div class="grid" v-if="selectedContracts.length > 0">
         <div
@@ -13,14 +16,15 @@
         </div>
       </div>
       <notification>
-        <p>{{ $store.state.currentAccount.name }}'s account on Dragonglass:</p>
-        <a
-          target="_blank"
-          :href="`https://testnet.dragonglass.me/hedera/accounts/${$store.state.currentAccount.accountId}`"
-        >
-          https://testnet.dragonglass.me/hedera/accounts/
-          {{ $store.state.currentAccount.accountId }}
-        </a>
+        <p>
+          {{ $store.state.currentAccount.name }}'s account on
+          <a
+            target="_blank"
+            :href="`https://testnet.dragonglass.me/hedera/accounts/${$store.state.currentAccount.accountId}`"
+          >
+            Dragonglass
+          </a>
+        </p>
       </notification>
 
       <notification v-if="$store.state.currentContractId !== -1">
@@ -30,7 +34,10 @@
         </p>
       </notification>
     </div>
-    <div v-if="selectedContracts.length === 0" class="page--placeholder">
+    <div
+      v-if="selectedContracts.length === 0 && !$store.state.fetching"
+      class="page--placeholder"
+    >
       <div>
         <p class="bottom-xs-2">No active contracts found in your account</p>
 
@@ -53,6 +60,20 @@
 
 <script>
 export default {
+  data() {
+    return {
+      selectedContracts: [],
+    };
+  },
+
+  async mounted() {
+    this.$store.commit("toggleFetchState");
+    let data = await this.$store.dispatch("getSmartContracts");
+    this.selectedContracts = data;
+    console.log(this.selectedContracts);
+    this.$store.commit("toggleFetchState");
+  },
+
   computed: {
     contracts() {
       return this.$store.state.contracts;
@@ -60,17 +81,18 @@ export default {
     me() {
       return +this.$store.state.currentAccount.ID;
     },
-    selectedContracts() {
-      let myContracts = this.contracts.filter((c) => +c.owner === this.me);
-      let selected = this.$store.state.currentCategory;
-      if (selected === -1) {
-        return myContracts;
-      } else {
-        return myContracts.filter(
-          (c) => +c.category === this.$store.state.currentCategory
-        );
-      }
-    },
+    // selectedContracts() {
+
+    //   let myContracts = this.contracts.filter((c) => +c.owner === this.me);
+    //   let selected = this.$store.state.currentCategory;
+    //   if (selected === -1) {
+    //     return myContracts;
+    //   } else {
+    //     return myContracts.filter(
+    //       (c) => +c.category === this.$store.state.currentCategory
+    //     );
+    //   }
+    // },
   },
 };
 </script>

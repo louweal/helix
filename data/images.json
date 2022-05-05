@@ -1,80 +1,116 @@
 [
   {
     "ID": 0,
-    "alt": "Bunny toy",
-    "url": "bunny.png",
+    "alt": "Area rug",
+    "url": "arearug.png",
     "used": false
   },
   {
     "ID": 1,
-    "alt": "Fruit basket",
-    "url": "fruit-basket.png",
-    "used": true
+    "alt": "Bar stool",
+    "url": "barstool.png",
+    "used": false
   },
   {
     "ID": 2,
-    "alt": "Pies",
-    "url": "pies.png",
-    "used": true
+    "alt": "Duvet cover",
+    "url": "bedsheet1.png",
+    "used": false
   },
   {
     "ID": 3,
-    "alt": "Pizza",
-    "url": "pizza.png",
-    "used": true
+    "alt": "Couch",
+    "url": "couch.png",
+    "used": false
   },
   {
     "ID": 4,
-    "alt": "Sandwiches",
-    "url": "sandwich-friends.png",
-    "used": true
+    "alt": "Office chair",
+    "url": "deskchair.png",
+    "used": false
   },
   {
     "ID": 5,
-    "alt": "De Orang-Oetan",
-    "url": "book.png",
+    "alt": "Set of glasses (4)",
+    "url": "glass.png",
     "used": false
   },
   {
     "ID": 6,
-    "alt": "Carriage",
-    "url": "carriage.png",
+    "alt": "Plant",
+    "url": "plant1.png",
     "used": false
   },
   {
     "ID": 7,
-    "alt": "Dining chair - blue",
-    "url": "chair.png",
-    "used": true
+    "alt": "Stool",
+    "url": "stool.png",
+    "used": false
   },
   {
     "ID": 8,
-    "alt": "Small fridge",
-    "url": "fridge.png",
+    "alt": "Apron",
+    "url": "apron.png",
     "used": false
   },
   {
     "ID": 9,
-    "alt": "Groceries basket",
-    "url": "groceries-basket.png",
-    "used": true
+    "alt": "Bag",
+    "url": "bag.png",
+    "used": false
   },
   {
     "ID": 10,
-    "alt": "Pan set - pink",
-    "url": "pans.png",
+    "alt": "Bed",
+    "url": "bed.png",
     "used": false
   },
   {
     "ID": 11,
-    "alt": "Bath slippers",
-    "url": "slippers.png",
+    "alt": "Cabinet",
+    "url": "cabinet.png",
     "used": false
   },
   {
     "ID": 12,
-    "alt": "Vegatable basket",
-    "url": "veggie-basket.png",
-    "used": true
+    "alt": "Curtains",
+    "url": "curtains.png",
+    "used": false
+  },
+  {
+    "ID": 13,
+    "alt": "Dishcloths (4)",
+    "url": "dishcloth.png",
+    "used": false
+  },
+  {
+    "ID": 14,
+    "alt": "Duvet cover for kids",
+    "url": "duvetcover2.png",
+    "used": false
+  },
+  {
+    "ID": 15,
+    "alt": "Night table",
+    "url": "nightstand.png",
+    "used": false
+  },
+  {
+    "ID": 16,
+    "alt": "Plant (...)",
+    "url": "plant2.png",
+    "used": false
+  },
+  {
+    "ID": 17,
+    "alt": "Shower curtain",
+    "url": "showercurtain.png",
+    "used": false
+  },
+  {
+    "ID": 18,
+    "alt": "Washbasin",
+    "url": "washbasin.png",
+    "used": false
   }
 ]

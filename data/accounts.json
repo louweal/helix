@@ -1,7 +1,7 @@
 [
   {
     "ID": 2,
-    "name": "GreenStore Amsterdam",
+    "name": "Warehouse Amsterdam",
     "seller": true,
     "accountId": "0.0.34174224",
     "pvkey": "302e020100300506032b6570042204206e1155ff9c76cbe297d5de6920f535edc1302996775eba73cf2f171e712af105",
@@ -11,7 +11,7 @@
   },
   {
     "ID": 0,
-    "name": "Jane Doe",
+    "name": "Alice",
     "accountId": "0.0.34174211",
     "pvkey": "302e020100300506032b6570042204201d09dee4680c077cebbb26fbc25f03932d0fb958be51c9a4b00d551f75d8db3c",
     "avatar": "avatar1.png",
@@ -19,7 +19,7 @@
   },
   {
     "ID": 1,
-    "name": "John Doe",
+    "name": "Bob",
     "accountId": "0.0.34174207",
     "pvkey": "302e020100300506032b6570042204202554bbc6fd55e31f8ddb235da3e2cbe7b1017f3d95f7081efba6b9b03ee1769f",
     "avatar": "avatar2.png",

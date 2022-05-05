@@ -310,7 +310,7 @@ export default {
       contract["charity"] = +this.contract.charity.ID;
       contract["label"] = this.contract.label;
 
-      this.contract;
+      // this.contract;
 
       // console.log(contract.ID);
       return contract;
@@ -336,10 +336,10 @@ export default {
     allCharities() {
       return this.accounts
         .filter((a) => a.charity)
-        .map(({ name, ID }) => ({
+        .map(({ name, ID, accountId }) => ({
           id: ID,
           label: name,
-          value: name.toLowerCase(),
+          value: accountId,
         }));
     },
     materialGroups() {
@@ -366,11 +366,15 @@ export default {
       this.toggleDrawer("#gallery-drawer");
     },
     async newHederaContract() {
+      console.log(this.contract.charity.val);
+
       await this.$store.dispatch("addSmartContract", {
         name: this.contract.name,
-        duration: this.contract.duration,
+        description: this.contract.description,
+        visual: +this.contract.visual.ID,
+        duration: this.contract.duration.val,
         deposit: parseInt(this.contract.deposit), // string to int tinybar
-        charityAccountId: this.contract.charity,
+        charityAccountId: this.contract.charity.val,
       });
     },
     createContract() {
@@ -380,7 +384,7 @@ export default {
       // add contract directly to store
       let newContract = this.makeContract;
 
-      console.log("image id" + this.contract.visual.ID);
+      // console.log("image id" + this.contract.visual.ID);
       this.$store.commit("addContract", newContract);
 
       // this.$store.commit("setImageUsed", {

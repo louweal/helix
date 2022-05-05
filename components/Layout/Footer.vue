@@ -13,7 +13,8 @@
               "
               alt="all contracts"
               height="24"
-          /></nuxt-link>
+            />Items</nuxt-link
+          >
         </li>
         <li>
           <nuxt-link to="/search"
@@ -25,7 +26,8 @@
               "
               alt="search contracts"
               height="24"
-          /></nuxt-link>
+            />Search
+          </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/faq"
@@ -37,7 +39,9 @@
               "
               alt="faq"
               height="24"
-          /></nuxt-link>
+            />
+            FAQ
+          </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/account"
@@ -51,7 +55,9 @@
               "
               alt="account"
               height="24"
-          /></nuxt-link>
+            />
+            Account
+          </nuxt-link>
         </li>
       </ul>
     </div>
@@ -98,8 +104,10 @@ export default {
       ::v-deep a {
         width: 100%;
         height: 100%;
-        padding: 0.5rem 0;
+        padding: 0.5rem 0 0rem 0;
         text-align: center;
+        font-size: 11px;
+        color: get-color(base-text);
       }
 
       img {

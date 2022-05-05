@@ -43,7 +43,7 @@ export default {
   position: fixed;
   bottom: 0;
   z-index: 3;
-  transform: translateY(-66px);
+  transform: translateY(-76px);
   transition: transform 0.9s 0.1s ease-out;
 
   &__inner {

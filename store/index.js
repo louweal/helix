@@ -1,4 +1,4 @@
-import { contractCreate } from "../utils/contractService";
+import { contractCreate, getMyContracts } from "../utils/contractService";
 
 export const state = () => ({
   currentCategory: -1,
@@ -12,6 +12,7 @@ export const state = () => ({
   images: [],
   labels: [],
   materials: [],
+  fetching: false,
 });
 
 export const actions = {
@@ -21,11 +22,22 @@ export const actions = {
       state.currentAccount.accountId,
       state.currentAccount.pvkey,
       payload.name,
+      payload.description,
+      payload.visual,
       payload.duration,
       payload.deposit,
-      payload.charityAccountId // this is not the Account ID!!!!
+      payload.charityAccountId
     );
     commit("updateContractId", contractId);
+  },
+
+  async getSmartContracts({ commit, state }) {
+    // commit("toggleFetchState");
+    let data = await getMyContracts(state.currentAccount.accountId);
+
+    // commit("toggleFetchState");
+
+    return data;
   },
 };
 
@@ -97,6 +109,10 @@ export const mutations = {
 
   updateContractId(state, payload) {
     state.currentContractId = payload;
+  },
+
+  toggleFetchState(state) {
+    state.fetching = !state.fetching;
   },
 };
 
