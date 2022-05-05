@@ -104,18 +104,26 @@ export async function contractSetBuyer(buyerAccountId) {
   // todo
 }
 
-export async function getMyContracts(accountId) {
+export async function getMyContracts(accountId, pvKey) {
   console.log(process.env.MY_ACCOUNT_ID);
   console.log(process.env.MY_PRIVATE_KEY);
 
   const operatorId = AccountId.fromString(process.env.MY_ACCOUNT_ID);
   const operatorKey = PrivateKey.fromString(process.env.MY_PRIVATE_KEY);
 
-  const client = Client.forTestnet().setOperator(operatorId, operatorKey);
+  const operatorClient = Client.forTestnet().setOperator(
+    operatorId,
+    operatorKey
+  );
+
+  const sellerId = AccountId.fromString(accountId);
+  const sellerKey = PrivateKey.fromString(pvKey);
+
+  const client = Client.forTestnet().setOperator(sellerId, sellerKey);
 
   let lookupContractId = process.env.LOOKUP_CONTRACT;
 
-  let myContracts = []; //[];
+  let myContracts = [];
 
   let i = 0;
   while (i < 1024) {
@@ -129,40 +137,34 @@ export async function getMyContracts(accountId) {
             .addAddress(AccountId.fromString(accountId).toSolidityAddress())
             .addUint32(i)
         );
-      const contractQuerySubmit = await contractQueryTx.execute(client);
+      const contractQuerySubmit = await contractQueryTx.execute(operatorClient);
       const contractQueryResult = contractQuerySubmit.getAddress(0);
 
-      console.log("the result: " + contractQueryResult);
+      // console.log("the result: " + contractQueryResult);
 
       const contractId = ContractId.fromSolidityAddress(contractQueryResult); // ?
       console.log(`- The contractAddress at index ${i} is ${contractId} \n`);
 
-      const solidityContractId = contractQueryResult;
-      // ContractId.fromString(contractQueryResult).toSolidityAddress();
+      // get values from contract
+      const name = await getter(client, contractId, "getName", "string");
+      const description = await getter(
+        client,
+        contractId,
+        "getDescription",
+        "string"
+      );
+      const visual = await getter(client, contractId, "getVisual", "uint32");
 
-      console.log(solidityContractId);
-
-      // get visual
-      const visual = 3; // tododododododod
-
-      // const contractVisualQueryTx = new ContractCallQuery()
-      //   .setContractId(solidityContractId)
-      //   .setGas(100000)
-      //   .setFunction("getVisual");
-      // const contractVisualQuerySubmit = await contractVisualQueryTx.execute(
-      //   client
-      // );
-      // visual = contractVisualQuerySubmit.getUint32(0);
-
-      // console.log("the visual is: " + str(visual));
-      // console.log(visual);
+      console.log("the visual is: " + visual);
+      console.log(visual);
 
       myContracts.push({
         ID: contractId,
         seller: accountId,
         visual: visual,
-        name: false,
-        deposit: false,
+        name: name,
+        description: description,
+        deposit: "999999999",
       });
     } catch (error) {
       console.log(error);
@@ -175,4 +177,22 @@ export async function getMyContracts(accountId) {
 
   // console.log(myContracts);
   return myContracts;
+}
+
+// helper functions
+
+async function getter(client, contractId, functionName, returnType) {
+  const contractQueryTx = await new ContractCallQuery()
+    .setContractId(contractId)
+    .setGas(100000)
+    .setFunction(functionName)
+    .setQueryPayment(new Hbar(2));
+  const contractQuerySubmit = await contractQueryTx.execute(client);
+
+  if (returnType === "uint32") {
+    return await contractQuerySubmit.getUint32(0);
+  }
+  if (returnType === "string") {
+    return await contractQuerySubmit.getString(0);
+  }
 }

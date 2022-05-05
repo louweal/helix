@@ -4,14 +4,13 @@
     :to="data.ID ? '/contracts/' + data.ID : '/'"
   >
     <div class="contract-card__body">
-      {{ data.ID }}
       <div class="contract-card__visual bottom-xs-1">
         <div
-          v-if="data.visual"
+          v-if="visual"
           class="img ratio-1x1"
           :style="{
             backgroundImage:
-              `url(` + require(`~/assets/images/products/${visual}`) + `)`,
+              `url(` + require(`~/assets/images/products/${visual.url}`) + `)`,
           }"
         ></div>
 
@@ -56,7 +55,7 @@ export default {
 
   computed: {
     visual() {
-      return this.images.find((i) => i.ID === this.data.visual).url;
+      return this.images.find((i) => i.ID === this.data.visual);
     },
 
     accounts() {

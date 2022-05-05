@@ -70,7 +70,6 @@ export default {
     this.$store.commit("toggleFetchState");
     let data = await this.$store.dispatch("getSmartContracts");
     this.selectedContracts = data;
-    console.log(this.selectedContracts);
     this.$store.commit("toggleFetchState");
   },
 

@@ -31,11 +31,11 @@ export const actions = {
     commit("updateContractId", contractId);
   },
 
-  async getSmartContracts({ commit, state }) {
-    // commit("toggleFetchState");
-    let data = await getMyContracts(state.currentAccount.accountId);
-
-    // commit("toggleFetchState");
+  async getSmartContracts({ state }) {
+    let data = await getMyContracts(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey
+    );
 
     return data;
   },

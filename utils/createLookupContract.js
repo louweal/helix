@@ -3,6 +3,8 @@
 
 // only run this code if you need a another lookup contract
 
+// node .\utils\createLookupContract.js
+
 // my lookup contract ID is = 0.0.34402157
 
 require("dotenv").config();

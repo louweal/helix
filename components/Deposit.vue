@@ -24,7 +24,7 @@ export default {
 
   computed: {
     deposit() {
-      return this.val / 100000000;
+      return (parseInt(this.val) / 100000000).toString(); // convert deposit from tinybar to hbar
     },
 
     integral() {
@@ -33,15 +33,18 @@ export default {
 
     fractional() {
       let frac = this.deposit.split(".")[1];
-      if (frac == undefined) {
-        return "00";
-      }
-      if (frac.length === 0) {
-        return "00";
-      }
-      if (frac.length === 1) {
-        return frac + "0";
-      }
+      // if (frac == undefined) {
+      //   return "00";
+      // }
+      // if (frac.length === 0) {
+      //   return "00";
+      // }
+      // if (frac.length === 1) {
+      //   return frac + "0";
+      // }
+      // if (frac.length >= 2) {
+      //   return frac.toFixed(2);
+      // }
       return frac;
     },
   },
