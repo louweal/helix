@@ -7,7 +7,10 @@ contract PurchaseAgreement {
     address payable public charity;
     string public name;
     string public description;
+    string public materialDescription;
+    string public productionCountry;
     uint32 public visual;
+    uint32 public category;
     uint public deposit;
     uint public initialDepositB;
     uint public depositB;
@@ -19,10 +22,13 @@ contract PurchaseAgreement {
     enum State {Created, Sold, Resold, Inactive}
     State public state;
 
-    constructor(string memory name_, string memory description_, uint32 visual_, uint duration_, uint deposit_, address charity_) payable {
+    constructor(string memory name_, string memory description_, uint32 visual_, uint32 category_, string memory productionCountry_, string memory materialDescription_, uint duration_, uint deposit_, address charity_) payable {
         name = name_;
         description = description_;
         visual = visual_;
+        category = category_;
+        productionCountry = productionCountry_;
+        materialDescription = materialDescription_;
         seller = payable(msg.sender);
         deposit = deposit_;
         charity = payable(charity_);
@@ -54,8 +60,37 @@ contract PurchaseAgreement {
         return description;
     }
 
+    function getMaterialDescription()  public view returns (string memory) {
+        return materialDescription;
+    }
+
+    function getProductionCountry()  public view returns (string memory) {
+        return productionCountry;
+    }
+
+    function getBuyDate()  public view returns (uint256) {
+        return buyDate;
+    }
+
+    function getDuration()  public view returns (uint256) {
+        return duration;
+    }
+
+    // gets the initial deposit
+    function getDeposit() public view returns (uint256) {
+        return deposit;
+    }
+
     function getVisual() public view returns (uint32) {
         return visual;
+    }
+
+    function getCategory() public view returns (uint32) {
+        return category;
+    }
+
+    function getCharityAddress() public view returns (address) {
+        return charity;
     }
 
     function getCurrentTimestamp() public view returns (uint256) {

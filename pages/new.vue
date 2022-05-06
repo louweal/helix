@@ -41,6 +41,7 @@
             key="0"
             class="field field--light field--textarea"
             placeholder="Product description (optional)"
+            :value="contract.visual ? contract.visual.alt : ''"
             @input="(e) => setValue('description', e.target.value)"
           />
           <heading size="l" level="2" class="bottom-xs-0">
@@ -182,12 +183,12 @@
           <heading size="l" level="2" class="bottom-xs-0"
             >Deposit summary</heading
           >
-          <!-- 
+
           <deposit-table
             :materials="this.selectedMaterials.map((m) => m.ID)"
             :country="parseInt(this.contract.production_country.ID)"
             show-total
-          /> -->
+          />
 
           <deposit
             :val="this.contract.deposit"
@@ -287,34 +288,34 @@ export default {
         value: name.toLowerCase(),
       }));
     },
-    makeContract() {
-      let contract = {};
-      // meta info
-      contract["ID"] = this.newId;
-      contract["contractId"] = this.$store.state.currentContractId;
-      contract["startdate"] = this.todayDate;
-      contract["store"] = +this.$store.state.currentAccount.ID;
-      contract["seller"] = +this.$store.state.currentAccount.ID;
-      contract["owner"] = +this.$store.state.currentAccount.ID;
-      contract["deposit"] = this.contract.deposit;
+    // makeContract() {
+    //   let contract = {};
+    //   // meta info
+    //   contract["ID"] = this.newId;
+    //   contract["contractId"] = this.$store.state.currentContractId;
+    //   contract["startdate"] = this.todayDate;
+    //   contract["store"] = +this.$store.state.currentAccount.ID;
+    //   contract["seller"] = +this.$store.state.currentAccount.ID;
+    //   contract["owner"] = +this.$store.state.currentAccount.ID;
+    //   contract["deposit"] = this.contract.deposit;
 
-      // input
-      contract["visual"] = +this.contract.visual.ID;
-      contract["name"] = this.contract.name;
-      contract["description"] = this.contract.description;
-      contract["category"] = +this.contract.category.ID;
-      contract["duration"] = +this.contract.duration.ID;
-      contract["production_country"] = +this.contract.production_country.ID;
-      contract["materials"] = this.contract.materials.map(({ ID }) => +ID);
-      contract["material_description"] = this.contract.material_description;
-      contract["charity"] = +this.contract.charity.ID;
-      contract["label"] = this.contract.label;
+    //   // input
+    //   contract["visual"] = +this.contract.visual.ID;
+    //   contract["name"] = this.contract.name;
+    //   contract["description"] = this.contract.description;
+    //   contract["category"] = +this.contract.category.ID;
+    //   contract["duration"] = +this.contract.duration.ID;
+    //   contract["production_country"] = +this.contract.production_country.ID;
+    //   contract["materials"] = this.contract.materials.map(({ ID }) => +ID);
+    //   contract["material_description"] = this.contract.material_description;
+    //   contract["charity"] = +this.contract.charity.ID;
+    //   contract["label"] = this.contract.label;
 
-      // this.contract;
+    //   // this.contract;
 
-      // console.log(contract.ID);
-      return contract;
-    },
+    //   // console.log(contract.ID);
+    //   return contract;
+    // },
 
     newId() {
       let allContracts = this.$store.state.contracts;
@@ -363,29 +364,41 @@ export default {
     selectImage(image) {
       Vue.set(this.contract, "visual", image);
       Vue.set(this.contract, "name", image.alt);
+      Vue.set(this.contract, "description", image.alt);
       this.toggleDrawer("#gallery-drawer");
     },
-    async newHederaContract() {
-      console.log(this.contract.charity.val);
+    // async newHederaContract(data) {
+    //   console.log(this.contract.charity.val);
 
-      await this.$store.dispatch("addSmartContract", {
+    //   console.log(contractData);
+
+    //   // add to store
+    // },
+    async createContract() {
+      this.$store.commit("resetCurrentContractId");
+
+      console.log("name: " + this.contract.name);
+
+      let data = {
         name: this.contract.name,
         description: this.contract.description,
+        materialDescription: this.contract.material_description,
+        productionCountry: +this.contract.production_country.ID,
+        category: +this.contract.category.ID,
         visual: +this.contract.visual.ID,
         duration: this.contract.duration.val,
         deposit: parseInt(this.contract.deposit), // string to int tinybar
         charityAccountId: this.contract.charity.val,
-      });
-    },
-    createContract() {
-      this.$store.commit("resetCurrentContractId");
-      this.newHederaContract();
+      };
+
+      // add the contract on hedera network
+      let contractId = await this.$store.dispatch("addSmartContract", data);
 
       // add contract directly to store
-      let newContract = this.makeContract;
+      // let newContract = this.makeContract;
 
       // console.log("image id" + this.contract.visual.ID);
-      this.$store.commit("addContract", newContract);
+      // this.$store.commit("addContract", newContract);
 
       // this.$store.commit("setImageUsed", {
       //   ID: this.contract.visual.ID,

@@ -18,17 +18,24 @@ export const state = () => ({
 export const actions = {
   // hedera smart contracts
   async addSmartContract({ commit, state }, payload) {
+    console.log("the payload");
+    console.log(payload.name);
+
     let contractId = await contractCreate(
       state.currentAccount.accountId,
       state.currentAccount.pvkey,
       payload.name,
       payload.description,
       payload.visual,
+      payload.category,
+      payload.productionCountry,
+      payload.materialDescription,
       payload.duration,
       payload.deposit,
       payload.charityAccountId
     );
     commit("updateContractId", contractId);
+    return contractId;
   },
 
   async getSmartContracts({ state }) {
@@ -36,6 +43,11 @@ export const actions = {
       state.currentAccount.accountId,
       state.currentAccount.pvkey
     );
+
+    console.log("data in store");
+    console.log(data);
+
+    // todo commit each to store if not in store yet
 
     return data;
   },

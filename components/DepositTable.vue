@@ -93,9 +93,9 @@ export default {
     },
 
     distanceLabel() {
-      console.log("country: " + this.country);
+      // console.log("country: " + this.country);
       let pid = this.country;
-      return pid ? this.currentCountry.distances[pid] : "?";
+      return pid >= 0 ? this.currentCountry.distances[pid] : "?";
     },
 
     currentCountry() {

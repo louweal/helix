@@ -17,12 +17,12 @@
       </div>
       <notification>
         <p>
-          {{ $store.state.currentAccount.name }}'s account on
           <a
             target="_blank"
             :href="`https://testnet.dragonglass.me/hedera/accounts/${$store.state.currentAccount.accountId}`"
           >
-            Dragonglass
+            Inspect account {{ $store.state.currentAccount.accountId }} on
+            DragonGlass
           </a>
         </p>
       </notification>

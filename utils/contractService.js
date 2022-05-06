@@ -19,6 +19,9 @@ export async function contractCreate(
   name,
   description,
   visual,
+  category,
+  productionCountry,
+  materialDescription,
   duration,
   deposit,
   charity
@@ -69,6 +72,9 @@ export async function contractCreate(
         .addString(name)
         .addString(description)
         .addUint32(visual)
+        .addUint32(category)
+        .addString(productionCountry)
+        .addString(materialDescription)
         .addUint256(duration)
         .addUint256(deposit)
         .addAddress(AccountId.fromString(charity).toSolidityAddress())
@@ -154,6 +160,7 @@ export async function getMyContracts(accountId, pvKey) {
         "string"
       );
       const visual = await getter(client, contractId, "getVisual", "uint32");
+      const deposit = await getter(client, contractId, "getDeposit", "uint256");
 
       console.log("the visual is: " + visual);
       console.log(visual);
@@ -164,7 +171,7 @@ export async function getMyContracts(accountId, pvKey) {
         visual: visual,
         name: name,
         description: description,
-        deposit: "999999999",
+        deposit: deposit.toString(),
       });
     } catch (error) {
       console.log(error);
@@ -191,6 +198,9 @@ async function getter(client, contractId, functionName, returnType) {
 
   if (returnType === "uint32") {
     return await contractQuerySubmit.getUint32(0);
+  }
+  if (returnType === "uint256") {
+    return await contractQuerySubmit.getUint256(0);
   }
   if (returnType === "string") {
     return await contractQuerySubmit.getString(0);
