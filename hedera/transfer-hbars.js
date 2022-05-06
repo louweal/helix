@@ -1,5 +1,7 @@
-const { Client, PrivateKey, AccountCreateTransaction, AccountBalanceQuery, Hbar, TransferTransaction } = require("@hashgraph/sdk");
+const { Client, AccountBalanceQuery, Hbar, TransferTransaction } = require("@hashgraph/sdk");
 require("dotenv").config();
+
+console.log("hello");
 
 async function main() {
 
@@ -13,15 +15,15 @@ async function main() {
         throw new Error("Environment variables myAccountId and myPrivateKey must be present");
     }
 
+    console.log("hello");
+
     // Create our connection to the Hedera network
     // The Hedera JS SDK makes this really easy!
-    const client = Client.forTestnet();
-
-    client.setOperator(myAccountId, myPrivateKey);
+    const client = Client.forTestnet().setOperator(myAccountId, myPrivateKey);
 
     //Create new keys
-    const newAccountPrivateKey = await PrivateKey.generateED25519();
-    const newAccountPublicKey = newAccountPrivateKey.publicKey;
+    // const newAccountPrivateKey = await PrivateKey.generateED25519();
+    // const newAccountPublicKey = newAccountPrivateKey.publicKey;
 
     //Create a new account with 1,000 tinybar starting balance
     // const newAccountTransactionResponse = await new AccountCreateTransaction()
@@ -46,8 +48,8 @@ async function main() {
 
     //Create the transfer transaction
     const sendHbar = await new TransferTransaction()
-        .addHbarTransfer(myAccountId, new Hbar(-1000))
-        .addHbarTransfer(newAccountId, new Hbar(1000))
+        .addHbarTransfer(myAccountId, new Hbar(-4000))
+        .addHbarTransfer(newAccountId, new Hbar(4000))
         .execute(client);
 
     //Verify the transaction reached consensus
