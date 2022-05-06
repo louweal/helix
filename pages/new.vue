@@ -377,8 +377,6 @@ export default {
     async createContract() {
       this.$store.commit("resetCurrentContractId");
 
-      console.log("name: " + this.contract.name);
-
       let data = {
         name: this.contract.name,
         description: this.contract.description,

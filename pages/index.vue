@@ -3,7 +3,7 @@
     <Header fixed />
     <div class="container container--wide">
       <div v-if="$store.state.fetching">
-        Fetching your contracts from Hedera network ...
+        Fetching contracts from the Hedera network ...
       </div>
       <!-- {{ selectedContracts }} -->
       <div class="grid" v-if="selectedContracts.length > 0">

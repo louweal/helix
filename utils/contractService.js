@@ -162,8 +162,8 @@ export async function getMyContracts(accountId, pvKey) {
       const visual = await getter(client, contractId, "getVisual", "uint32");
       const deposit = await getter(client, contractId, "getDeposit", "uint256");
 
-      console.log("the visual is: " + visual);
-      console.log(visual);
+      // console.log("the visual is: " + visual);
+      // console.log(visual);
 
       myContracts.push({
         ID: contractId,
@@ -174,7 +174,7 @@ export async function getMyContracts(accountId, pvKey) {
         deposit: deposit.toString(),
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       console.log("Done");
       break;
       // console.error(error);
