@@ -38,26 +38,24 @@
           </badge> -->
 
           <deposit
-            :val="contract.deposit"
+            :val="(contract.deposit * 0.6).toFixed()"
             class="bottom-xs-1"
-            label="initial deposit"
+            label="collectable deposit"
           />
 
           <Stack :gap="0.5">
             <Button
-              @click="false"
               class="button--primary"
-              @click.native="toggleDrawer('#transfer-drawer')"
+              xxxclick.native="toggleDrawer('#transfer-drawer')"
             >
-              <icon icon="arrow-right" /> Transfer
+              <icon icon="payouts" /> Collect now
             </Button>
             <Button
-              @click="false"
-              class="button--dark"
-              @click.native="toggleDrawer('#delete-drawer')"
+              class="button--secondary"
+              xxxclick.native="toggleDrawer('#delete-drawer')"
             >
-              <icon icon="delete" />
-              Delete
+              <icon icon="donations" />
+              Donate now
             </Button>
           </Stack>
         </Section>
@@ -86,19 +84,18 @@
 
         <Section>
           <p v-if="contract.description">{{ contract.description }}</p>
-          <lorem v-else :max="50" />
         </Section>
 
         <Section>
           <hr />
 
-          <accordion-item label="Collect deposit" icon="graph" level="2">
+          <!-- <accordion-item label="Collect deposit" icon="graph" level="2">
             <p><lorem /></p>
 
             todo
-          </accordion-item>
+          </accordion-item> -->
 
-          <!-- <accordion-item
+          <accordion-item
             label="Materials"
             icon="tools"
             level="2"
@@ -109,7 +106,7 @@
             </p>
           </accordion-item>
 
-          <accordion-item label="Deposit breakdown" icon="grid" level="2">
+          <!-- <accordion-item label="Deposit breakdown" icon="grid" level="2">
             <deposit-table
               :materials="contract.materials"
               :country="contract.production_country"

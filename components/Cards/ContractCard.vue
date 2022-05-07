@@ -37,10 +37,10 @@
             fstyle="italic"
             xxxv-if="seller"
           >
-            {{ categoryName }}
+            {{ data.description }}
           </heading>
 
-          State: {{ data.state }}
+          {{ data.state }}
         </div>
         <div class="col-xs-8">
           <div class="contract-card__footer align-xs-end" v-if="data.deposit">

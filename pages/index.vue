@@ -54,12 +54,12 @@
         </p>
       </notification>
 
-      <notification v-if="$store.state.currentContractId !== -1">
+      <!-- <notification v-if="$store.state.currentContractId !== -1">
         <p>
           The smart contract with ID {{ $store.state.currentContractId }} was
           successfully created!
         </p>
-      </notification>
+      </notification> -->
     </div>
     <div
       v-if="selectedContracts.length === 0 && !$store.state.fetching"

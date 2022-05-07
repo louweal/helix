@@ -8,7 +8,7 @@
       <div class="grid" v-if="matchingContracts.length > 0">
         <div
           class="col-xs-24"
-          v-for="(contract, index) in matchingContracts"
+          v-for="(contract, index) in matchingContracts.slice().reverse()"
           :key="index"
         >
           <contract-card :data="contract" />
