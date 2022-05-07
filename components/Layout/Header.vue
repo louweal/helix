@@ -55,7 +55,7 @@ export default {
     setPushdownHeight() {
       let header = this.$refs["header"];
       let pushdown = this.$refs["pushdown"];
-      pushdown.style.height = header.offsetHeight + "px";
+      pushdown.style.height = "58px"; //header.offsetHeight + "px";
     },
 
     aosHeader() {
