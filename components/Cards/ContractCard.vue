@@ -35,10 +35,12 @@
             level="0"
             weight="400"
             fstyle="italic"
-            v-if="seller"
+            xxxv-if="seller"
           >
-            {{ seller }}
+            {{ categoryName }}
           </heading>
+
+          State: {{ data.state }}
         </div>
         <div class="col-xs-8">
           <div class="contract-card__footer align-xs-end" v-if="data.deposit">
@@ -93,7 +95,7 @@
         </div>
         <div class="col-xs-8">
           <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
-            <Button class="button--fullwidth"> View details </Button>
+            <Button class="button--fullwidth"> More info </Button>
           </nuxt-link>
         </div>
       </div>
@@ -132,7 +134,7 @@
       <dropdown
         key="0"
         class="dropdown--white"
-        @input="getItemRecepient"
+        @input="getBuyer()"
         :options="allAccounts"
       />
       <Button
@@ -155,12 +157,12 @@
       <dropdown
         key="0"
         class="dropdown--white"
-        @input="getItemRecepient"
+        @input="getBuyer"
         :options="allAccounts"
       />
       <Button
         class="button--primary button--fullwidth"
-        xxxclick.native="doSell"
+        @click.native="setBuyer()"
       >
         Confirm
       </Button>
@@ -191,6 +193,12 @@ export default {
   },
 
   methods: {
+    async setBuyer() {
+      let contractId = await this.$store.dispatch("setBuyer", {
+        contractId: this.data.ID,
+        buyerId: this.buyer,
+      });
+    },
     toggleActions() {
       this.showActions = !this.showActions;
 
@@ -223,7 +231,7 @@ export default {
         this.showDeleteOptions = false;
       }
     },
-    getItemRecepient(data) {
+    getBuyer(data) {
       this.buyer = data.ID;
       // console.log(data.ID);
     },
@@ -246,9 +254,9 @@ export default {
             !a.charity &&
             a.ID !== this.$store.state.currentAccount.ID
         )
-        .map(({ ID, name, accountId }) => ({
-          id: ID,
-          label: name,
+        .map(({ ID, accountId, name }) => ({
+          id: accountId,
+          label: name + " (" + accountId + ")",
           value: accountId,
         }));
     },
@@ -259,6 +267,14 @@ export default {
 
     images() {
       return this.$store.state.images;
+    },
+
+    categories() {
+      return this.$store.state.categories;
+    },
+
+    categoryName() {
+      return this.categories.find((c) => c.ID === this.data.category).name;
     },
 
     me() {

@@ -5,12 +5,8 @@ contract PurchaseAgreement {
     address payable public seller;
     address payable public buyer;
     address payable public charity;
-    string public name;
-    string public description;
-    string public materialDescription;
-    string public productionCountry;
-    uint32 public visual;
-    uint32 public category;
+    address public prevOwner;
+    string public staticData;
     uint public deposit;
     uint public initialDepositB;
     uint public depositB;
@@ -19,21 +15,18 @@ contract PurchaseAgreement {
     uint public buyDate;
     uint public duration;
 
-    enum State {Created, Sold, Resold, Inactive}
+    enum State {Created, Pending, Sold, Resold, Inactive}
     State public state;
 
-    constructor(string memory name_, string memory description_, uint32 visual_, uint32 category_, string memory productionCountry_, string memory materialDescription_, uint duration_, uint deposit_, address charity_) payable {
-        name = name_;
-        description = description_;
-        visual = visual_;
-        category = category_;
-        productionCountry = productionCountry_;
-        materialDescription = materialDescription_;
+    constructor(string memory staticData_, uint duration_, uint deposit_, address charity_) payable {
         seller = payable(msg.sender);
-        deposit = deposit_;
+        prevOwner = msg.sender;
+
         charity = payable(charity_);
-        
+        staticData = staticData_;
         duration = duration_ * 86400; //  in seconds 86400
+
+        deposit = deposit_;
         initialDepositB = (deposit_ * 60) / 100;
         depositB = (deposit_ * 60) / 100;
         depositB2 = (deposit_ * 30) / 100;
@@ -44,6 +37,7 @@ contract PurchaseAgreement {
     // setters
 
     function setBuyer(address buyer_) external onlySeller() {
+        state = State.Pending;
         buyer = payable(buyer_);
     }
 
@@ -52,24 +46,16 @@ contract PurchaseAgreement {
     }
 
     // getters
-    function getName() public view returns (string memory) {
-        return name;
-    }
-
-    function getDescription()  public view returns (string memory) {
-        return description;
-    }
-
-    function getMaterialDescription()  public view returns (string memory) {
-        return materialDescription;
-    }
-
-    function getProductionCountry()  public view returns (string memory) {
-        return productionCountry;
+    function getState() public view returns (uint8) {
+        return uint8(state);
     }
 
     function getBuyDate()  public view returns (uint256) {
         return buyDate;
+    }
+
+    function getStatic() public view returns (string memory) {
+        return staticData;
     }
 
     function getDuration()  public view returns (uint256) {
@@ -81,12 +67,8 @@ contract PurchaseAgreement {
         return deposit;
     }
 
-    function getVisual() public view returns (uint32) {
-        return visual;
-    }
-
-    function getCategory() public view returns (uint32) {
-        return category;
+    function getPrevOwner() public view returns (address) {
+        return prevOwner;
     }
 
     function getCharityAddress() public view returns (address) {
@@ -102,13 +84,18 @@ contract PurchaseAgreement {
     } 
 
     // confirm buying the new item 
-    function confirmPurchase() external inState(State.Created) onlyBuyer() payable {
+    function confirmPurchase(uint buyDate_) external inState(State.Pending) onlyBuyer() payable {
         require(msg.value == deposit, "Please send in the exact deposit amount"); // add the deposit to the contract
         // update state
         state = State.Sold;
-        buyDate = block.timestamp;
-        // buyer = msg.sender;
-        // seller.transfer(deposit); // pay X to the seller
+
+        if(buyDate != 0) { // for providing fake buydates for demo's
+            buyDate = buyDate_;
+        }
+        else {
+            buyDate = block.timestamp;
+        }
+        prevOwner = seller;
         seller = payable(msg.sender); // update seller to buyer
         buyer = payable(address(0)); // reset buyer value
     }

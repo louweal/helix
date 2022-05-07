@@ -13,7 +13,7 @@
 export default {
   props: {
     val: {
-      type: [String, Boolean],
+      type: [Number, Boolean],
       default: false,
     },
     label: {

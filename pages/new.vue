@@ -1,5 +1,7 @@
 <template>
   <div class="page page--white">
+    <spinner v-if="$store.state.fetching" />
+
     <back-button bg> Add contract </back-button>
 
     <div class="container" style="margin-top: 42px">
@@ -33,7 +35,11 @@
             class="field field--light"
             type="text"
             :placeholder="'Product name'"
-            :value="contract.visual ? contract.visual.alt : ''"
+            :value="
+              contract.visual && !contract.name
+                ? contract.visual.alt
+                : contract.name
+            "
             @input="(e) => setValue('name', e.target.value)"
           />
 
@@ -41,7 +47,11 @@
             key="0"
             class="field field--light field--textarea"
             placeholder="Product description (optional)"
-            :value="contract.visual ? contract.visual.alt : ''"
+            :value="
+              contract.visual && !contract.description
+                ? contract.visual.alt
+                : contract.description
+            "
             @input="(e) => setValue('description', e.target.value)"
           />
           <heading size="l" level="2" class="bottom-xs-0">
@@ -387,16 +397,18 @@ export default {
         duration: this.contract.duration.val,
         deposit: parseInt(this.contract.deposit), // string to int tinybar
         charityAccountId: this.contract.charity.val,
+        owner: this.$store.state.currentAccount.accountId,
       };
 
+      console.log("the data", data);
+
       // add the contract on hedera network
+      this.$store.commit("toggleFetchState");
       let contractId = await this.$store.dispatch("addSmartContract", data);
 
-      // add contract directly to store
-      // let newContract = this.makeContract;
-
-      // console.log("image id" + this.contract.visual.ID);
-      // this.$store.commit("addContract", newContract);
+      data["ID"] = contractId.toString();
+      this.$store.commit("addContract", data);
+      this.$store.commit("toggleFetchState");
 
       // this.$store.commit("setImageUsed", {
       //   ID: this.contract.visual.ID,

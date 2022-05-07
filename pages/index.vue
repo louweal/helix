@@ -2,34 +2,47 @@
   <div class="page">
     <Header fixed />
     <div class="container container--wide">
-      <!-- {{ selectedContracts }} -->
-      <heading size="l" level="2" class="bottom-xs-0">
-        Pending contracts
-      </heading>
-      <div class="grid" v-if="selectedContracts.length > 0">
-        <div
-          class="col-xs-24"
-          v-for="(contract, index) in selectedContracts.slice(0, 2)"
-          :key="index"
-        >
-          <contract-card
-            :data="contract"
-            @activeContract="setActiveContract"
-            pending
-          />
-        </div>
-      </div>
+      <!-- {{ contracts }} -->
 
-      <heading size="l" level="2" class="bottom-xs-0"> Contracts </heading>
-      <div class="grid" v-if="selectedContracts.length > 0">
-        <div
-          class="col-xs-24"
-          v-for="(contract, index) in selectedContracts"
-          :key="index"
-        >
-          <contract-card :data="contract" @activeContract="setActiveContract" />
+      <template v-if="pendingContracts.length > 0">
+        <heading size="l" level="2" class="bottom-xs-0">
+          Pending contracts
+        </heading>
+        <div class="grid">
+          <div
+            class="col-xs-24"
+            v-for="(contract, index) in pendingContracts.slice(0, 2).reverse()"
+            :key="index"
+          >
+            <contract-card
+              :data="contract"
+              @activeContract="setActiveContract"
+              pending
+            />
+          </div>
         </div>
-      </div>
+      </template>
+
+      <!-- {{ selectedContracts }} -->
+
+      <template v-if="selectedContracts.length > 0">
+        <heading size="l" level="2" class="bottom-xs-0">
+          Active contracts
+        </heading>
+        <div class="grid">
+          <div
+            class="col-xs-24"
+            v-for="(contract, index) in selectedContracts.slice().reverse()"
+            :key="index"
+          >
+            <contract-card
+              :data="contract"
+              @activeContract="setActiveContract"
+            />
+          </div>
+        </div>
+      </template>
+
       <notification>
         <p>
           <a
@@ -53,7 +66,7 @@
       class="page--placeholder"
     >
       <div>
-        <p class="bottom-xs-2">No active contracts found in your account</p>
+        <p class="bottom-xs-2">No contracts found</p>
 
         <template v-if="!$store.state.currentAccount.seller">
           <Button to="/login" class="button--secondary">
@@ -151,7 +164,7 @@
 export default {
   data() {
     return {
-      selectedContracts: [],
+      // selectedContracts: [],
       allContracts: [],
       activeContract: "",
     };
@@ -162,14 +175,10 @@ export default {
       this.$store.state.currentAccount.ID &&
       !this.$store.state.currentAccount.fetched
     ) {
-      console.log("fetch because not yet fetched");
       this.$store.commit("toggleFetchState");
       let data = await this.$store.dispatch("getSmartContracts");
       this.selectedContracts = data;
       this.$store.commit("toggleFetchState");
-    } else {
-      console.log("not fetching...!");
-      this.selectedContracts = this.selectedStoreContracts;
     }
   },
 
@@ -181,7 +190,7 @@ export default {
     me() {
       return this.$store.state.currentAccount.accountId;
     },
-    selectedStoreContracts() {
+    selectedContracts() {
       let myContracts = this.contracts.filter((c) => c.owner === this.me);
       let selected = this.$store.state.currentCategory;
       if (selected === -1) {
@@ -191,6 +200,10 @@ export default {
           (c) => +c.category === this.$store.state.currentCategory
         );
       }
+    },
+
+    pendingContracts() {
+      return this.selectedContracts.filter((c) => c.state === 1); // temp
     },
   },
 

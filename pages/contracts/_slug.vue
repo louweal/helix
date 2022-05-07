@@ -19,7 +19,13 @@
       <div class="container">
         <!-- {{ contract }} -->
         <Section>
-          <heading size="3xl" level="1" weight="400" class="bottom-xs-0">
+          <heading
+            size="3xl"
+            level="1"
+            weight="400"
+            class="bottom-xs-0"
+            v-if="contract.name"
+          >
             {{ contract.name }}
           </heading>
           <span v-if="contract.contractId === -1">{{
@@ -62,15 +68,15 @@
             Bought from {{ contract.seller }}
           </list-item>
 
-          <list-item icon="calendar" v-if="!isShop">
+          <list-item icon="calendar" v-if="!isShop && contract.startdate">
             Owner since {{ contract.startdate }}
           </list-item>
 
-          <list-item icon="calendar" v-if="isShop">
+          <list-item icon="calendar" v-if="isShop && contract.startdate">
             Listed on {{ contract.startdate }}
           </list-item>
 
-          <list-item icon="pin">
+          <list-item icon="pin" v-if="contract.production_country">
             Produced in
             {{
               countries.find((c) => +c.ID === +contract.production_country).name
@@ -134,7 +140,9 @@ export default {
       return this.$store.state.contracts;
     },
     contract() {
-      return this.contracts.find((c) => c.ID === +this.$route.params.slug);
+      console.log(this.contracts);
+      // console.log(this.$route.params.slug);
+      return this.contracts.find((c) => c.ID == this.$route.params.slug);
     },
     countries() {
       return this.$store.state.countries;

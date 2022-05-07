@@ -1,4 +1,8 @@
-import { contractCreate, getMyContracts } from "../utils/contractService";
+import {
+  contractCreate,
+  getMyContracts,
+  contractSetBuyer,
+} from "../utils/contractService";
 
 export const state = () => ({
   currentCategory: -1,
@@ -17,9 +21,22 @@ export const state = () => ({
 
 export const actions = {
   // hedera smart contracts
+
+  async setBuyer({ commit, state }, payload) {
+    // call contract function
+    await contractSetBuyer(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      payload.contractId,
+      payload.buyerId
+    );
+
+    // update store: the state, the owner, and such
+  },
+
   async addSmartContract({ commit, state }, payload) {
-    console.log("the payload");
-    console.log(payload.name);
+    // console.log("the payload");
+    // console.log(payload.name);
 
     let contractId = await contractCreate(
       state.currentAccount.accountId,
@@ -96,9 +113,10 @@ export const mutations = {
   addContract(state, payload) {
     //payload = contract
     state.contracts.push(payload);
-    state.images.forEach(
-      (i) => (i.used = i.ID === payload.visual ? true : i.used)
-    );
+    console.log("added to store: " + payload);
+    // state.images.forEach(
+    //   (i) => (i.used = i.ID === payload.visual ? true : i.used)
+    // );
   },
 
   deleteContract(state, payload) {
