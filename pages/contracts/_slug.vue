@@ -111,75 +111,6 @@
           </accordion-item> -->
         </Section>
       </div>
-
-      <drawer id="transfer-drawer">
-        <template v-slot:header> Transfer ownership </template>
-        <p>
-          If you transfer the ownership of this contract to someone, the new
-          owner receives 30% of the deposit ({{ hbars(30) }}).
-        </p>
-
-        <heading size="m" level="3" class="bottom-xs-0">
-          Item recepient <badge color="primary">30%</badge>
-        </heading>
-
-        <dropdown
-          key="0"
-          class="dropdown--white"
-          @input="getItemRecepient"
-          :options="allAccounts"
-        />
-
-        <heading size="m" level="3" class="bottom-xs-0">
-          Donation recepient <badge color="primary">10%</badge>
-        </heading>
-
-        <dropdown
-          key="1"
-          class="dropdown--white"
-          @input="getDepositRecepient"
-          :options="allCharities"
-        />
-
-        <p>
-          After transfering the ownership you will instantly receive the
-          remaining 60% of your deposit ({{ hbars(60) }}) and you will donate
-          10% ({{ hbars(10) }}) to {{ "todo" }} The Plastic Soup Foundation.
-        </p>
-
-        <Button
-          class="button--primary button--fullwidth"
-          @click.native="doTransfer"
-        >
-          Confirm
-        </Button>
-      </drawer>
-
-      <drawer id="delete-drawer">
-        <template v-slot:header> Delete contract </template>
-
-        <p>
-          Do you want to delete this contract? This action donates the complete
-          remainder of the deposit to the charity selected below.
-        </p>
-        <heading size="m" level="3" class="bottom-xs-0">
-          Deposit recepient <badge color="primary">10%</badge>
-        </heading>
-
-        <dropdown
-          key="1"
-          class="dropdown--white"
-          @input="getDepositRecepient"
-          :options="allCharities"
-        />
-
-        <Button
-          class="button--primary button--fullwidth"
-          @click.native="doDelete"
-        >
-          Confirm
-        </Button>
-      </drawer>
     </template>
     <div v-else class="page--placeholder">
       <p>Oh no. This contract doesn't exist.</p>
@@ -273,40 +204,6 @@ export default {
     getDepositRecepient(data) {
       this.charity = this.allCharities.find((c) => c.id == +data.ID).label;
       // console.log(this.charity);
-    },
-    doTransfer() {
-      if (this.isShop) {
-        this.$store.commit("sellContract", {
-          ID: +this.contract.ID,
-          buyer: +this.buyer,
-        });
-      } else {
-        if (this.contract.owner !== this.buyer) {
-          this.$store.commit("transferContract", {
-            ID: +this.contract.ID,
-            seller: +this.me,
-            buyer: +this.buyer,
-          });
-        }
-      }
-
-      this.$store.commit("setAction", "transferSuccess");
-
-      this.transferred = true;
-      this.toggleDrawer("#transfer-drawer");
-      this.$router.push({
-        path: "/",
-      });
-    },
-    doDelete() {
-      this.$store.commit("deleteContract", this.contract);
-
-      this.$store.commit("setAction", "deleteSuccess");
-
-      this.toggleDrawer("#delete-drawer");
-      this.$router.push({
-        path: "/",
-      });
     },
   },
 };

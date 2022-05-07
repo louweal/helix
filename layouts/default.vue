@@ -41,7 +41,6 @@ export default {
   },
 
   created() {
-    this.$store.commit("SET_CONTRACTS", require("~/data/contracts.json"));
     this.$store.commit("SET_ACCOUNTS", require("~/data/accounts.json"));
     this.$store.commit("SET_CATEGORIES", require("~/data/categories.json"));
     this.$store.commit("SET_COUNTRIES", require("~/data/countries.json"));

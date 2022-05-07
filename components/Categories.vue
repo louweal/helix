@@ -42,7 +42,7 @@ export default {
     },
 
     me() {
-      return +this.$store.state.currentAccount.ID;
+      return this.$store.state.currentAccount.accountId;
     },
 
     maxWidth() {
@@ -58,7 +58,7 @@ export default {
 
   methods: {
     numContracts(cat) {
-      let myContracts = this.contracts.filter((c) => +c.owner === this.me);
+      let myContracts = this.contracts.filter((c) => c.owner === this.me);
       return myContracts.filter((c) => +c.category === +cat).length;
     },
     setActiveCat(clickedCat) {

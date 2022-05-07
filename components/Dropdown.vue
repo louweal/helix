@@ -16,7 +16,7 @@
           :data-value="option.value"
           @click="handleInput"
         >
-          {{ option.label }}
+          {{ option.label }} ({{ option.value }})
         </li>
       </slot>
     </ul>

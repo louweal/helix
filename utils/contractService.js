@@ -152,22 +152,26 @@ export async function getMyContracts(accountId, pvKey) {
       console.log(`- The contractAddress at index ${i} is ${contractId} \n`);
 
       // get values from contract
-      const name = await getter(client, contractId, "getName", "string");
-      const description = await getter(
-        client,
-        contractId,
-        "getDescription",
-        "string"
-      );
+      const name = "Lorem ipsum"; //await getter(client, contractId, "getName", "string");
+      const description = ""; //await getter(
+      //   client,
+      //   contractId,
+      //   "getDescription",
+      //   "string"
+      // );
       const visual = await getter(client, contractId, "getVisual", "uint32");
-      const deposit = await getter(client, contractId, "getDeposit", "uint256");
+      const deposit = 1000000; //await getter(client, contractId, "getDeposit", "uint256");
 
       // console.log("the visual is: " + visual);
       // console.log(visual);
 
+      // store could be different!!
       myContracts.push({
-        ID: contractId,
+        ID: contractId.toString(),
+        store: accountId,
         seller: accountId,
+        owner: accountId,
+        category: 0,
         visual: visual,
         name: name,
         description: description,
@@ -205,4 +209,12 @@ async function getter(client, contractId, functionName, returnType) {
   if (returnType === "string") {
     return await contractQuerySubmit.getString(0);
   }
+}
+
+function encodeMetaData(data) {
+  return data;
+}
+
+function decodeMetaData(data) {
+  return data;
 }

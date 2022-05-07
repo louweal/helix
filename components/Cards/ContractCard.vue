@@ -1,55 +1,231 @@
 <template>
-  <nuxt-link
-    class="contract-card"
-    :to="data.ID ? '/contracts/' + data.ID : '/'"
-  >
-    <div class="contract-card__body">
-      <div class="contract-card__visual bottom-xs-1">
-        <div
-          v-if="visual"
-          class="img ratio-1x1"
-          :style="{
-            backgroundImage:
-              `url(` + require(`~/assets/images/products/${visual.url}`) + `)`,
-          }"
-        ></div>
-
-        <!-- <div class="contract-card__state" v-if="data.state !== 0">
-          <badge :color="data.state === 1 ? 'primary' : false">
-            {{ data.state === 1 ? "transferred" : "deleted" }}
-          </badge>
-        </div> -->
-
-        <!-- <div class="contract-card__state" v-if="sold">
-          <badge color="primary"> sold </badge>
-        </div> -->
+  <div class="contract-card">
+    <div
+      class="contract-card__body"
+      @click="toggleActions()"
+      :class="pending ? 'pending' : false"
+    >
+      <div class="grid no-bottom-margin-cols">
+        <div class="col-xs-4">
+          <div class="contract-card__visual">
+            <div
+              v-if="visual"
+              class="img ratio-1x1"
+              :style="{
+                backgroundImage:
+                  `url(` +
+                  require(`~/assets/images/products/${visual.url}`) +
+                  `)`,
+              }"
+            ></div>
+          </div>
+        </div>
+        <div class="col-xs-11 offset-xs-1">
+          <heading
+            size="l"
+            level="2"
+            weight="400"
+            class="bottom-xs-0"
+            v-if="data.name"
+          >
+            {{ data.name }}
+          </heading>
+          <heading
+            size="s"
+            level="0"
+            weight="400"
+            fstyle="italic"
+            v-if="seller"
+          >
+            {{ seller }}
+          </heading>
+        </div>
+        <div class="col-xs-8">
+          <div class="contract-card__footer align-xs-end" v-if="data.deposit">
+            <deposit :val="data.deposit" />
+          </div>
+        </div>
       </div>
+    </div>
 
-      <heading
-        size="l"
-        level="2"
-        weight="400"
-        class="bottom-xs-0"
-        v-if="data.name"
+    <div class="contract-card__actions" v-if="showActions">
+      <div class="grid no-bottom-margin-cols" v-if="!pending && !isShop">
+        <div class="col-xs-8">
+          <Button
+            class="button--light button--fullwidth"
+            @click.native="toggleTransferOptions"
+          >
+            <icon icon="arrow-right" /> Transfer
+          </Button>
+        </div>
+        <div class="col-xs-8">
+          <Button
+            class="button--light button--fullwidth"
+            @click.native="toggleDeleteOptions"
+          >
+            <icon icon="delete" />
+            Delete
+          </Button>
+        </div>
+        <div class="col-xs-8">
+          <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
+            <Button class="button--fullwidth"> View details </Button>
+          </nuxt-link>
+        </div>
+      </div>
+      <div class="grid no-bottom-margin-cols" v-if="!pending && isShop">
+        <div class="col-xs-8">
+          <Button
+            class="button--light button--fullwidth"
+            @click.native="toggleSellOptions"
+          >
+            <icon icon="arrow-right" /> Sell
+          </Button>
+        </div>
+        <div class="col-xs-8">
+          <Button
+            class="button--light button--fullwidth"
+            @click.native="toggleDeleteOptions"
+          >
+            <icon icon="delete" />
+            Delete
+          </Button>
+        </div>
+        <div class="col-xs-8">
+          <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
+            <Button class="button--fullwidth"> View details </Button>
+          </nuxt-link>
+        </div>
+      </div>
+      <div class="grid no-bottom-margin-cols" v-if="pending">
+        <div class="col-xs-12">
+          <Button @click="false" class="button--primary button--fullwidth">
+            Confirm purchase
+          </Button>
+        </div>
+        <div class="col-xs-12">
+          <heading size="s" level="0" fstyle="italic" weight="400"
+            >This action locks the deposit amount into the contract.</heading
+          >
+        </div>
+      </div>
+    </div>
+
+    <div
+      v-if="showActions && showTransferOptions"
+      class="contract-card__options"
+    >
+      <div class="contract-card__options__header">
+        <heading size="m" level="2" class="bottom-xs-0" color="black">
+          Transfer ownership
+        </heading>
+      </div>
+      <p>
+        If you transfer the ownership of this contract to someone, the new owner
+        receives 30% of the deposit ({{ "hbars(30)" }}).
+      </p>
+
+      <heading size="m" level="3" class="bottom-xs-0">
+        Item recepient <badge color="primary">30%</badge>
+      </heading>
+
+      <dropdown
+        key="0"
+        class="dropdown--white"
+        @input="getItemRecepient"
+        :options="allAccounts"
+      />
+      <Button
+        class="button--primary button--fullwidth"
+        xxxclick.native="doTransfer"
       >
-        {{ data.name }}
-      </heading>
-      <heading size="s" level="0" weight="400" fstyle="italic" v-if="seller">
-        {{ seller }}
-      </heading>
+        Confirm
+      </Button>
     </div>
-    <div class="contract-card__footer align-xs-end" v-if="data.deposit">
-      <deposit :val="data.deposit" />
+    <div v-if="showActions && showSellOptions" class="contract-card__options">
+      <div class="contract-card__options__header">
+        <heading size="m" level="2" class="bottom-xs-0" color="black">
+          Set buyer
+        </heading>
+      </div>
+      <p>lorem ipsum</p>
+
+      <heading size="m" level="3" class="bottom-xs-0"> Buyer </heading>
+
+      <dropdown
+        key="0"
+        class="dropdown--white"
+        @input="getItemRecepient"
+        :options="allAccounts"
+      />
+      <Button
+        class="button--primary button--fullwidth"
+        xxxclick.native="doSell"
+      >
+        Confirm
+      </Button>
     </div>
-  </nuxt-link>
+  </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      showActions: false,
+      showTransferOptions: false,
+      showDeleteOptions: false,
+      showSellOptions: false,
+      buyer: false,
+    };
+  },
   props: {
     data: {
       type: Object,
       default: () => {},
+    },
+    pending: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  methods: {
+    toggleActions() {
+      this.showActions = !this.showActions;
+
+      if (this.showActions) {
+        this.$emit("activeContract", this.data.ID);
+      }
+    },
+    toggleTransferOptions() {
+      this.showTransferOptions = !this.showTransferOptions;
+
+      if (this.showTransferOptions) {
+        // console.log("show!");
+        this.showDeleteOptions = false;
+      }
+    },
+    toggleDeleteOptions() {
+      this.showDeleteOptions = !this.showDeleteOptions;
+
+      if (this.showDeleteOptions) {
+        // console.log("show!");
+        this.showTransferOptions = false;
+        this.showSellOptions = false;
+      }
+    },
+    toggleSellOptions() {
+      this.showSellOptions = !this.showSellOptions;
+
+      if (this.showSellOptions) {
+        // console.log("show!");
+        this.showDeleteOptions = false;
+      }
+    },
+    getItemRecepient(data) {
+      this.buyer = data.ID;
+      // console.log(data.ID);
     },
   },
 
@@ -61,6 +237,26 @@ export default {
     accounts() {
       return this.$store.state.accounts;
     },
+
+    allAccounts() {
+      return this.accounts
+        .filter(
+          (a) =>
+            !a.seller &&
+            !a.charity &&
+            a.ID !== this.$store.state.currentAccount.ID
+        )
+        .map(({ ID, name, accountId }) => ({
+          id: ID,
+          label: name,
+          value: accountId,
+        }));
+    },
+
+    isShop() {
+      return this.$store.state.currentAccount.seller === true;
+    },
+
     images() {
       return this.$store.state.images;
     },
@@ -99,16 +295,38 @@ export default {
   padding: 4px;
   height: 100%;
 
+  &__body {
+    &.pending {
+      opacity: 0.5;
+    }
+  }
+
+  &__actions {
+    margin-top: 5px;
+  }
+
+  &__options {
+    &__header {
+      width: 100%;
+      background-color: get-color(light);
+      text-align: center;
+      border-radius: 6px;
+      padding: 7px 0;
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+  }
+
   &__visual {
     position: relative;
     background-color: #fff;
-    padding: 24px;
+    // padding: 24px;
   }
 
-  &__state {
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-  }
+  // &__state {
+  //   position: absolute;
+  //   left: 0px;
+  //   bottom: 0px;
+  // }
 }
 </style>

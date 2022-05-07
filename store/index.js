@@ -38,7 +38,7 @@ export const actions = {
     return contractId;
   },
 
-  async getSmartContracts({ state }) {
+  async getSmartContracts({ commit, state }) {
     let data = await getMyContracts(
       state.currentAccount.accountId,
       state.currentAccount.pvkey
@@ -47,7 +47,12 @@ export const actions = {
     console.log("data in store");
     console.log(data);
 
-    // todo commit each to store if not in store yet
+    // todo commit all to store if not already
+
+    if (!state.currentAccount.fetched) {
+      commit("SET_CONTRACTS", data);
+      commit("setAccountContractsFetched");
+    }
 
     return data;
   },
@@ -125,6 +130,10 @@ export const mutations = {
 
   toggleFetchState(state) {
     state.fetching = !state.fetching;
+  },
+
+  setAccountContractsFetched(state) {
+    state.currentAccount["fetched"] = true;
   },
 };
 

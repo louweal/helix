@@ -85,6 +85,15 @@ $btn-radius: 7px;
     color: #fff; //get-color(base-text);
   }
 
+  &--light {
+    background: get-color(light);
+    color: get-color(base-text);
+
+    i {
+      color: get-color(base-text);
+    }
+  }
+
   &--dark {
     background: get-color(dark);
     color: #fff;
