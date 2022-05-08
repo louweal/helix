@@ -300,19 +300,19 @@ export default {
     },
     toggleTransferOptions() {
       this.showTransferOptions = !this.showTransferOptions;
-      this.showDeleteOptions = !this.showTransferOptions;
+      this.showDeleteOptions = false;
     },
     toggleDeleteOptions() {
       this.showDeleteOptions = !this.showDeleteOptions;
-      this.showTransferOptions = !this.showDeleteOptions;
+      this.showTransferOptions = false;
     },
     toggleRemoveOptions() {
       this.showRemoveOptions = !this.showRemoveOptions;
-      this.showSellOptions = !this.showRemoveOptions;
+      this.showSellOptions = false;
     },
     toggleSellOptions() {
       this.showSellOptions = !this.showSellOptions;
-      this.showDeleteOptions = !this.showSellOptions;
+      this.showRemoveOptions = false;
     },
     getBuyer(data) {
       this.buyer = data.id;
