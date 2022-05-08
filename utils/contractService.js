@@ -133,6 +133,8 @@ export async function contractSetBuyer(
 
   // delete contract from seller lookup list
   deleteContract(operatorClient, sellerId, index);
+
+  return newIndex;
 }
 
 async function getContractIndex(client, accountId) {
@@ -278,6 +280,7 @@ export async function getMyContracts(accountId, pvKey) {
       console.log(s);
 
       myContracts.push({
+        index: i,
         ID: contractId.toString(),
         startdate: parseInt((Date.now() / 1000 - date) / 86400),
         duration: +duration,

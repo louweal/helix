@@ -87,10 +87,10 @@
         <div class="col-xs-8">
           <Button
             class="button--light button--fullwidth"
-            @click.native="toggleDeleteOptions"
+            @click.native="toggleRemoveOptions"
           >
             <icon icon="delete" />
-            Delete
+            Remove
           </Button>
         </div>
         <div class="col-xs-8">
@@ -143,7 +143,7 @@
       <dropdown
         key="0"
         class="dropdown--white"
-        @input="getBuyer()"
+        @input="getBuyer"
         :options="allAccounts"
       />
       <Button
@@ -198,6 +198,24 @@
         Confirm
       </Button>
     </div>
+    <div v-if="showActions && showRemoveOptions" class="contract-card__options">
+      <div class="contract-card__options__header">
+        <heading size="m" level="2" class="bottom-xs-0" color="black">
+          Remove contract
+        </heading>
+      </div>
+      <p>
+        If you accidentially created this contract, you can remove it from the
+        list. It will remain as an inactive contract on the Hedera network.
+      </p>
+
+      <Button
+        class="button--primary button--fullwidth"
+        @click.native="removeContract"
+      >
+        Confirm
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -208,6 +226,7 @@ export default {
       showActions: false,
       showTransferOptions: false,
       showDeleteOptions: false,
+      showRemoveOptions: false,
       showSellOptions: false,
       buyer: false,
       fakeBuyDate: 0,
@@ -267,41 +286,37 @@ export default {
     },
 
     async deleteContract() {},
+    async removeContract() {
+      // calls deleteCreatedContract on the contract and removes it from the lookup contract
+      // todo
+      // await this.$store.dispatch("removeContract", {
+      //   contractId: this.data.ID,
+      //   index: this.data.index,
+      // });
+    },
+
     toggleActions() {
       this.showActions = !this.showActions;
-
-      // if (this.showActions) {
-      //   this.$emit("activeContract", this.data.ID);
-      // }
     },
     toggleTransferOptions() {
       this.showTransferOptions = !this.showTransferOptions;
-
-      if (this.showTransferOptions) {
-        // console.log("show!");
-        this.showDeleteOptions = false;
-      }
+      this.showDeleteOptions = !this.showTransferOptions;
     },
     toggleDeleteOptions() {
       this.showDeleteOptions = !this.showDeleteOptions;
-
-      if (this.showDeleteOptions) {
-        // console.log("show!");
-        this.showTransferOptions = false;
-        this.showSellOptions = false;
-      }
+      this.showTransferOptions = !this.showDeleteOptions;
+    },
+    toggleRemoveOptions() {
+      this.showRemoveOptions = !this.showRemoveOptions;
+      this.showSellOptions = !this.showRemoveOptions;
     },
     toggleSellOptions() {
       this.showSellOptions = !this.showSellOptions;
-
-      if (this.showSellOptions) {
-        // console.log("show!");
-        this.showDeleteOptions = false;
-      }
+      this.showDeleteOptions = !this.showSellOptions;
     },
     getBuyer(data) {
-      this.buyer = data.ID;
-      // console.log(data.ID);
+      this.buyer = data.id;
+      console.log(data);
     },
   },
 
@@ -322,7 +337,7 @@ export default {
             !a.charity &&
             a.ID !== this.$store.state.currentAccount.ID
         )
-        .map(({ ID, accountId, name }) => ({
+        .map(({ accountId, name }) => ({
           id: accountId,
           label: name + " (" + accountId + ")",
           value: accountId,

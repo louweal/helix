@@ -3,17 +3,6 @@
     <pre-loader />
     <spinner v-if="$store.state.waiting" />
 
-    <!-- <template v-if="width >= 800">
-      <div class="container container--wide">
-        <notification>
-          <p>Switch to a mobile device for better user experience.</p>
-          <p>
-            <a href="https://helixheroes.org">helixheroes.org</a>
-          </p>
-        </notification>
-      </div>
-    </template> -->
-
     <Nuxt />
 
     <notification v-if="$store.state.action === 'transferSuccess'">
@@ -63,20 +52,6 @@ export default {
   mounted() {
     this.getWidth();
     window.addEventListener("resize", this.getWidth);
-
-    // let gaScript = document.createElement("script");
-    // gaScript.setAttribute(
-    //   "src",
-    //   "https://www.googletagmanager.com/gtag/js?id=G-HNSQMHP9VF"
-    // );
-    // document.head.appendChild(gaScript);
-    // window.dataLayer = window.dataLayer || [];
-
-    // function gtag() {
-    //   dataLayer.push(arguments);
-    // }
-    // gtag("js", new Date());
-    // gtag("config", "G-HNSQMHP9VF");
   },
 
   beforeDestroy() {
@@ -97,18 +72,5 @@ main {
 .page-enter,
 .page-leave-to {
   opacity: 0.5;
-  // transform: translateY(40px);
 }
-
-// .rtl-enter-active,
-// .rtl-leave-active {
-//   transition: all 0.5s;
-// }
-// .rtl-enter {
-//   transform: translateX(40px);
-// }
-// .rtl-leave-to {
-//   // opacity: 0;
-//   transform: translateX(0px);
-// }
 </style>

@@ -84,7 +84,8 @@ export default {
     materialsFeeSum() {
       return +this.materialData
         .map((m) => +this.labels.find((l) => l.ID === m.label).fee)
-        .reduce((a, b) => a + b, 0);
+        .reduce((a, b) => a + b, 0)
+        .toFixed(2);
     },
 
     totalFee() {

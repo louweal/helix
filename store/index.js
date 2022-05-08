@@ -106,7 +106,7 @@ export const actions = {
 
   async setBuyer({ commit, state }, payload) {
     // call contract function
-    await contractSetBuyer(
+    let index = await contractSetBuyer(
       state.currentAccount.accountId,
       state.currentAccount.pvkey,
       payload.contractId,
@@ -114,7 +114,13 @@ export const actions = {
       payload.buyerId
     );
 
-    // update state and owner in store (so no queries are needed to see the changes)
+    // update index, state and owner in store (so no queries are needed to see the changes)
+
+    commit("updateField", {
+      contractId: payload.contractId,
+      field: "index",
+      value: index,
+    });
 
     commit("updateField", {
       contractId: payload.contractId,
@@ -182,6 +188,13 @@ export const actions = {
 
     console.log("data in store");
     console.log(data);
+
+    let storeIds = state.contracts.map((c) => c.ID);
+
+    console.log("lengths");
+    console.log(data.length);
+    data = data.filter((c) => !storeIds.includes(c.ID));
+    console.log(data.length);
 
     // commit all to store
     commit("addContracts", data);

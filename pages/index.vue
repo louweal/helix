@@ -2,9 +2,6 @@
   <div class="page">
     <Header fixed />
     <div class="container container--wide">
-      {{ $store.state.waiting }}
-      {{ myContracts }}
-
       <template v-if="pendingContracts.length > 0">
         <heading size="l" level="2" class="bottom-xs-0">
           Pending contracts
