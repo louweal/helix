@@ -1,12 +1,10 @@
 <template>
   <div class="page page--white">
-    <spinner v-if="$store.state.fetching" />
-
     <back-button bg> Add contract </back-button>
 
-    <div class="container" style="margin-top: 42px">
-      <br />
-      {{ $store.state.currentAccount.accountId }}
+    <div class="container" style="margin-top: 53px">
+      <!-- <br /> -->
+      <!-- {{ $store.state.currentAccount.accountId }} -->
 
       <div class="add-form">
         <Section v-if="currentStep === 1">
@@ -70,7 +68,7 @@
             key="2"
             fieldName="duration"
             @input="setDropdownValue"
-            :options="[{ id: 15, label: '15 years', value: 15 }]"
+            :options="durationOptions"
           />
 
           <template
@@ -156,7 +154,7 @@
           <div class="grid">
             <div class="col-xs-12">
               <Button
-                class="button--dark button--fullwidth"
+                class="button--secondary button--fullwidth"
                 @click.native="currentStep -= 1"
               >
                 Back
@@ -179,9 +177,9 @@
             Select charity
           </heading>
           <p>
-            10% of the deposit will be donated monthly to a charity. If the
-            buyer of this product prefers to support another charity, he can
-            change this after obtaining ownership of this contract.
+            At least 10% of the deposit will be donated to the selected charity.
+            If the buyer disposes the product before the contract has ended, the
+            complete remainder of the deposit is donated.
           </p>
           <dropdown
             fieldName="charity"
@@ -209,7 +207,7 @@
           <div class="grid">
             <div class="col-xs-12">
               <Button
-                class="button--dark button--fullwidth"
+                class="button--secondary button--fullwidth"
                 @click.native="currentStep -= 1"
               >
                 Back
@@ -291,6 +289,14 @@ export default {
       return this.$store.state.materials;
     },
 
+    durationOptions() {
+      return [3000, 6000].map((d) => ({
+        id: d,
+        label: `${d} days (${(d / 365.242199).toFixed(2)} years)`,
+        value: d,
+      }));
+    },
+
     categories() {
       return this.$store.state.categories.map(({ name, ID }) => ({
         id: ID,
@@ -298,34 +304,6 @@ export default {
         value: name.toLowerCase(),
       }));
     },
-    // makeContract() {
-    //   let contract = {};
-    //   // meta info
-    //   contract["ID"] = this.newId;
-    //   contract["contractId"] = this.$store.state.currentContractId;
-    //   contract["startdate"] = this.todayDate;
-    //   contract["store"] = +this.$store.state.currentAccount.ID;
-    //   contract["seller"] = +this.$store.state.currentAccount.ID;
-    //   contract["owner"] = +this.$store.state.currentAccount.ID;
-    //   contract["deposit"] = this.contract.deposit;
-
-    //   // input
-    //   contract["visual"] = +this.contract.visual.ID;
-    //   contract["name"] = this.contract.name;
-    //   contract["description"] = this.contract.description;
-    //   contract["category"] = +this.contract.category.ID;
-    //   contract["duration"] = +this.contract.duration.ID;
-    //   contract["production_country"] = +this.contract.production_country.ID;
-    //   contract["materials"] = this.contract.materials.map(({ ID }) => +ID);
-    //   contract["material_description"] = this.contract.material_description;
-    //   contract["charity"] = +this.contract.charity.ID;
-    //   contract["label"] = this.contract.label;
-
-    //   // this.contract;
-
-    //   // console.log(contract.ID);
-    //   return contract;
-    // },
 
     newId() {
       let allContracts = this.$store.state.contracts;
@@ -374,46 +352,32 @@ export default {
     selectImage(image) {
       Vue.set(this.contract, "visual", image);
       Vue.set(this.contract, "name", image.alt);
-      Vue.set(this.contract, "description", image.alt);
+      Vue.set(this.contract, "description", image.alt + " description");
       this.toggleDrawer("#gallery-drawer");
     },
-    // async newHederaContract(data) {
-    //   console.log(this.contract.charity.val);
-
-    //   console.log(contractData);
-
-    //   // add to store
-    // },
     async createContract() {
-      this.$store.commit("resetCurrentContractId");
-
+      this.$store.commit("toggleAwaitState");
+      // collect all data in single object
       let data = {
+        startdate: Date.now() / 1000,
+        state: 0,
+        owner: this.$store.state.currentAccount.accountId,
+        seller: this.$store.state.currentAccount.accountId,
+        duration: this.contract.duration.val,
+        deposit: parseInt(this.contract.deposit), // string to int tinybar
+        charity: this.contract.charity.val,
         name: this.contract.name,
         description: this.contract.description,
         materialDescription: this.contract.material_description,
         productionCountry: +this.contract.production_country.ID,
         category: +this.contract.category.ID,
         visual: +this.contract.visual.ID,
-        duration: this.contract.duration.val,
-        deposit: parseInt(this.contract.deposit), // string to int tinybar
-        charityAccountId: this.contract.charity.val,
-        owner: this.$store.state.currentAccount.accountId,
       };
 
-      console.log("the data", data);
-
-      // add the contract on hedera network
-      this.$store.commit("toggleFetchState");
+      // add the contract on hedera network and to the store
       let contractId = await this.$store.dispatch("addSmartContract", data);
 
-      data["ID"] = contractId.toString();
-      this.$store.commit("addContract", data);
-      this.$store.commit("toggleFetchState");
-
-      // this.$store.commit("setImageUsed", {
-      //   ID: this.contract.visual.ID,
-      //   used: true,
-      // });
+      this.$store.commit("toggleAwaitState");
 
       this.$router.push({
         path: "/",
@@ -429,7 +393,6 @@ export default {
     },
 
     getAllFromGroup(group) {
-      console.log("group: " + group);
       return this.materials
         .filter((m) => m.parent === group)
         .sort((a, b) => (a.name > b.name ? 1 : -1))
@@ -478,7 +441,7 @@ export default {
       Vue.set(
         this.contract,
         "deposit",
-        parseInt((materialSum + shipmentDeposit) * 100000000).toString()
+        parseInt((materialSum + shipmentDeposit) * 100000000)
       );
 
       Vue.set(this.contract, "label", totalLabel);

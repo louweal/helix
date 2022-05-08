@@ -2,7 +2,8 @@
   <div class="page">
     <Header fixed />
     <div class="container container--wide">
-      <!-- {{ contracts }} -->
+      {{ $store.state.waiting }}
+      {{ myContracts }}
 
       <template v-if="pendingContracts.length > 0">
         <heading size="l" level="2" class="bottom-xs-0">
@@ -14,20 +15,14 @@
             v-for="(contract, index) in pendingContracts.slice(0, 2).reverse()"
             :key="index"
           >
-            <contract-card
-              :data="contract"
-              @activeContract="setActiveContract"
-              pending
-            />
+            <contract-card :data="contract" pending />
           </div>
         </div>
       </template>
 
-      <!-- {{ selectedContracts }} -->
-
       <template v-if="selectedContracts.length > 0">
         <heading size="l" level="2" class="bottom-xs-0">
-          Active contracts
+          {{ isShop ? "Created contracts" : "Active contracts" }}
         </heading>
         <div class="grid">
           <div
@@ -35,10 +30,7 @@
             v-for="(contract, index) in selectedContracts.slice().reverse()"
             :key="index"
           >
-            <contract-card
-              :data="contract"
-              @activeContract="setActiveContract"
-            />
+            <contract-card :data="contract" />
           </div>
         </div>
       </template>
@@ -53,16 +45,9 @@
           </a>
         </p>
       </notification>
-
-      <!-- <notification v-if="$store.state.currentContractId !== -1">
-        <p>
-          The smart contract with ID {{ $store.state.currentContractId }} was
-          successfully created!
-        </p>
-      </notification> -->
     </div>
     <div
-      v-if="selectedContracts.length === 0 && !$store.state.fetching"
+      v-if="myContracts.length === 0 && !$store.state.waiting"
       class="page--placeholder"
     >
       <div>
@@ -82,81 +67,6 @@
         >
       </div>
     </div>
-    <div class="page--placeholder" v-if="$store.state.fetching">
-      <div>
-        <p>Awaiting query ...</p>
-      </div>
-    </div>
-
-    <drawer id="transfer-drawer">
-      <template v-slot:header> Transfer ownership </template>
-      <p>
-        If you transfer the ownership of this contract to someone, the new owner
-        receives 30% of the deposit ({{ "hbars(30)" }}).
-      </p>
-
-      <heading size="m" level="3" class="bottom-xs-0">
-        Item recepient <badge color="primary">30%</badge>
-      </heading>
-
-      <!-- <dropdown
-        key="0"
-        class="dropdown--white"
-        @input="getItemRecepient"
-        :options="allAccounts"
-      /> -->
-
-      <!-- <heading size="m" level="3" class="bottom-xs-0">
-        Donation recepient <badge color="primary">10%</badge>
-      </heading>
-
-      <dropdown
-        key="1"
-        class="dropdown--white"
-        @input="getDepositRecepient"
-        :options="allCharities"
-      /> -->
-
-      <!-- <p>
-        After transfering the ownership you will instantly receive the remaining
-        60% of your deposit ({{ hbars(60) }}) and you will donate 10% ({{
-          hbars(10)
-        }}) to {{ "todo" }} .
-      </p> -->
-
-      <Button
-        class="button--primary button--fullwidth"
-        xxxclick.native="doTransfer"
-      >
-        Confirm
-      </Button>
-    </drawer>
-
-    <drawer id="delete-drawer">
-      <template v-slot:header> Delete contract </template>
-
-      <p>
-        Do you want to delete this contract? This action donates the complete
-        remainder of the deposit to the charity that is on this contract.
-      </p>
-      <!-- <heading size="m" level="3" class="bottom-xs-0">
-        Deposit recepient <badge color="primary">10%</badge>
-      </heading>
-
-      <dropdown
-        key="1"
-        class="dropdown--white"
-        @input="getDepositRecepient"
-        :options="allCharities"
-      /> -->
-
-      <Button
-        class="button--primary button--fullwidth"
-        xxxclick.native="doDelete"
-      >
-        Confirm
-      </Button>
-    </drawer>
   </div>
 </template>
 
@@ -164,21 +74,23 @@
 export default {
   data() {
     return {
-      // selectedContracts: [],
       allContracts: [],
-      activeContract: "",
     };
   },
 
   async mounted() {
+    if (this.$store.state.currentAccount.ID === undefined) {
+      console.log("not signed in yet");
+      return;
+    }
     if (
-      this.$store.state.currentAccount.ID &&
-      !this.$store.state.currentAccount.fetched
+      this.$store.state.currentAccount.ID !== undefined &&
+      this.$store.state.currentAccount.fetched === false
     ) {
-      this.$store.commit("toggleFetchState");
       let data = await this.$store.dispatch("getSmartContracts");
-      this.selectedContracts = data;
-      this.$store.commit("toggleFetchState");
+      // this.selectedContracts = data;
+    } else {
+      console.log("already fetched");
     }
   },
 
@@ -190,8 +102,13 @@ export default {
     me() {
       return this.$store.state.currentAccount.accountId;
     },
-    selectedContracts() {
+    isShop() {
+      return this.$store.state.currentAccount.seller === true;
+    },
+
+    myContracts() {
       let myContracts = this.contracts.filter((c) => c.owner === this.me);
+
       let selected = this.$store.state.currentCategory;
       if (selected === -1) {
         return myContracts;
@@ -201,17 +118,25 @@ export default {
         );
       }
     },
+    selectedContracts() {
+      if (this.isShop) {
+        return this.myContracts.filter((c) => c.state === 0);
+      } else {
+        // show only Pending, Sold and [todo] Resold contracts
+        return this.myContracts.filter((c) => c.state === 2 || c.state === 3);
+      }
+    },
 
     pendingContracts() {
-      return this.selectedContracts.filter((c) => c.state === 1); // temp
+      if (this.isShop) {
+        return [];
+      } else {
+        return this.myContracts.filter((c) => c.state === 1);
+      }
     },
   },
 
   methods: {
-    setActiveContract(val) {
-      // console.log("the active contract is ", val);
-      this.activeContract = val;
-    },
     doTransfer() {
       if (this.isShop) {
         this.$store.commit("sellContract", {

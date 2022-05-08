@@ -20,7 +20,7 @@
             ></div>
           </div>
         </div>
-        <div class="col-xs-11 offset-xs-1">
+        <div class="col-xs-15 offset-xs-1">
           <heading
             size="l"
             level="2"
@@ -28,7 +28,7 @@
             class="bottom-xs-0"
             v-if="data.name"
           >
-            {{ data.name }}
+            {{ data.name }} - {{ data.index }}
           </heading>
           <heading
             size="s"
@@ -40,9 +40,9 @@
             {{ data.description }}
           </heading>
 
-          {{ data.state }}
+          <!-- {{ data.state }} -->
         </div>
-        <div class="col-xs-8">
+        <div class="col-xs-4">
           <div class="contract-card__footer align-xs-end" v-if="data.deposit">
             <deposit :val="data.deposit" />
           </div>
@@ -95,20 +95,29 @@
         </div>
         <div class="col-xs-8">
           <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
-            <Button class="button--fullwidth"> More info </Button>
+            <Button class="button--fullwidth"> More details </Button>
           </nuxt-link>
         </div>
       </div>
       <div class="grid no-bottom-margin-cols" v-if="pending">
         <div class="col-xs-12">
-          <Button @click="false" class="button--primary button--fullwidth">
-            Confirm purchase
-          </Button>
+          <input
+            class="field field--light"
+            type="text"
+            :placeholder="'*DEMO FIELD*'"
+            @input="(e) => setFakeBuyDate(e.target.value)"
+          />
         </div>
         <div class="col-xs-12">
-          <heading size="s" level="0" fstyle="italic" weight="400"
+          <!-- <heading size="s" level="0" fstyle="italic" weight="400"
             >This action locks the deposit amount into the contract.</heading
+          > -->
+          <Button
+            @click.native="confirmPurchase"
+            class="button--primary button--fullwidth"
           >
+            Confirm purchase
+          </Button>
         </div>
       </div>
     </div>
@@ -150,7 +159,10 @@
           Set buyer
         </heading>
       </div>
-      <p>lorem ipsum</p>
+      <p>
+        Did you sell this item? Select the buyer below such that he can obtain
+        the contract.
+      </p>
 
       <heading size="m" level="3" class="bottom-xs-0"> Buyer </heading>
 
@@ -167,6 +179,25 @@
         Confirm
       </Button>
     </div>
+
+    <div v-if="showActions && showDeleteOptions" class="contract-card__options">
+      <div class="contract-card__options__header">
+        <heading size="m" level="2" class="bottom-xs-0" color="black">
+          Delete contract
+        </heading>
+      </div>
+      <p>
+        Do you want to delete this contract? This action donates the complete
+        remainder of the deposit to the charity that is on this contract.
+      </p>
+
+      <Button
+        class="button--primary button--fullwidth"
+        @click.native="deleteContract()"
+      >
+        Confirm
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -179,6 +210,7 @@ export default {
       showDeleteOptions: false,
       showSellOptions: false,
       buyer: false,
+      fakeBuyDate: 0,
     };
   },
   props: {
@@ -196,15 +228,51 @@ export default {
     async setBuyer() {
       let contractId = await this.$store.dispatch("setBuyer", {
         contractId: this.data.ID,
+        index: this.data.index,
         buyerId: this.buyer,
       });
     },
+
+    setFakeBuyDate(val) {
+      console.log(val);
+      this.fakeBuyDate = parseInt((Date.now() - val * 1000 * 86400) / 1000); // convert 'days ago' to timestamp in seconds
+      console.log(this.fakeBuyDate);
+    },
+
+    async confirmPurchase() {
+      // console.log(this.data.deposit);
+      // console.log(this.data.ID);
+
+      if (isNaN(this.fakeBuyDate)) {
+        console.log("Invalid buy date");
+        return;
+      }
+
+      let payload = {
+        contractId: this.data.ID,
+        deposit: +this.data.deposit,
+        fakeBuyDate: this.fakeBuyDate,
+      };
+      await this.$store.dispatch("confirmPurchase", payload);
+
+      this.$router.push({
+        path: "/",
+      });
+    },
+
+    getFakeDate(val) {
+      let today = Date.now() / 1000;
+      let date = today - val * 86400;
+      //todo
+    },
+
+    async deleteContract() {},
     toggleActions() {
       this.showActions = !this.showActions;
 
-      if (this.showActions) {
-        this.$emit("activeContract", this.data.ID);
-      }
+      // if (this.showActions) {
+      //   this.$emit("activeContract", this.data.ID);
+      // }
     },
     toggleTransferOptions() {
       this.showTransferOptions = !this.showTransferOptions;

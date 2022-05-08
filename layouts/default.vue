@@ -1,6 +1,7 @@
 <template>
   <main>
     <pre-loader />
+    <spinner v-if="$store.state.waiting" />
 
     <!-- <template v-if="width >= 800">
       <div class="container container--wide">

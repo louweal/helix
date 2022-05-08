@@ -28,6 +28,11 @@
           >
             {{ contract.name }}
           </heading>
+
+          <heading size="m" level="0" weight="400" fstyle="italic">
+            {{ contract.ID }}
+          </heading>
+
           <span v-if="contract.contractId === -1">{{
             contract.contractId
           }}</span>
@@ -37,41 +42,43 @@
             transferred
           </badge> -->
 
-          <deposit
-            :val="(contract.deposit * 0.6).toFixed()"
-            class="bottom-xs-1"
-            label="collectable deposit"
-          />
+          <template v-if="!isShop">
+            <deposit
+              :val="(contract.deposit * 0.6).toFixed()"
+              class="bottom-xs-1"
+              label="collectable deposit"
+            />
 
-          <Stack :gap="0.5">
-            <Button
-              class="button--primary"
-              xxxclick.native="toggleDrawer('#transfer-drawer')"
-            >
-              <icon icon="payouts" /> Collect now
-            </Button>
-            <Button
-              class="button--secondary"
-              xxxclick.native="toggleDrawer('#delete-drawer')"
-            >
-              <icon icon="donations" />
-              Donate now
-            </Button>
-          </Stack>
+            <Stack :gap="0.5">
+              <Button
+                class="button--primary"
+                xxxclick.native="toggleDrawer('#transfer-drawer')"
+              >
+                <icon icon="payouts" /> Collect now
+              </Button>
+              <Button
+                class="button--secondary"
+                xxxclick.native="toggleDrawer('#delete-drawer')"
+              >
+                <icon icon="donations" />
+                Donate now
+              </Button>
+            </Stack>
+          </template>
         </Section>
 
         <Section>
           <hr />
           <list-item icon="gift" v-if="!isShop">
-            Bought from {{ contract.seller }}
+            Bought from {{ sellerName }}
           </list-item>
 
           <list-item icon="calendar" v-if="!isShop && contract.startdate">
-            Owner since {{ contract.startdate }}
+            Owner since {{ contract.startdate }} days
           </list-item>
 
-          <list-item icon="calendar" v-if="isShop && contract.startdate">
-            Listed on {{ contract.startdate }}
+          <list-item icon="calendar" v-if="isShop && contract.startdate > -1">
+            Listed {{ contract.startdate }} days ago
           </list-item>
 
           <list-item icon="pin" v-if="contract.production_country">
@@ -79,6 +86,14 @@
             {{
               countries.find((c) => +c.ID === +contract.production_country).name
             }}
+          </list-item>
+
+          <list-item icon="heart" v-if="contract.charity">
+            Charity: {{ charityName }}
+          </list-item>
+
+          <list-item icon="trophy" v-if="!isShop && contract.duration">
+            {{ contract.duration / 86400 - contract.startdate }} days left
           </list-item>
         </Section>
 
@@ -88,30 +103,16 @@
 
         <Section>
           <hr />
-
-          <!-- <accordion-item label="Collect deposit" icon="graph" level="2">
-            <p><lorem /></p>
-
-            todo
-          </accordion-item> -->
-
           <accordion-item
             label="Materials"
             icon="tools"
             level="2"
-            v-if="contract.material_description !== false"
+            v-if="contract.material_description !== undefined"
           >
-            <p v-if="contract.material_description">
+            <p>
               {{ contract.material_description }}
             </p>
           </accordion-item>
-
-          <!-- <accordion-item label="Deposit breakdown" icon="grid" level="2">
-            <deposit-table
-              :materials="contract.materials"
-              :country="contract.production_country"
-            />
-          </accordion-item> -->
         </Section>
       </div>
     </template>
@@ -137,8 +138,6 @@ export default {
       return this.$store.state.contracts;
     },
     contract() {
-      console.log(this.contracts);
-      // console.log(this.$route.params.slug);
       return this.contracts.find((c) => c.ID == this.$route.params.slug);
     },
     countries() {
@@ -146,6 +145,16 @@ export default {
     },
     accounts() {
       return this.$store.state.accounts;
+    },
+
+    sellerName() {
+      return this.accounts.find((a) => a.accountId === this.contract.seller)
+        .name;
+    },
+
+    charityName() {
+      return this.accounts.find((a) => a.accountId === this.contract.charity)
+        .name;
     },
     images() {
       return this.$store.state.images;

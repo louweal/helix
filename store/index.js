@@ -2,13 +2,11 @@ import {
   contractCreate,
   getMyContracts,
   contractSetBuyer,
+  contractConfirmPurchase,
 } from "../utils/contractService";
 
 export const state = () => ({
-  currentCategory: -1,
-  action: false,
   currentAccount: {},
-  currentContractId: -1,
   contracts: [],
   accounts: [],
   categories: [],
@@ -16,64 +14,10 @@ export const state = () => ({
   images: [],
   labels: [],
   materials: [],
-  fetching: false,
+  currentCategory: -1,
+  waiting: false,
+  action: false,
 });
-
-export const actions = {
-  // hedera smart contracts
-
-  async setBuyer({ commit, state }, payload) {
-    // call contract function
-    await contractSetBuyer(
-      state.currentAccount.accountId,
-      state.currentAccount.pvkey,
-      payload.contractId,
-      payload.buyerId
-    );
-
-    // update store: the state, the owner, and such
-  },
-
-  async addSmartContract({ commit, state }, payload) {
-    // console.log("the payload");
-    // console.log(payload.name);
-
-    let contractId = await contractCreate(
-      state.currentAccount.accountId,
-      state.currentAccount.pvkey,
-      payload.name,
-      payload.description,
-      payload.visual,
-      payload.category,
-      payload.productionCountry,
-      payload.materialDescription,
-      payload.duration,
-      payload.deposit,
-      payload.charityAccountId
-    );
-    commit("updateContractId", contractId);
-    return contractId;
-  },
-
-  async getSmartContracts({ commit, state }) {
-    let data = await getMyContracts(
-      state.currentAccount.accountId,
-      state.currentAccount.pvkey
-    );
-
-    console.log("data in store");
-    console.log(data);
-
-    // todo commit all to store if not already
-
-    if (!state.currentAccount.fetched) {
-      commit("SET_CONTRACTS", data);
-      commit("setAccountContractsFetched");
-    }
-
-    return data;
-  },
-};
 
 export const mutations = {
   SET_CONTRACTS(state, payload) {
@@ -103,9 +47,6 @@ export const mutations = {
   setCurrentAccount(state, payload) {
     state.currentAccount = payload;
   },
-  resetCurrentContractId(state) {
-    state.currentContractId = -1;
-  },
   setAction(state, payload) {
     state.action = payload;
   },
@@ -114,18 +55,27 @@ export const mutations = {
     //payload = contract
     state.contracts.push(payload);
     console.log("added to store: " + payload);
-    // state.images.forEach(
-    //   (i) => (i.used = i.ID === payload.visual ? true : i.used)
-    // );
+  },
+
+  addContracts(state, payload) {
+    //payload = contracts array
+    state.contracts.push(...payload);
+    console.log("added to store: " + payload);
   },
 
   deleteContract(state, payload) {
     //payload = contract
-    state.images.forEach(
-      (i) => (i.used = i.ID === payload.visual ? false : i.used)
-    );
     state.contracts = state.contracts.filter((c) => c.ID !== payload.ID);
   },
+
+  updateField(state, payload) {
+    state.contracts.forEach(
+      (c) =>
+        (c[payload.field] =
+          c.ID === payload.contractId ? payload.value : c[payload.field])
+    );
+  },
+
   transferContract(state, payload) {
     // { ID , seller, buyer }
     state.contracts.forEach((c) => {
@@ -142,16 +92,103 @@ export const mutations = {
     });
   },
 
-  updateContractId(state, payload) {
-    state.currentContractId = payload;
-  },
-
-  toggleFetchState(state) {
-    state.fetching = !state.fetching;
+  toggleAwaitState(state) {
+    state.waiting = !state.waiting;
   },
 
   setAccountContractsFetched(state) {
     state.currentAccount["fetched"] = true;
+  },
+};
+
+export const actions = {
+  // purchase contract functions
+
+  async setBuyer({ commit, state }, payload) {
+    // call contract function
+    await contractSetBuyer(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      payload.contractId,
+      payload.index,
+      payload.buyerId
+    );
+
+    // update state and owner in store (so no queries are needed to see the changes)
+
+    commit("updateField", {
+      contractId: payload.contractId,
+      field: "state",
+      value: 1,
+    });
+
+    commit("updateField", {
+      contractId: payload.contractId,
+      field: "owner",
+      value: payload.buyerId,
+    });
+  },
+
+  async confirmPurchase({ commit, state }, payload) {
+    await contractConfirmPurchase(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      payload.contractId,
+      payload.deposit,
+      payload.fakeBuyDate
+    );
+
+    // update store: state = 2, date , alleen dit?
+
+    commit("updateField", {
+      contractId: payload.contractId,
+      field: "state",
+      value: 2,
+    });
+    commit("updateField", {
+      contractId: payload.contractId,
+      field: "startdate",
+      value: payload.fakeBuyDate,
+    });
+  },
+
+  async addSmartContract({ commit, state }, payload) {
+    // commit("toggleAwaitState"); //
+
+    let data = payload;
+    let { contractId, index } = await contractCreate(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      data
+    );
+    // console.log(index);
+
+    // add the returned contract meta data
+    data["ID"] = contractId.toString();
+    data["index"] = +index; // index in list in lookup contract
+
+    commit("addContract", data);
+    // commit("toggleAwaitState");
+
+    return contractId;
+  },
+
+  async getSmartContracts({ commit, state }) {
+    commit("toggleAwaitState");
+    let data = await getMyContracts(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey
+    );
+
+    console.log("data in store");
+    console.log(data);
+
+    // commit all to store
+    commit("addContracts", data);
+    commit("setAccountContractsFetched");
+
+    commit("toggleAwaitState");
+    return data;
   },
 };
 

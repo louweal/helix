@@ -11,7 +11,10 @@
           v-for="(contract, index) in matchingContracts.slice().reverse()"
           :key="index"
         >
-          <contract-card :data="contract" />
+          <contract-card
+            :data="contract"
+            :pending="contract.state === 1 ? true : false"
+          />
         </div>
       </div>
 
