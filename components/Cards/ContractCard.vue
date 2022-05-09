@@ -51,32 +51,8 @@
     </div>
 
     <div class="contract-card__actions" v-if="showActions">
-      <div class="grid no-bottom-margin-cols" v-if="!pending && !isShop">
-        <div class="col-xs-8">
-          <Button
-            class="button--light button--fullwidth"
-            @click.native="toggleTransferOptions"
-          >
-            <icon icon="arrow-right" /> Transfer
-          </Button>
-        </div>
-        <div class="col-xs-8">
-          <Button
-            class="button--light button--fullwidth"
-            @click.native="toggleDeleteOptions"
-          >
-            <icon icon="delete" />
-            Delete
-          </Button>
-        </div>
-        <div class="col-xs-8">
-          <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
-            <Button class="button--fullwidth"> View details </Button>
-          </nuxt-link>
-        </div>
-      </div>
-      <div class="grid no-bottom-margin-cols" v-if="!pending && isShop">
-        <div class="col-xs-8">
+      <div class="grid no-bottom-margin-cols">
+        <div class="col-xs-8" v-if="data.state === 0">
           <Button
             class="button--light button--fullwidth"
             @click.native="toggleSellOptions"
@@ -84,7 +60,7 @@
             <icon icon="arrow-right" /> Sell
           </Button>
         </div>
-        <div class="col-xs-8">
+        <div class="col-xs-8" v-if="data.state === 0">
           <Button
             class="button--light button--fullwidth"
             @click.native="toggleRemoveOptions"
@@ -93,14 +69,8 @@
             Remove
           </Button>
         </div>
-        <div class="col-xs-8">
-          <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
-            <Button class="button--fullwidth"> More details </Button>
-          </nuxt-link>
-        </div>
-      </div>
-      <div class="grid no-bottom-margin-cols" v-if="pending">
-        <div class="col-xs-12">
+
+        <div class="col-xs-12" v-if="data.state === 1">
           <input
             class="field field--light"
             type="text"
@@ -108,7 +78,7 @@
             @input="(e) => setFakeBuyDate(e.target.value)"
           />
         </div>
-        <div class="col-xs-12">
+        <div class="col-xs-12" v-if="data.state === 1">
           <!-- <heading size="s" level="0" fstyle="italic" weight="400"
             >This action locks the deposit amount into the contract.</heading
           > -->
@@ -119,7 +89,44 @@
             Confirm purchase
           </Button>
         </div>
+
+        <div class="col-xs-8" v-if="data.state === 2">
+          <Button
+            class="button--light button--fullwidth"
+            @click.native="toggleTransferOptions"
+          >
+            <icon icon="arrow-right" /> Transfer
+          </Button>
+        </div>
+        <div class="col-xs-8" v-if="data.state === 2">
+          <Button
+            class="button--light button--fullwidth"
+            @click.native="toggleDeleteOptions"
+          >
+            <icon icon="delete" />
+            Delete
+          </Button>
+        </div>
+
+        <div class="col-xs-8" v-if="data.state === 3">
+          <Button
+            class="button--light button--fullwidth"
+            @click.native="toggleRemoveResoldOptions"
+          >
+            <icon icon="delete" />
+            Remove
+          </Button>
+        </div>
+        <div class="col-xs-8" v-if="data.state !== 1">
+          <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
+            <Button class="button--fullwidth"> View details </Button>
+          </nuxt-link>
+        </div>
       </div>
+
+      <!-- <div class="grid no-bottom-margin-cols" v-if="pending">
+
+      </div> -->
     </div>
 
     <div
@@ -148,7 +155,7 @@
       />
       <Button
         class="button--primary button--fullwidth"
-        xxxclick.native="doTransfer"
+        @click.native="transferOwnership"
       >
         Confirm
       </Button>
@@ -245,17 +252,24 @@ export default {
 
   methods: {
     async setBuyer() {
-      let contractId = await this.$store.dispatch("setBuyer", {
+      await this.$store.dispatch("setBuyer", {
         contractId: this.data.ID,
         index: this.data.index,
         buyerId: this.buyer,
       });
     },
 
+    async transferOwnership() {
+      await this.$store.dispatch("transferOwnership", {
+        contractId: this.data.ID,
+        buyerId: this.buyer,
+        charityId: this.data.charity,
+        index: this.data.index,
+      });
+    },
+
     setFakeBuyDate(val) {
-      console.log(val);
       this.fakeBuyDate = parseInt((Date.now() - val * 1000 * 86400) / 1000); // convert 'days ago' to timestamp in seconds
-      console.log(this.fakeBuyDate);
     },
 
     async confirmPurchase() {
@@ -313,8 +327,7 @@ export default {
       this.showRemoveOptions = false;
     },
     getBuyer(data) {
-      this.buyer = data.id;
-      console.log(data);
+      this.buyer = data.ID;
     },
   },
 

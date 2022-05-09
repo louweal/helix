@@ -1,11 +1,20 @@
 import {
   contractCreate,
-  getMyContracts,
   contractSetBuyer,
+  contractGetter,
   contractConfirmPurchase,
+  contractTransferOwnership,
   contractDeleteCreatedContract,
-  lookupContractRemoveContract,
 } from "../utils/contractService";
+
+import {
+  lookupContractGetContract,
+  lookupContractAddContract,
+  lookupContractDeleteContract,
+  lookupContractRemoveContract,
+  lookupContractGetNumContracts,
+  lookupContractGetContractIndex,
+} from "../utils/lookupContractService";
 
 export const state = () => ({
   currentAccount: {},
@@ -56,13 +65,11 @@ export const mutations = {
   addContract(state, payload) {
     //payload = contract
     state.contracts.push(payload);
-    console.log("added to store: " + payload);
   },
 
   addContracts(state, payload) {
     //payload = contracts array
     state.contracts.push(...payload);
-    console.log("added to store: " + payload);
   },
 
   deleteContract(state, payload) {
@@ -128,17 +135,30 @@ export const actions = {
   },
 
   async setBuyer({ commit, state }, payload) {
-    // call contract function
-    let index = await contractSetBuyer(
+    commit("toggleAwaitState");
+
+    // 1) call contract function
+    await contractSetBuyer(
       state.currentAccount.accountId,
       state.currentAccount.pvkey,
       payload.contractId,
-      payload.index,
       payload.buyerId
     );
 
-    // update index, state and owner in store (so no queries are needed to see the changes)
+    // 2) add contractid to the new owners' lookup list
+    await lookupContractAddContract(payload.buyerId, payload.contractId);
 
+    // 3) get the new index
+    const index = await lookupContractGetContractIndex(payload.buyerId);
+    console.log(index);
+
+    // 4) delete contractid from the sellers lookup list
+    await lookupContractDeleteContract(
+      state.currentAccount.accountId,
+      payload.index
+    );
+
+    // 5) update in store: owner, index, state
     commit("updateField", {
       contractId: payload.contractId,
       field: "index",
@@ -156,9 +176,13 @@ export const actions = {
       field: "owner",
       value: payload.buyerId,
     });
+
+    commit("toggleAwaitState");
   },
 
   async confirmPurchase({ commit, state }, payload) {
+    commit("toggleAwaitState");
+
     await contractConfirmPurchase(
       state.currentAccount.accountId,
       state.currentAccount.pvkey,
@@ -179,45 +203,185 @@ export const actions = {
       field: "startdate",
       value: payload.fakeBuyDate,
     });
+
+    commit("toggleAwaitState");
+  },
+
+  async transferOwnership({ commit, state }, payload) {
+    commit("toggleAwaitState");
+
+    // 1) call contract function
+    await contractTransferOwnership(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      payload.contractId,
+      payload.buyerId,
+      payload.charityId
+    );
+
+    // 2) add contractid to the new owners' lookup list
+    await lookupContractAddContract(payload.buyerId, payload.contractId);
+
+    // 3) get the new index
+    const index = await lookupContractGetContractIndex(payload.buyerId);
+
+    // 4) delete contractid from the sellers lookup list
+    await lookupContractDeleteContract(
+      state.currentAccount.accountId,
+      payload.index
+    );
+
+    // 5) update in store: owner, index, state
+    commit("updateField", {
+      contractId: payload.contractId,
+      field: "index",
+      value: index,
+    });
+
+    commit("updateField", {
+      contractId: payload.contractId,
+      field: "state",
+      value: 3,
+    });
+
+    commit("updateField", {
+      contractId: payload.contractId,
+      field: "owner",
+      value: payload.buyerId,
+    });
+
+    commit("toggleAwaitState");
   },
 
   async addSmartContract({ commit, state }, payload) {
-    // commit("toggleAwaitState"); //
-
     let data = payload;
-    let { contractId, index } = await contractCreate(
-      state.currentAccount.accountId,
-      state.currentAccount.pvkey,
-      data
+    let accountId = state.currentAccount.accountId;
+    let pvkey = state.currentAccount.pvkey;
+
+    const staticDataStr = encodeData({
+      name: data.name,
+      visual: data.visual,
+      category: data.category,
+      deposit: data.deposit,
+      description: data.description,
+      productionCountry: data.productionCountry,
+      materialDescription: data.materialDescription,
+    });
+
+    let contractId = await contractCreate(
+      accountId,
+      pvkey,
+      data,
+      staticDataStr
     );
-    // console.log(index);
+
+    await lookupContractAddContract(accountId, contractId);
+
+    // Run query to find the index of the new contract in the list
+    const index = await lookupContractGetContractIndex(accountId);
 
     // add the returned contract meta data
     data["ID"] = contractId.toString();
     data["index"] = +index; // index in list in lookup contract
 
+    // add contract to store
     commit("addContract", data);
-    // commit("toggleAwaitState");
 
     return contractId;
   },
 
   async getSmartContracts({ commit, state }) {
     commit("toggleAwaitState");
-    let data = await getMyContracts(
-      state.currentAccount.accountId,
-      state.currentAccount.pvkey
-    );
 
-    console.log("data in store");
-    console.log(data);
+    let accountId = state.currentAccount.accountId;
+    let pvkey = state.currentAccount.pvkey;
+
+    console.log("currentAccount", accountId);
+
+    const numContracts = await lookupContractGetNumContracts(accountId);
+
+    let i = 0;
+
+    let data = [];
+
+    while (i < numContracts) {
+      let contractId = await lookupContractGetContract(accountId, i);
+
+      if (contractId.toString() !== "0.0.0") {
+        const state = await contractGetter(
+          accountId,
+          pvkey,
+          contractId,
+          "getState",
+          "uint8"
+        );
+        const prevOwner = await contractGetter(
+          accountId,
+          pvkey,
+          contractId,
+          "getPrevOwner",
+          "address"
+        );
+        const charity = await contractGetter(
+          accountId,
+          pvkey,
+          contractId,
+          "getCharityAddress",
+          "address"
+        );
+        const encodedS = await contractGetter(
+          accountId,
+          pvkey,
+          contractId,
+          "getStatic",
+          "string"
+        );
+        const date = await contractGetter(
+          accountId,
+          pvkey,
+          contractId,
+          "getDate",
+          "uint32"
+        );
+        const duration = await contractGetter(
+          accountId,
+          pvkey,
+          contractId,
+          "getDuration",
+          "uint256"
+        );
+        const s = decodeData(encodedS);
+
+        // console.log("prevOwner:", prevOwner);
+        // console.log("date:", date);
+        // console.log(s);
+
+        data.push({
+          index: i,
+          ID: contractId.toString(),
+          startdate: parseInt((Date.now() / 1000 - date) / 86400),
+          duration: +duration,
+          state: state,
+          store: accountId,
+          seller: prevOwner,
+          owner: accountId,
+          category: +s.category,
+          visual: +s.visual,
+          name: s.name,
+          description: s.description,
+          materialDescription: s.materialDescription,
+          productionCountry: s.productionCountry,
+          deposit: +s.deposit,
+          charity: charity,
+        });
+      }
+
+      i += 1;
+    }
 
     let storeIds = state.contracts.map((c) => c.ID);
 
-    console.log("lengths");
-    console.log(data.length);
     data = data.filter((c) => !storeIds.includes(c.ID));
-    console.log(data.length);
 
     // commit all to store
     commit("addContracts", data);
@@ -235,4 +399,34 @@ function todayDate() {
   var yyyy = today.getFullYear();
 
   return dd + "-" + mm + "-" + yyyy;
+}
+
+// helper functions
+
+function encodeData(data) {
+  let str = "";
+  let numProps = Object.keys(data).length;
+  let i = 0;
+  for (let prop in data) {
+    str = str.concat(data[prop]);
+    if (i < numProps - 1) {
+      str = str.concat(":|:");
+    }
+    i += 1;
+  }
+  return str;
+}
+
+function decodeData(str) {
+  let obj = {};
+  let props = str.split(":|:");
+
+  obj["name"] = props[0];
+  obj["visual"] = +props[1];
+  obj["category"] = +props[2];
+  obj["deposit"] = +props[3];
+  obj["description"] = props[4];
+  obj["productionCountry"] = props[5];
+  obj["materialDescription"] = props[6];
+  return obj;
 }

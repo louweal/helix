@@ -69,6 +69,11 @@ export default {
         useShortDoctype: true,
       },
     },
+  },
 
+  vue: {
+    config: {
+      silent: true,
+    },
   },
 };
