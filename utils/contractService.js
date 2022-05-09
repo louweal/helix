@@ -40,7 +40,7 @@ export async function contractCreate(accountId, pvKey, data) {
   const fileCreateSubmit = await fileCreateSign.execute(client);
   const fileCreateRx = await fileCreateSubmit.getReceipt(client);
   const bytecodeFileId = fileCreateRx.fileId;
-  console.log(`- The smart contract bytecode file ID is ${bytecodeFileId}`);
+  // console.log(`- The smart contract bytecode file ID is ${bytecodeFileId}`);
 
   // Append contents to the file
   const fileAppendTx = new FileAppendTransaction()
@@ -51,7 +51,7 @@ export async function contractCreate(accountId, pvKey, data) {
   const fileAppendSign = await fileAppendTx.sign(sellerKey);
   const fileAppendSubmit = await fileAppendSign.execute(client);
   const fileAppendRx = await fileAppendSubmit.getReceipt(client);
-  console.log(`- Content added: ${fileAppendRx.status} \n`);
+  console.log(`FileAppendTransaction - status: ${fileAppendRx.status} \n`);
 
   const contractTx = await new ContractCreateTransaction()
     .setBytecodeFileId(bytecodeFileId)
@@ -66,7 +66,9 @@ export async function contractCreate(accountId, pvKey, data) {
   const contractResponse = await contractTx.execute(client);
   const contractReceipt = await contractResponse.getReceipt(client);
   const newContractId = await contractReceipt.contractId;
-  console.log("The smart contract ID is " + newContractId);
+  console.log("ContractCreateTransaction - result: " + newContractId);
+
+  // other function?
 
   // add newContractId to lookup contract
   const operatorId = AccountId.fromString(process.env.MY_ACCOUNT_ID);
@@ -81,9 +83,59 @@ export async function contractCreate(accountId, pvKey, data) {
   // Run query to find the index of the new contract in the list
 
   const index = await getContractIndex(operatorClient, accountId);
-  console.log(index);
+  // console.log(index);
 
   return { contractId: newContractId, index: index };
+}
+
+export async function contractDeleteCreatedContract(
+  accountId,
+  pvKey,
+  contractId
+) {
+  // sets the state of the contract to inactive
+  const sellerId = AccountId.fromString(accountId);
+  const sellerKey = PrivateKey.fromString(pvKey);
+  const client = Client.forTestnet().setOperator(sellerId, sellerKey);
+
+  // execute transaction
+  const contractExecTx1 = new ContractExecuteTransaction()
+    .setContractId(contractId)
+    .setGas(3000000)
+    .setFunction("deleteCreatedContract")
+    .freezeWith(client);
+  const contractExecSign1 = await contractExecTx1.sign(sellerKey);
+  const contractExecSubmit1 = await contractExecSign1.execute(client);
+  const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
+  console.log(
+    `ContractExecuteTransaction - deleteCreatedContract - status: ${contractExecRx1.status.toString()} \n`
+  );
+}
+
+export async function lookupContractRemoveContract(accountId, index) {
+  const operatorId = AccountId.fromString(process.env.MY_ACCOUNT_ID);
+  const operatorKey = PrivateKey.fromString(process.env.MY_PRIVATE_KEY);
+  const operatorClient = Client.forTestnet().setOperator(
+    operatorId,
+    operatorKey
+  );
+
+  const contractExecuteTx = new ContractExecuteTransaction()
+    .setContractId(process.env.LOOKUP_CONTRACT)
+    .setGas(100000)
+    .setFunction(
+      "deleteContract",
+      new ContractFunctionParameters()
+        .addAddress(AccountId.fromString(accountId).toSolidityAddress())
+        .addUint32(index)
+    );
+  const contractExecuteSubmit = await contractExecuteTx.execute(operatorClient);
+  const contractExecuteRx = await contractExecuteSubmit.getReceipt(
+    operatorClient
+  );
+  console.log(
+    `ContractExecuteTransaction - deleteContract - status: ${contractExecuteRx.status} \n`
+  );
 }
 
 export async function contractSetBuyer(
@@ -112,7 +164,7 @@ export async function contractSetBuyer(
   const contractExecSubmit1 = await contractExecSign1.execute(client);
   const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
   console.log(
-    `- Contract association with the buyers's account: ${contractExecRx1.status.toString()} \n`
+    `ContractExecuteTransaction - setBuyer - status: ${contractExecRx1.status.toString()} \n`
   );
 
   // add contract to lookup list buyer
@@ -137,7 +189,7 @@ export async function contractSetBuyer(
   return newIndex;
 }
 
-async function getContractIndex(client, accountId) {
+async function getNumContracts(client, accountId) {
   const contractQueryTx = new ContractCallQuery()
     .setContractId(process.env.LOOKUP_CONTRACT)
     .setGas(100000)
@@ -150,7 +202,16 @@ async function getContractIndex(client, accountId) {
   const contractQuerySubmit = await contractQueryTx.execute(client);
   const contractQueryResult = contractQuerySubmit.getUint32(0);
 
-  return contractQueryResult - 1;
+  console.log(
+    `ContractCallQuery - getNumContracts - result: ${contractQueryResult}`
+  );
+
+  return contractQueryResult;
+}
+
+async function getContractIndex(client, accountId) {
+  const numContracts = await getNumContracts(client, accountId);
+  return numContracts - 1;
 }
 
 async function addContract(client, accountId, contractId) {
@@ -165,7 +226,9 @@ async function addContract(client, accountId, contractId) {
     );
   const contractExecuteSubmit = await contractExecuteTx.execute(client);
   const contractExecuteRx = await contractExecuteSubmit.getReceipt(client);
-  console.log(`- addContract call status: ${contractExecuteRx.status} \n`);
+  console.log(
+    `ContractExecuteTransaction - addContract - status: ${contractExecuteRx.status} \n`
+  );
 }
 
 async function deleteContract(client, accountId, index) {
@@ -210,7 +273,7 @@ export async function contractConfirmPurchase(
   const contractExecSubmit1 = await contractExecSign1.execute(client);
   const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
   console.log(
-    `- confirmPurchase call status: ${contractExecRx1.status.toString()} \n`
+    `ContractExecuteTransaction - confirmPurchase - status: ${contractExecRx1.status.toString()} \n`
   );
 }
 
@@ -232,8 +295,10 @@ export async function getMyContracts(accountId, pvKey) {
 
   let myContracts = [];
 
+  const numContracts = await getNumContracts(client, sellerId);
+
   let i = 0;
-  while (i < 1024) {
+  while (i < numContracts) {
     try {
       const contractQueryTx = new ContractCallQuery()
         .setContractId(lookupContractId)
@@ -248,55 +313,64 @@ export async function getMyContracts(accountId, pvKey) {
       const contractQueryResult = contractQuerySubmit.getAddress(0);
 
       const contractId = ContractId.fromSolidityAddress(contractQueryResult); // ?
-      console.log(`- The contractAddress at index ${i} is ${contractId} \n`);
-
-      // get values from contract
-      const state = await getter(client, contractId, "getState", "uint8");
-      const prevOwner = await getter(
-        client,
-        contractId,
-        "getPrevOwner",
-        "address"
+      console.log(
+        `-  ${i} - ContractCallQuery - getContract - result: ${contractId} \n`
       );
-      const charity = await getter(
-        client,
-        contractId,
-        "getCharityAddress",
-        "address"
-      );
-      const encodedS = await getter(client, contractId, "getStatic", "string");
-      const date = await getter(client, contractId, "getDate", "uint32");
-      const duration = await getter(
-        client,
-        contractId,
-        "getDuration",
-        "uint256"
-      );
-      const s = decodeData(encodedS);
 
-      console.log("prevOwner:", prevOwner);
-      console.log("date:", date);
+      if (contractId.toString() !== "0.0.0") {
+        // not a moved/removed contracts
+        // get values from contract
+        const state = await getter(client, contractId, "getState", "uint8");
+        const prevOwner = await getter(
+          client,
+          contractId,
+          "getPrevOwner",
+          "address"
+        );
+        const charity = await getter(
+          client,
+          contractId,
+          "getCharityAddress",
+          "address"
+        );
+        const encodedS = await getter(
+          client,
+          contractId,
+          "getStatic",
+          "string"
+        );
+        const date = await getter(client, contractId, "getDate", "uint32");
+        const duration = await getter(
+          client,
+          contractId,
+          "getDuration",
+          "uint256"
+        );
+        const s = decodeData(encodedS);
 
-      console.log(s);
+        // console.log("prevOwner:", prevOwner);
+        // console.log("date:", date);
+        // console.log(s);
 
-      myContracts.push({
-        index: i,
-        ID: contractId.toString(),
-        startdate: parseInt((Date.now() / 1000 - date) / 86400),
-        duration: +duration,
-        state: state,
-        store: accountId,
-        seller: AccountId.fromSolidityAddress(prevOwner).toString(),
-        owner: accountId,
-        category: +s.category,
-        visual: +s.visual,
-        name: s.name,
-        description: s.description,
-        materialDescription: s.materialDescription,
-        productionCountry: s.productionCountry,
-        deposit: +s.deposit,
-        charity: AccountId.fromSolidityAddress(charity).toString(),
-      });
+        myContracts.push({
+          index: i,
+          ID: contractId.toString(),
+          startdate: parseInt((Date.now() / 1000 - date) / 86400),
+          duration: +duration,
+          state: state,
+          store: accountId,
+          seller: AccountId.fromSolidityAddress(prevOwner).toString(),
+          owner: accountId,
+          category: +s.category,
+          visual: +s.visual,
+          name: s.name,
+          description: s.description,
+          materialDescription: s.materialDescription,
+          productionCountry: s.productionCountry,
+          deposit: +s.deposit,
+          charity: AccountId.fromSolidityAddress(charity).toString(),
+        });
+      }
     } catch (error) {
       console.log(error);
       console.log("Done");
@@ -319,21 +393,21 @@ async function getter(client, contractId, functionName, returnType) {
     .setQueryPayment(new Hbar(2));
   const contractQuerySubmit = await contractQueryTx.execute(client);
 
+  let result = 0;
+
   if (returnType === "uint8") {
-    return contractQuerySubmit.getUint8(0);
+    result = contractQuerySubmit.getUint8(0);
+  } else if (returnType === "uint32") {
+    result = contractQuerySubmit.getUint32(0);
+  } else if (returnType === "uint256") {
+    result = contractQuerySubmit.getUint256(0);
+  } else if (returnType === "string") {
+    result = contractQuerySubmit.getString(0);
+  } else if (returnType === "address") {
+    result = contractQuerySubmit.getAddress(0);
   }
-  if (returnType === "uint32") {
-    return contractQuerySubmit.getUint32(0);
-  }
-  if (returnType === "uint256") {
-    return contractQuerySubmit.getUint256(0);
-  }
-  if (returnType === "string") {
-    return contractQuerySubmit.getString(0);
-  }
-  if (returnType === "address") {
-    return contractQuerySubmit.getAddress(0);
-  }
+  console.log(`- - ContractCallQuery - ${functionName} - result: ${result} \n`);
+  return result;
 }
 
 function encodeData(data) {

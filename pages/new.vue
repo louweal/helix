@@ -359,7 +359,7 @@ export default {
       this.$store.commit("toggleAwaitState");
       // collect all data in single object
       let data = {
-        startdate: Date.now() / 1000,
+        startdate: 0, // startdate is actually num days ago?
         state: 0,
         owner: this.$store.state.currentAccount.accountId,
         seller: this.$store.state.currentAccount.accountId,

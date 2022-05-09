@@ -3,6 +3,8 @@ import {
   getMyContracts,
   contractSetBuyer,
   contractConfirmPurchase,
+  contractDeleteCreatedContract,
+  lookupContractRemoveContract,
 } from "../utils/contractService";
 
 export const state = () => ({
@@ -103,6 +105,27 @@ export const mutations = {
 
 export const actions = {
   // purchase contract functions
+
+  async removeContract({ commit, state }, payload) {
+    commit("toggleAwaitState");
+
+    // call contractDeleteCreatedContract
+    await contractDeleteCreatedContract(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      payload.contractId
+    );
+
+    // update lookup contract
+    await lookupContractRemoveContract(
+      state.currentAccount.accountId,
+      payload.index
+    );
+    commit("toggleAwaitState");
+
+    // update store (delete contract)
+    commit("deleteContract", { ID: payload.contractId });
+  },
 
   async setBuyer({ commit, state }, payload) {
     // call contract function

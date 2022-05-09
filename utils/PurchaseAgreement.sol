@@ -12,7 +12,7 @@ contract PurchaseAgreement {
     uint public depositB;
     uint public depositB2;
     uint public depositC;
-    uint public buyDate;
+    uint public date;
     uint public duration;
 
     enum State {Created, Pending, Sold, Resold, Inactive}
@@ -25,7 +25,7 @@ contract PurchaseAgreement {
         charity = payable(charity_);
         staticData = staticData_;
         duration = duration_ * 86400; //  in seconds 86400
-
+        date = block.timestamp; 
         deposit = deposit_;
         initialDepositB = (deposit_ * 60) / 100;
         depositB = (deposit_ * 60) / 100;
@@ -50,8 +50,8 @@ contract PurchaseAgreement {
         return uint8(state);
     }
 
-    function getBuyDate()  public view returns (uint256) {
-        return buyDate;
+    function getDate()  public view returns (uint256) {
+        return date;
     }
 
     function getStatic() public view returns (string memory) {
@@ -80,20 +80,20 @@ contract PurchaseAgreement {
     }
 
     function getMaxAmount() public view returns (uint256) {
-        return (((initialDepositB * (block.timestamp - buyDate))/ duration)) - (initialDepositB - depositB);
+        return (((initialDepositB * (block.timestamp - date))/ duration)) - (initialDepositB - depositB);
     } 
 
     // confirm buying the new item 
-    function confirmPurchase(uint buyDate_) external inState(State.Pending) onlyBuyer() payable {
+    function confirmPurchase(uint date_) external inState(State.Pending) onlyBuyer() payable {
         require(msg.value == deposit, "Please send in the exact deposit amount"); // add the deposit to the contract
         // update state
         state = State.Sold;
 
-        if(buyDate != 0) { // for providing fake buydates for demo's
-            buyDate = buyDate_;
+        if(date != 0) { // for providing fake dates for demo's
+            date = date_;
         }
         else {
-            buyDate = block.timestamp;
+            date = block.timestamp;
         }
         prevOwner = seller;
         seller = payable(msg.sender); // update seller to buyer
@@ -113,28 +113,27 @@ contract PurchaseAgreement {
         charity.transfer(deposit); // todo: charity
     }
 
+    function deleteCreatedContract() external inState(State.Created) onlySeller() {
+        state = State.Inactive; 
+    }
+
     // the buyer of a secondhand item receives 30% of the deposit
     // + 10% is donated to the charity param
     function transferOwnership(address buyer_, address charity_) external inState(State.Sold) onlySeller() payable {
         state = State.Resold; 
         buyer = payable(buyer_);
         charity = payable(charity_);
-        buyDate = block.timestamp;
+        date = block.timestamp;
         seller.transfer(depositB); // seller gets 60%
         buyer.transfer(depositB2); // buyer get 30%
         charity.transfer(depositC); // charity gets 10%
     }
 
     function collect() external inState(State.Sold) onlySeller payable {
-        uint amount = (((initialDepositB * (block.timestamp - buyDate))/ duration)) - (initialDepositB - depositB);
+        uint amount = (((initialDepositB * (block.timestamp - date))/ duration)) - (initialDepositB - depositB);
         // require(amount_ <= , "You can't collect this amount at this time");
         depositB = depositB - amount;
         seller.transfer(amount);
-    }
-
-    function abort() external onlySeller() inState(State.Created) {
-        state = State.Inactive;
-        seller.transfer(address(this).balance);
     }
 
     // modifiers
@@ -163,7 +162,7 @@ contract PurchaseAgreement {
     error ContractActive();
 
     modifier contractEnded() {
-        if((block.timestamp - buyDate) < duration) {
+        if((block.timestamp - date) < duration) {
             revert ContractActive();
         }
         _;

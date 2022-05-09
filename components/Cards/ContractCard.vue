@@ -287,12 +287,10 @@ export default {
 
     async deleteContract() {},
     async removeContract() {
-      // calls deleteCreatedContract on the contract and removes it from the lookup contract
-      // todo
-      // await this.$store.dispatch("removeContract", {
-      //   contractId: this.data.ID,
-      //   index: this.data.index,
-      // });
+      await this.$store.dispatch("removeContract", {
+        contractId: this.data.ID,
+        index: this.data.index,
+      });
     },
 
     toggleActions() {
