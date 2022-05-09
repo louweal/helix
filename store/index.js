@@ -231,7 +231,7 @@ export const actions = {
       payload.index
     );
 
-    // 5) update in store: owner, index, state
+    // 5) update in store: owner, index, state, seller, startdate
     commit("updateField", {
       contractId: payload.contractId,
       field: "index",
@@ -250,6 +250,16 @@ export const actions = {
       value: payload.buyerId,
     });
 
+    commit("updateField", {
+      contractId: payload.contractId,
+      field: "startdate",
+      value: 0,
+    });
+    commit("updateField", {
+      contractId: payload.contractId,
+      field: "seller",
+      value: state.currentAccount.accountId,
+    });
     commit("toggleAwaitState");
   },
 
