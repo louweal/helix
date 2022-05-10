@@ -25,7 +25,7 @@ export async function lookupContractRemoveContract(accountId, index) {
   const contractExecuteSubmit = await contractExecuteTx.execute(client);
   const contractExecuteRx = await contractExecuteSubmit.getReceipt(client);
   console.log(
-    `ContractExecuteTransaction - deleteContract - status: ${contractExecuteRx.status} \n`
+    `LookupContract - ContractExecuteTransaction - deleteContract - status: ${contractExecuteRx.status} \n`
   );
 }
 

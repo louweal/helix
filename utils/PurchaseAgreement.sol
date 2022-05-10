@@ -4,28 +4,35 @@ pragma solidity ^0.8.11;
 contract PurchaseAgreement {
     address payable public seller;
     address payable public buyer;
-    address payable public charity;
     address public prevOwner;
     string public staticData;
-    uint public deposit;
-    uint public initialDepositB;
-    uint public depositB;
-    uint public depositB2;
-    uint public depositC;
-    uint public date;
-    uint public duration;
+    uint256 public deposit;
+    uint256 public initialDepositB;
+    uint256 public depositB;
+    uint256 public depositB2;
+    uint256 public depositC;
+    uint256 public date;
+    uint256 public duration;
 
-    enum State {Created, Pending, Sold, Resold, Inactive}
+    enum State {
+        Created,
+        Pending,
+        Sold,
+        Resold,
+        Inactive
+    }
     State public state;
 
-    constructor(string memory staticData_, uint duration_, uint deposit_, address charity_) payable {
+    constructor(
+        string memory staticData_,
+        uint256 duration_,
+        uint256 deposit_
+    ) payable {
         seller = payable(msg.sender);
         prevOwner = msg.sender;
-
-        charity = payable(charity_);
         staticData = staticData_;
         duration = duration_ * 86400; //  in seconds 86400
-        date = block.timestamp; 
+        date = block.timestamp;
         deposit = deposit_;
         initialDepositB = (deposit_ * 60) / 100;
         depositB = (deposit_ * 60) / 100;
@@ -36,13 +43,9 @@ contract PurchaseAgreement {
     // functions
     // setters
 
-    function setBuyer(address buyer_) external onlySeller() {
+    function setBuyer(address buyer_) external onlySeller {
         state = State.Pending;
         buyer = payable(buyer_);
-    }
-
-    function setCharity(address charity_) external onlySeller() {
-        charity = payable(charity_);
     }
 
     // getters
@@ -50,7 +53,7 @@ contract PurchaseAgreement {
         return uint8(state);
     }
 
-    function getDate()  public view returns (uint256) {
+    function getDate() public view returns (uint256) {
         return date;
     }
 
@@ -58,7 +61,7 @@ contract PurchaseAgreement {
         return staticData;
     }
 
-    function getDuration()  public view returns (uint256) {
+    function getDuration() public view returns (uint256) {
         return duration;
     }
 
@@ -71,28 +74,34 @@ contract PurchaseAgreement {
         return prevOwner;
     }
 
-    function getCharityAddress() public view returns (address) {
-        return charity;
-    }
-
     function getCurrentTimestamp() public view returns (uint256) {
         return block.timestamp;
     }
 
     function getMaxAmount() public view returns (uint256) {
-        return (((initialDepositB * (block.timestamp - date))/ duration)) - (initialDepositB - depositB);
-    } 
+        return
+            (((initialDepositB * (block.timestamp - date)) / duration)) -
+            (initialDepositB - depositB);
+    }
 
-    // confirm buying the new item 
-    function confirmPurchase(uint date_) external inState(State.Pending) onlyBuyer() payable {
-        require(msg.value == deposit, "Please send in the exact deposit amount"); // add the deposit to the contract
+    // confirm buying the new item
+    function confirmPurchase(uint256 date_)
+        external
+        payable
+        inState(State.Pending)
+        onlyBuyer
+    {
+        require(
+            msg.value == deposit,
+            "Please send in the exact deposit amount"
+        ); // add the deposit to the contract
         // update state
         state = State.Sold;
 
-        if(date != 0) { // for providing fake dates for demo's
+        if (date != 0) {
+            // for providing fake dates for demo's
             date = date_;
-        }
-        else {
+        } else {
             date = block.timestamp;
         }
         prevOwner = seller;
@@ -101,39 +110,76 @@ contract PurchaseAgreement {
     }
 
     // collect 60% of the deposit back after contract end
-    function collectDeposit() external inState(State.Sold) onlySeller() contractEnded() payable {
-        state = State.Inactive; 
+    function collectDeposit()
+        external
+        payable
+        inState(State.Sold)
+        onlySeller
+        contractEnded
+    {
+        state = State.Inactive;
         seller.transfer(depositB);
     }
 
     // delete contract: 100% is donated to the charity
-    function deleteContract(address charity_) external inState(State.Sold) onlySeller() payable {
-        state = State.Inactive; 
-        charity = payable(charity_);
+    function deleteContract(address charity_)
+        external
+        payable
+        inState(State.Sold)
+        onlySeller
+    {
+        state = State.Inactive;
+        address payable charity = payable(charity_);
         charity.transfer(deposit); // todo: charity
     }
 
-    function deleteCreatedContract() external inState(State.Created) onlySeller() {
-        state = State.Inactive; 
+    function deleteCreatedContract()
+        external
+        inState(State.Created)
+        onlySeller
+    {
+        state = State.Inactive;
     }
 
     // the buyer of a secondhand item receives 30% of the deposit
     // + 10% is donated to the charity param
-    function transferOwnership(address buyer_, address charity_) external inState(State.Sold) onlySeller() payable {
-        state = State.Resold; 
+    function transferOwnership(address buyer_, address charity_)
+        external
+        payable
+        inState(State.Sold)
+        onlySeller
+    {
+        state = State.Resold;
         buyer = payable(buyer_);
-        charity = payable(charity_);
+        address payable charity = payable(charity_);
         date = block.timestamp;
         seller.transfer(depositB); // seller gets 60%
         buyer.transfer(depositB2); // buyer get 30%
         charity.transfer(depositC); // charity gets 10%
     }
 
-    function collect() external inState(State.Sold) onlySeller payable {
-        uint amount = (((initialDepositB * (block.timestamp - date))/ duration)) - (initialDepositB - depositB);
+    function collect() external payable inState(State.Sold) onlySeller {
+        uint256 amount = (
+            ((initialDepositB * (block.timestamp - date)) / duration)
+        ) - (initialDepositB - depositB);
         // require(amount_ <= , "You can't collect this amount at this time");
         depositB = depositB - amount;
         seller.transfer(amount);
+    }
+
+    function donate(address charity_)
+        external
+        payable
+        inState(State.Sold)
+        onlySeller
+    {
+        uint256 amount = (
+            ((initialDepositB * (block.timestamp - date)) / duration)
+        ) - (initialDepositB - depositB);
+        // require(amount_ <= , "You can't collect this amount at this time");
+        depositB = depositB - amount;
+        address payable charity = payable(charity_);
+        charity.transfer(amount);
     }
 
     // modifiers
@@ -142,7 +188,7 @@ contract PurchaseAgreement {
     error InvalidState();
 
     modifier inState(State state_) {
-        if(state != state_) {
+        if (state != state_) {
             revert InvalidState();
         }
         _;
@@ -152,7 +198,7 @@ contract PurchaseAgreement {
     error OnlyBuyer();
 
     modifier onlyBuyer() {
-        if(msg.sender != buyer) {
+        if (msg.sender != buyer) {
             revert OnlyBuyer();
         }
         _;
@@ -162,7 +208,7 @@ contract PurchaseAgreement {
     error ContractActive();
 
     modifier contractEnded() {
-        if((block.timestamp - date) < duration) {
+        if ((block.timestamp - date) < duration) {
             revert ContractActive();
         }
         _;
@@ -172,10 +218,9 @@ contract PurchaseAgreement {
     error OnlySeller();
 
     modifier onlySeller() {
-        if(msg.sender != seller) {
+        if (msg.sender != seller) {
             revert OnlySeller();
         }
         _;
     }
-
 }

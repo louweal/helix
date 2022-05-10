@@ -42,7 +42,7 @@
             transferred
           </badge> -->
 
-          <template v-if="!isShop">
+          <template v-if="!isShop && contract.state === 2">
             <deposit
               :val="(contract.deposit * 0.6).toFixed()"
               class="bottom-xs-1"
@@ -92,11 +92,23 @@
             }}
           </list-item>
 
-          <list-item icon="heart" v-if="contract.charity">
+          <list-item icon="heart" v-if="contract.charity && contract.state > 3">
             Charity: {{ charityName }}
           </list-item>
 
-          <list-item icon="trophy" v-if="!isShop && contract.duration">
+          <list-item icon="recycle" v-if="contract.state === 3">
+            You got this item secondhand
+          </list-item>
+
+          <list-item icon="bars" v-if="contract.state === 3">
+            You received ℏ
+            {{ parseFloat((contract.deposit / 1e8) * 0.3).toFixed(2) }}
+          </list-item>
+
+          <list-item
+            icon="trophy"
+            v-if="!isShop && contract.duration && contract.state > 3"
+          >
             {{
               parseInt(contract.duration / 86400) -
               parseInt((Date.now() / 1000 - contract.startdate) / 86400)

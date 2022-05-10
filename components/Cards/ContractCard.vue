@@ -148,7 +148,7 @@
       </heading>
 
       <dropdown
-        key="0"
+        key="2"
         class="dropdown--white"
         @input="getBuyer"
         :options="allAccounts"
@@ -174,29 +174,38 @@
       <heading size="m" level="3" class="bottom-xs-0"> Buyer </heading>
 
       <dropdown
-        key="0"
+        key="1"
         class="dropdown--white"
         @input="getBuyer"
         :options="allAccounts"
       />
       <Button
         class="button--primary button--fullwidth"
-        @click.native="setBuyer()"
+        @click.native="setBuyer"
       >
         Confirm
       </Button>
     </div>
 
     <div v-if="showActions && showDeleteOptions" class="contract-card__options">
-      <div class="contract-card__options__header">
+      <!-- <div class="contract-card__options__header">
         <heading size="m" level="2" class="bottom-xs-0" color="black">
           Delete contract
         </heading>
-      </div>
+      </div> -->
       <p>
         Do you want to delete this contract? This action donates the complete
-        remainder of the deposit to the charity that is on this contract.
+        remainder of the deposit to the charity selected below.
       </p>
+
+      <heading size="m" level="3" class="bottom-xs-0"> Charity </heading>
+
+      <dropdown
+        key="0"
+        class="dropdown--white"
+        @input="getCharity"
+        :options="allCharities"
+      />
 
       <Button
         class="button--primary button--fullwidth"
@@ -236,6 +245,7 @@ export default {
       showRemoveOptions: false,
       showSellOptions: false,
       buyer: false,
+      charity: false,
       fakeBuyDate: 0,
     };
   },
@@ -299,7 +309,13 @@ export default {
       //todo
     },
 
-    async deleteContract() {},
+    async deleteContract() {
+      await this.$store.dispatch("deleteBoughtContract", {
+        contractId: this.data.ID,
+        index: this.data.index,
+        charityId: this.charity,
+      });
+    },
     async removeContract() {
       await this.$store.dispatch("removeContract", {
         contractId: this.data.ID,
@@ -329,6 +345,10 @@ export default {
     getBuyer(data) {
       this.buyer = data.ID;
     },
+
+    getCharity(sel) {
+      this.charity = sel.ID;
+    },
   },
 
   computed: {
@@ -349,6 +369,16 @@ export default {
             a.ID !== this.$store.state.currentAccount.ID
         )
         .map(({ accountId, name }) => ({
+          id: accountId,
+          label: name + " (" + accountId + ")",
+          value: accountId,
+        }));
+    },
+
+    allCharities() {
+      return this.accounts
+        .filter((a) => a.charity)
+        .map(({ name, accountId }) => ({
           id: accountId,
           label: name + " (" + accountId + ")",
           value: accountId,
@@ -423,7 +453,7 @@ export default {
       border-radius: 6px;
       padding: 7px 0;
       margin-bottom: 5px;
-      margin-top: 5px;
+      margin-top: 15px;
     }
   }
 

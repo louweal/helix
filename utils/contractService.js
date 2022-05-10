@@ -82,6 +82,33 @@ export async function contractDeleteCreatedContract(
   );
 }
 
+export async function contractDeleteContract(
+  accountId,
+  pvKey,
+  contractId,
+  charityAccountId
+) {
+  // sets the state of the contract to inactive
+  const sellerId = AccountId.fromString(accountId);
+  const sellerKey = PrivateKey.fromString(pvKey);
+  const client = Client.forTestnet().setOperator(sellerId, sellerKey);
+
+  // execute transaction
+  const contractExecTx1 = new ContractExecuteTransaction()
+    .setContractId(contractId)
+    .setGas(3000000)
+    .setFunction("deleteContract", new ContractFunctionParameters()
+      .addAddress(AccountId.fromString(charityAccountId).toSolidityAddress())
+    )
+    .freezeWith(client);
+  const contractExecSign1 = await contractExecTx1.sign(sellerKey);
+  const contractExecSubmit1 = await contractExecSign1.execute(client);
+  const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
+  console.log(
+    `ContractExecuteTransaction - deleteContract - status: ${contractExecRx1.status.toString()} \n`
+  );
+}
+
 export async function contractSetBuyer(
   accountId,
   pvKey,

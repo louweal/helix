@@ -1,10 +1,11 @@
 import {
   contractCreate,
+  contractDeleteCreatedContract,
   contractSetBuyer,
   contractGetter,
   contractConfirmPurchase,
   contractTransferOwnership,
-  contractDeleteCreatedContract,
+  contractDeleteContract,
 } from "../utils/contractService";
 
 import {
@@ -80,26 +81,26 @@ export const mutations = {
   updateField(state, payload) {
     state.contracts.forEach(
       (c) =>
-        (c[payload.field] =
-          c.ID === payload.contractId ? payload.value : c[payload.field])
+      (c[payload.field] =
+        c.ID === payload.contractId ? payload.value : c[payload.field])
     );
   },
 
-  transferContract(state, payload) {
-    // { ID , seller, buyer }
-    state.contracts.forEach((c) => {
-      (c.owner = c.ID === payload.ID ? payload.buyer : c.owner),
-        (c.seller = c.ID === payload.ID ? payload.seller : c.seller),
-        (c.startdate = c.ID === payload.ID ? todayDate() : c.startdate);
-    });
-  },
-  sellContract(state, payload) {
-    // { ID , buyer }
-    state.contracts.forEach((c) => {
-      (c.owner = c.ID === payload.ID ? payload.buyer : c.owner),
-        (c.startdate = c.ID === payload.ID ? todayDate() : c.startdate);
-    });
-  },
+  // transferContract(state, payload) {
+  //   // { ID , seller, buyer }
+  //   state.contracts.forEach((c) => {
+  //     (c.owner = c.ID === payload.ID ? payload.buyer : c.owner),
+  //       (c.seller = c.ID === payload.ID ? payload.seller : c.seller),
+  //       (c.startdate = c.ID === payload.ID ? todayDate() : c.startdate);
+  //   });
+  // },
+  // sellContract(state, payload) {
+  //   // { ID , buyer }
+  //   state.contracts.forEach((c) => {
+  //     (c.owner = c.ID === payload.ID ? payload.buyer : c.owner),
+  //       (c.startdate = c.ID === payload.ID ? todayDate() : c.startdate);
+  //   });
+  // },
 
   toggleAwaitState(state) {
     state.waiting = !state.waiting;
@@ -121,6 +122,28 @@ export const actions = {
       state.currentAccount.accountId,
       state.currentAccount.pvkey,
       payload.contractId
+    );
+
+    // update lookup contract
+    await lookupContractRemoveContract(
+      state.currentAccount.accountId,
+      payload.index
+    );
+    commit("toggleAwaitState");
+
+    // update store (delete contract)
+    commit("deleteContract", { ID: payload.contractId });
+  },
+
+  async deleteBoughtContract({ commit, state }, payload) {
+    commit("toggleAwaitState");
+
+    // call contractDeleteCreatedContract
+    await contractDeleteContract(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      payload.contractId,
+      payload.charityId
     );
 
     // update lookup contract
@@ -332,13 +355,7 @@ export const actions = {
           "getPrevOwner",
           "address"
         );
-        const charity = await contractGetter(
-          accountId,
-          pvkey,
-          contractId,
-          "getCharityAddress",
-          "address"
-        );
+
         const encodedS = await contractGetter(
           accountId,
           pvkey,
@@ -362,18 +379,15 @@ export const actions = {
         );
         const s = decodeData(encodedS);
 
-        // console.log("prevOwner:", prevOwner);
-        // console.log("date:", date);
-        // console.log(s);
 
         data.push({
           index: i,
           ID: contractId.toString(),
-          startdate: Date.now() / 1000, //parseInt((Date.now() / 1000 - date) / 86400),
+          startdate: date, //parseInt((Date.now() / 1000 - date) / 86400),
           duration: +duration,
           state: state,
-          store: accountId,
-          seller: prevOwner,
+          store: accountId, // is this correct?
+          seller: prevOwner, // get this from store? 
           owner: accountId,
           category: +s.category,
           visual: +s.visual,
@@ -402,14 +416,14 @@ export const actions = {
   },
 };
 
-function todayDate() {
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, "0");
-  var mm = String(today.getMonth() + 1).padStart(2, "0");
-  var yyyy = today.getFullYear();
+// function todayDate() {
+//   var today = new Date();
+//   var dd = String(today.getDate()).padStart(2, "0");
+//   var mm = String(today.getMonth() + 1).padStart(2, "0");
+//   var yyyy = today.getFullYear();
 
-  return dd + "-" + mm + "-" + yyyy;
-}
+//   return dd + "-" + mm + "-" + yyyy;
+// }
 
 // helper functions
 

@@ -17,14 +17,29 @@
         </div>
       </template>
 
-      <template v-if="selectedContracts.length > 0">
+      <template v-if="activeContracts.length > 0">
         <heading size="l" level="2" class="bottom-xs-0">
           {{ isShop ? "Created contracts" : "Active contracts" }}
         </heading>
         <div class="grid">
           <div
             class="col-xs-24"
-            v-for="(contract, index) in selectedContracts.slice().reverse()"
+            v-for="(contract, index) in activeContracts.slice().reverse()"
+            :key="index"
+          >
+            <contract-card :data="contract" />
+          </div>
+        </div>
+      </template>
+
+      <template v-if="otherContracts.length > 0">
+        <heading size="l" level="2" class="bottom-xs-0">
+          Other contracts
+        </heading>
+        <div class="grid">
+          <div
+            class="col-xs-24"
+            v-for="(contract, index) in otherContracts.slice().reverse()"
             :key="index"
           >
             <contract-card :data="contract" />
@@ -85,7 +100,7 @@ export default {
       this.$store.state.currentAccount.fetched === false
     ) {
       let data = await this.$store.dispatch("getSmartContracts");
-      // this.selectedContracts = data;
+      // this.activeContracts = data;
     } else {
       console.log("already fetched");
     }
@@ -115,12 +130,19 @@ export default {
         );
       }
     },
-    selectedContracts() {
+    activeContracts() {
       if (this.isShop) {
         return this.myContracts.filter((c) => c.state === 0);
       } else {
-        // show only Pending, Sold and [todo] Resold contracts
-        return this.myContracts.filter((c) => c.state === 2 || c.state === 3);
+        return this.myContracts.filter((c) => c.state === 2);
+      }
+    },
+
+    otherContracts() {
+      if (this.isShop) {
+        return [];
+      } else {
+        return this.myContracts.filter((c) => c.state === 3);
       }
     },
 

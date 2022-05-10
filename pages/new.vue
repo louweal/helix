@@ -173,7 +173,7 @@
         </Section>
 
         <Section v-if="currentStep === 3">
-          <heading size="l" level="2" class="bottom-xs-0">
+          <!-- <heading size="l" level="2" class="bottom-xs-0">
             Select charity
           </heading>
           <p>
@@ -185,7 +185,7 @@
             fieldName="charity"
             @input="setDropdownValue"
             :options="allCharities"
-          />
+          /> -->
 
           <div class="bottom-xs-2"></div>
           <heading size="l" level="2" class="bottom-xs-0"
@@ -290,7 +290,7 @@ export default {
     },
 
     durationOptions() {
-      return [3000, 6000].map((d) => ({
+      return [0.25, 0.5, 1, 3000, 6000].map((d) => ({
         id: d,
         label: `${d} days (${(d / 365.242199).toFixed(2)} years)`,
         value: d,
@@ -322,15 +322,15 @@ export default {
       return dd + "-" + mm + "-" + yyyy;
     },
 
-    allCharities() {
-      return this.accounts
-        .filter((a) => a.charity)
-        .map(({ name, ID, accountId }) => ({
-          id: ID,
-          label: name,
-          value: accountId,
-        }));
-    },
+    // allCharities() {
+    //   return this.accounts
+    //     .filter((a) => a.charity)
+    //     .map(({ name, ID, accountId }) => ({
+    //       id: ID,
+    //       label: name,
+    //       value: accountId,
+    //     }));
+    // },
     materialGroups() {
       return [...new Set(this.materials.map((m) => m.parent).flat())]
 
@@ -365,7 +365,7 @@ export default {
         seller: this.$store.state.currentAccount.accountId,
         duration: this.contract.duration.val,
         deposit: parseInt(this.contract.deposit), // string to int tinybar
-        charity: this.contract.charity.val,
+        charity: "0.0.0", // todo this.contract.charity.val,
         name: this.contract.name,
         description: this.contract.description,
         materialDescription: this.contract.material_description,
