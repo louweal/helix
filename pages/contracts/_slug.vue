@@ -74,11 +74,15 @@
           </list-item>
 
           <list-item icon="calendar" v-if="!isShop && contract.startdate">
-            Owner since {{ contract.startdate }} days
+            Owner since
+            {{ parseInt((Date.now() / 1000 - contract.startdate) / 86400) }}
+            days
           </list-item>
 
           <list-item icon="calendar" v-if="isShop && contract.startdate > -1">
-            Listed {{ contract.startdate }} days ago
+            Listed
+            {{ parseInt((Date.now() / 1000 - contract.startdate) / 86400) }}
+            days ago
           </list-item>
 
           <list-item icon="pin" v-if="contract.production_country">
@@ -93,7 +97,11 @@
           </list-item>
 
           <list-item icon="trophy" v-if="!isShop && contract.duration">
-            {{ contract.duration / 86400 - contract.startdate }} days left
+            {{
+              parseInt(contract.duration / 86400) -
+              parseInt((Date.now() / 1000 - contract.startdate) / 86400)
+            }}
+            days left
           </list-item>
         </Section>
 

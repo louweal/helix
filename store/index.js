@@ -369,7 +369,7 @@ export const actions = {
         data.push({
           index: i,
           ID: contractId.toString(),
-          startdate: parseInt((Date.now() / 1000 - date) / 86400),
+          startdate: Date.now() / 1000, //parseInt((Date.now() / 1000 - date) / 86400),
           duration: +duration,
           state: state,
           store: accountId,
