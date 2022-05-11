@@ -5,6 +5,8 @@ import {
   contractGetter,
   contractConfirmPurchase,
   contractTransferOwnership,
+  contractCollect,
+  contractDonate,
   contractDeleteContract,
 } from "../utils/contractService";
 
@@ -81,8 +83,8 @@ export const mutations = {
   updateField(state, payload) {
     state.contracts.forEach(
       (c) =>
-      (c[payload.field] =
-        c.ID === payload.contractId ? payload.value : c[payload.field])
+        (c[payload.field] =
+          c.ID === payload.contractId ? payload.value : c[payload.field])
     );
   },
 
@@ -203,6 +205,49 @@ export const actions = {
     commit("toggleAwaitState");
   },
 
+  async getAvailableDeposit({ commit, state }, payload) {
+    commit("toggleAwaitState");
+
+    const amount = await contractGetter(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      payload.contractId,
+      "getAvailableDeposit",
+      "uint256"
+    );
+
+    commit("toggleAwaitState");
+
+    console.log(amount);
+
+    return amount;
+  },
+
+  async collect({ commit, state }, payload) {
+    commit("toggleAwaitState");
+
+    await contractCollect(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      payload.contractId
+    );
+
+    commit("toggleAwaitState");
+  },
+
+  async donate({ commit, state }, payload) {
+    commit("toggleAwaitState");
+
+    await contractDonate(
+      state.currentAccount.accountId,
+      state.currentAccount.pvkey,
+      payload.contractId,
+      payload.charityId
+    );
+
+    commit("toggleAwaitState");
+  },
+
   async confirmPurchase({ commit, state }, payload) {
     commit("toggleAwaitState");
 
@@ -224,7 +269,7 @@ export const actions = {
     commit("updateField", {
       contractId: payload.contractId,
       field: "startdate",
-      value: payload.fakeBuyDate,
+      value: payload.fakeBuyDate != 0 ? payload.fakeBuyDate : Date.now() / 1000,
     });
 
     commit("toggleAwaitState");
@@ -379,7 +424,6 @@ export const actions = {
         );
         const s = decodeData(encodedS);
 
-
         data.push({
           index: i,
           ID: contractId.toString(),
@@ -387,16 +431,16 @@ export const actions = {
           duration: +duration,
           state: state,
           store: accountId, // is this correct?
-          seller: prevOwner, // get this from store? 
+          seller: prevOwner, // get this from store?
           owner: accountId,
           category: +s.category,
           visual: +s.visual,
           name: s.name,
           description: s.description,
-          materialDescription: s.materialDescription,
-          productionCountry: s.productionCountry,
+          material_description: s.material_description,
+          production_country: s.production_country,
           deposit: +s.deposit,
-          charity: charity,
+          // charity: charity,
         });
       }
 
@@ -450,7 +494,7 @@ function decodeData(str) {
   obj["category"] = +props[2];
   obj["deposit"] = +props[3];
   obj["description"] = props[4];
-  obj["productionCountry"] = props[5];
-  obj["materialDescription"] = props[6];
+  obj["production_country"] = props[5];
+  obj["material_description"] = props[6];
   return obj;
 }

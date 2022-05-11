@@ -14,6 +14,26 @@
       <p>Deletion successful</p>
     </notification>
 
+    <notification v-if="$store.state.action === 'collectSuccess'">
+      <p>Collect successful.</p>
+      <a
+        target="_blank"
+        :href="`https://testnet.dragonglass.me/hedera/accounts/${$store.state.currentAccount.accountId}`"
+      >
+        Inspect on DragonGlass
+      </a>
+    </notification>
+
+    <notification v-if="$store.state.action === 'donateSuccess'">
+      <p>Donation successful.</p>
+      <a
+        target="_blank"
+        :href="`https://testnet.dragonglass.me/hedera/accounts/${$store.state.currentAccount.accountId}`"
+      >
+        Inspect on DragonGlass
+      </a>
+    </notification>
+
     <Footer v-if="$route.path !== '/login'" />
   </main>
 </template>

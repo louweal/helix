@@ -47,7 +47,6 @@ export async function contractCreate(accountId, pvKey, data, staticDataStr) {
         .addString(staticDataStr)
         .addUint256(data.duration)
         .addUint256(data.deposit)
-        .addAddress(AccountId.fromString(data.charity).toSolidityAddress())
     )
     .setGas(4000000);
   const contractResponse = await contractTx.execute(client);
@@ -97,8 +96,11 @@ export async function contractDeleteContract(
   const contractExecTx1 = new ContractExecuteTransaction()
     .setContractId(contractId)
     .setGas(3000000)
-    .setFunction("deleteContract", new ContractFunctionParameters()
-      .addAddress(AccountId.fromString(charityAccountId).toSolidityAddress())
+    .setFunction(
+      "deleteContract",
+      new ContractFunctionParameters().addAddress(
+        AccountId.fromString(charityAccountId).toSolidityAddress()
+      )
     )
     .freezeWith(client);
   const contractExecSign1 = await contractExecTx1.sign(sellerKey);
@@ -196,6 +198,55 @@ export async function contractTransferOwnership(
   const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
   console.log(
     `ContractExecuteTransaction - transferOwnership - status: ${contractExecRx1.status.toString()} \n`
+  );
+}
+
+export async function contractCollect(accountId, pvKey, contractId) {
+  const sellerId = AccountId.fromString(accountId);
+  const sellerKey = PrivateKey.fromString(pvKey);
+  const client = Client.forTestnet().setOperator(sellerId, sellerKey);
+
+  // console.log(contractId);
+
+  // return;
+
+  // execute transaction
+  const contractExecTx1 = await new ContractExecuteTransaction()
+    .setContractId(contractId)
+    .setGas(3000000)
+    .setFunction("collect")
+    .freezeWith(client);
+
+  const contractExecSign1 = await contractExecTx1.sign(sellerKey);
+  const contractExecSubmit1 = await contractExecSign1.execute(client);
+  const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
+  console.log(
+    `HC - ContractExecuteTransaction - collect - status: ${contractExecRx1.status.toString()} \n`
+  );
+}
+
+export async function contractDonate(accountId, pvKey, contractId, charityId) {
+  const sellerId = AccountId.fromString(accountId);
+  const sellerKey = PrivateKey.fromString(pvKey);
+  const client = Client.forTestnet().setOperator(sellerId, sellerKey);
+
+  // execute transaction
+  const contractExecTx1 = await new ContractExecuteTransaction()
+    .setContractId(contractId)
+    .setGas(3000000)
+    .setFunction(
+      "donate",
+      new ContractFunctionParameters().addAddress(
+        AccountId.fromString(charityId).toSolidityAddress()
+      )
+    )
+    .freezeWith(client);
+
+  const contractExecSign1 = await contractExecTx1.sign(sellerKey);
+  const contractExecSubmit1 = await contractExecSign1.execute(client);
+  const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
+  console.log(
+    `HC - ContractExecuteTransaction - donate - status: ${contractExecRx1.status.toString()} \n`
   );
 }
 

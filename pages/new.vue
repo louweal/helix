@@ -290,7 +290,7 @@ export default {
     },
 
     durationOptions() {
-      return [0.25, 0.5, 1, 3000, 6000].map((d) => ({
+      return [2, 4, 8, 16, 3000, 6000].map((d) => ({
         id: d,
         label: `${d} days (${(d / 365.242199).toFixed(2)} years)`,
         value: d,
@@ -363,7 +363,7 @@ export default {
         state: 0,
         owner: this.$store.state.currentAccount.accountId,
         seller: this.$store.state.currentAccount.accountId,
-        duration: this.contract.duration.val,
+        duration: this.contract.duration.val * 86400,
         deposit: parseInt(this.contract.deposit), // string to int tinybar
         charity: "0.0.0", // todo this.contract.charity.val,
         name: this.contract.name,

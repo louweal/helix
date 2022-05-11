@@ -37,33 +37,34 @@
             contract.contractId
           }}</span>
 
-          <!-- <badge :level="contract.label" class="bottom-xs-2" />
-          <badge v-if="contract.state === 1" color="primary">
-            transferred
-          </badge> -->
+          <br /><br />
 
           <template v-if="!isShop && contract.state === 2">
             <deposit
-              :val="(contract.deposit * 0.6).toFixed()"
+              :val="amount"
               class="bottom-xs-1"
               label="collectable deposit"
             />
 
-            <Stack :gap="0.5">
-              <Button
-                class="button--primary"
-                xxxclick.native="toggleDrawer('#transfer-drawer')"
-              >
-                <icon icon="payouts" /> Collect now
-              </Button>
-              <Button
-                class="button--secondary"
-                xxxclick.native="toggleDrawer('#delete-drawer')"
-              >
-                <icon icon="donations" />
-                Donate now
-              </Button>
-            </Stack>
+            <div class="grid">
+              <div class="col-xs-12">
+                <Button
+                  class="button--primary button--fullwidth"
+                  @click.native="toggleDrawer('#donate-drawer')"
+                >
+                  <icon icon="recycle" />
+                  Donate now
+                </Button>
+              </div>
+              <div class="col-xs-12">
+                <Button
+                  class="button--light button--fullwidth"
+                  @click.native="collectNow"
+                >
+                  <icon icon="bars" /> Collect now
+                </Button>
+              </div>
+            </div>
           </template>
         </Section>
 
@@ -73,7 +74,7 @@
             Bought from {{ sellerName }}
           </list-item>
 
-          <list-item icon="calendar" v-if="!isShop && contract.startdate">
+          <list-item icon="calendar" v-if="!isShop && contract.startdate > -1">
             Owner since
             {{ parseInt((Date.now() / 1000 - contract.startdate) / 86400) }}
             days
@@ -92,10 +93,6 @@
             }}
           </list-item>
 
-          <list-item icon="heart" v-if="contract.charity && contract.state > 3">
-            Charity: {{ charityName }}
-          </list-item>
-
           <list-item icon="recycle" v-if="contract.state === 3">
             You got this item secondhand
           </list-item>
@@ -107,7 +104,7 @@
 
           <list-item
             icon="trophy"
-            v-if="!isShop && contract.duration && contract.state > 3"
+            v-if="!isShop && contract.duration && contract.state >= 2"
           >
             {{
               parseInt(contract.duration / 86400) -
@@ -127,11 +124,13 @@
             label="Materials"
             icon="tools"
             level="2"
-            v-if="contract.material_description !== undefined"
+            xxxv-if="contract.material_description !== undefined"
           >
-            <p>
+            <p v-if="contract.material_description !== 'undefined'">
               {{ contract.material_description }}
             </p>
+
+            <p v-else>No material information available</p>
           </accordion-item>
         </Section>
       </div>
@@ -139,6 +138,37 @@
     <div v-else class="page--placeholder">
       <p>Oh no. This contract doesn't exist.</p>
     </div>
+
+    <drawer id="donate-drawer">
+      <template v-slot:header> Choose charity </template>
+      <p>
+        Great that you want to help a charity organisation! Please select one
+        below.
+      </p>
+
+      <dropdown
+        key="2"
+        class="dropdown--white"
+        @input="getCharity"
+        :options="allCharities"
+      />
+
+      <a
+        v-if="charity"
+        target="_blank"
+        :href="`https://testnet.dragonglass.me/hedera/accounts/${charity}`"
+      >
+        Inspect {{ charity }} on DragonGlass
+      </a>
+      <br /><br />
+
+      <Button
+        class="button--primary button--fullwidth"
+        @click.native="donateNow"
+      >
+        Confirm
+      </Button>
+    </drawer>
   </div>
 </template>
 
@@ -150,7 +180,18 @@ export default {
       deleted: false,
       buyer: false,
       charity: false,
+      amount: 0,
     };
+  },
+
+  async created() {
+    let amount = await this.$store.dispatch("getAvailableDeposit", {
+      contractId: this.contract.ID,
+    });
+    // amount = (amount / 1e3).toFixed(2); //(amount / 1e8).toFixed(2);
+
+    // console.log(amount);
+    this.amount = amount;
   },
 
   computed: {
@@ -213,8 +254,8 @@ export default {
       return this.accounts
         .filter((a) => a.charity)
         .map(({ ID, name, accountId }) => ({
-          id: ID,
-          label: name,
+          id: accountId,
+          label: name + " (" + accountId + ")",
           value: accountId,
         }));
     },
@@ -226,18 +267,46 @@ export default {
       // console.log(id);
       drawer.classList.toggle("drawer--active");
     },
-    hbars(percentage) {
-      return (
-        parseFloat(this.contract.deposit * (percentage / 100)).toFixed(2) + " ℏ"
-      );
+    async collectNow() {
+      // console.log(this.contract.ID);
+
+      await this.$store.dispatch("collect", {
+        contractId: this.contract.ID,
+      });
+
+      this.$store.commit("setAction", "collectSuccess");
+      this.$router.push({
+        path: "/",
+      });
     },
-    getItemRecepient(data) {
-      this.buyer = data.ID;
-      // console.log(data.ID);
+    async donateNow() {
+      await this.$store.dispatch("donate", {
+        contractId: this.contract.ID,
+        charityId: this.charity,
+      });
+
+      this.$store.commit("setAction", "donateSuccess");
+      this.toggleDrawer("#donate-drawer");
+      this.$router.push({
+        path: "/",
+      });
     },
-    getDepositRecepient(data) {
-      this.charity = this.allCharities.find((c) => c.id == +data.ID).label;
-      // console.log(this.charity);
+    // hbars(percentage) {
+    //   return (
+    //     parseFloat(this.contract.deposit * (percentage / 100)).toFixed(2) + " ℏ"
+    //   );
+    // },
+    // getItemRecepient(data) {
+    //   this.buyer = data.ID;
+    //   // console.log(data.ID);
+    // },
+    // getDepositRecepient(data) {
+    //   this.charity = this.allCharities.find((c) => c.id == +data.ID).label;
+    //   // console.log(this.charity);
+    // },
+
+    getCharity(sel) {
+      this.charity = sel.ID;
     },
   },
 };

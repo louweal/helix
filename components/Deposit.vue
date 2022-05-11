@@ -1,6 +1,10 @@
 <template>
   <div class="deposit" v-if="val">
-    <span class="integral"><span v-if="label">ℏ </span>{{ integral }}.</span
+    <span class="integral"
+      ><span v-if="label"
+        ><span v-if="unit">{{ unit }}</span
+        >ℏ </span
+      >{{ integral }}.</span
     ><span class="fractional">{{ fractional }}</span>
 
     <heading level="0" size="m" weight="400" fstyle="italic" v-if="label">
@@ -20,11 +24,19 @@ export default {
       type: [String, Boolean],
       default: false,
     },
+    unit: {
+      type: [String, Boolean],
+      default: false,
+    },
   },
 
   computed: {
     deposit() {
-      return (parseInt(this.val) / 100000000).toString(); // convert deposit from tinybar to hbar
+      if (this.unit === "m") {
+        return (parseInt(this.val) / 1e5).toString(); // convert deposit from tinybar to millibar
+      } else {
+        return (parseInt(this.val) / 1e8).toString(); // convert deposit from tinybar to hbar
+      }
     },
 
     integral() {

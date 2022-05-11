@@ -65,18 +65,20 @@
       <div>
         <p class="bottom-xs-2">No contracts found</p>
 
-        <template v-if="!$store.state.currentAccount.seller">
-          <Button to="/login" class="button--secondary">
-            Switch account
-          </Button>
-        </template>
+        <!-- <Stack dir="vertical"> -->
+        <!-- <Button
+            v-if="$store.state.currentAccount.seller"
+            to="/new"
+            class="button--secondary button--fullwidth"
+            >Add contract</Button
+          > -->
 
-        <Button
-          v-if="$store.state.currentAccount.seller"
-          to="/new"
-          class="button--primary"
-          >Add contract</Button
-        >
+        <!-- <template v-if="!$store.state.currentAccount.seller"> -->
+        <Button to="/login" class="button--secondary button--fullwidth">
+          Switch account
+        </Button>
+        <!-- </template> -->
+        <!-- </Stack> -->
       </div>
     </div>
   </div>
@@ -156,40 +158,36 @@ export default {
   },
 
   methods: {
-    doTransfer() {
-      if (this.isShop) {
-        this.$store.commit("sellContract", {
-          ID: +this.contract.ID,
-          buyer: +this.buyer,
-        });
-      } else {
-        if (this.contract.owner !== this.buyer) {
-          this.$store.commit("transferContract", {
-            ID: +this.contract.ID,
-            seller: +this.me,
-            buyer: +this.buyer,
-          });
-        }
-      }
-
-      this.$store.commit("setAction", "transferSuccess");
-
-      this.transferred = true;
-      this.toggleDrawer("#transfer-drawer");
-      this.$router.push({
-        path: "/",
-      });
-    },
-    doDelete() {
-      this.$store.commit("deleteContract", this.contract);
-
-      this.$store.commit("setAction", "deleteSuccess");
-
-      this.toggleDrawer("#delete-drawer");
-      this.$router.push({
-        path: "/",
-      });
-    },
+    // doTransfer() {
+    //   if (this.isShop) {
+    //     this.$store.commit("sellContract", {
+    //       ID: +this.contract.ID,
+    //       buyer: +this.buyer,
+    //     });
+    //   } else {
+    //     if (this.contract.owner !== this.buyer) {
+    //       this.$store.commit("transferContract", {
+    //         ID: +this.contract.ID,
+    //         seller: +this.me,
+    //         buyer: +this.buyer,
+    //       });
+    //     }
+    //   }
+    //   this.$store.commit("setAction", "transferSuccess");
+    //   this.transferred = true;
+    //   this.toggleDrawer("#transfer-drawer");
+    //   this.$router.push({
+    //     path: "/",
+    //   });
+    // },
+    // doDelete() {
+    //   this.$store.commit("deleteContract", this.contract);
+    //   this.$store.commit("setAction", "deleteSuccess");
+    //   this.toggleDrawer("#delete-drawer");
+    //   this.$router.push({
+    //     path: "/",
+    //   });
+    // },
   },
 };
 </script>

@@ -153,6 +153,16 @@
         @input="getBuyer"
         :options="allAccounts"
       />
+      <heading size="m" level="3" class="bottom-xs-0">
+        Charity <badge color="primary">up to 10%</badge>
+      </heading>
+
+      <dropdown
+        key="4"
+        class="dropdown--white"
+        @input="getCharity"
+        :options="allCharities"
+      />
       <Button
         class="button--primary button--fullwidth"
         @click.native="transferOwnership"
@@ -273,13 +283,15 @@ export default {
       await this.$store.dispatch("transferOwnership", {
         contractId: this.data.ID,
         buyerId: this.buyer,
-        charityId: this.data.charity,
+        charityId: this.charity,
         index: this.data.index,
       });
     },
 
     setFakeBuyDate(val) {
-      this.fakeBuyDate = parseInt((Date.now() - val * 1000 * 86400) / 1000); // convert 'days ago' to timestamp in seconds
+      console.log("val" + val);
+      this.fakeBuyDate = parseInt(Date.now() / 1000 - val * 86400); // convert 'days ago' to timestamp in seconds
+      this.fakeBuyDate = 0; // temp disable thi
     },
 
     async confirmPurchase() {
@@ -290,6 +302,8 @@ export default {
         console.log("Invalid buy date");
         return;
       }
+
+      console.log(this.fakeBuyDate);
 
       let payload = {
         contractId: this.data.ID,
