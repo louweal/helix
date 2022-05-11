@@ -20,7 +20,7 @@ export default {
       {
         hid: "description",
         name: "description",
-        content: "Be a hero, trade products sustainably using Hedera Helix.",
+        content: "Help the environment with Hedera Helix for Heroes.",
       },
       { name: "format-detection", content: "telephone=no" },
     ],
