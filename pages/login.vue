@@ -12,7 +12,7 @@
         />
       </div>
       <div class="grid align-xs-center bottom-xs-3">
-        <div class="col-xs-16">
+        <div class="col-xs-14">
           <p>Choose one of the demo accounts below to sign in</p>
         </div>
       </div>
