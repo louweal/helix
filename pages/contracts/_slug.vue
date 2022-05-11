@@ -116,6 +116,7 @@
 
         <Section>
           <p v-if="contract.description">{{ contract.description }}</p>
+          <p v-else>No description available</p>
         </Section>
 
         <Section>
@@ -185,13 +186,13 @@ export default {
   },
 
   async created() {
+    if (this.contract.state !== 2) {
+      return;
+    }
     let amount = await this.$store.dispatch("getAvailableDeposit", {
       contractId: this.contract.ID,
     });
-    // amount = (amount / 1e3).toFixed(2); //(amount / 1e8).toFixed(2);
-
-    // console.log(amount);
-    this.amount = amount;
+    this.amount = parseFloat(amount);
   },
 
   computed: {

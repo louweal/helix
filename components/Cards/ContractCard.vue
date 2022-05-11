@@ -133,11 +133,11 @@
       v-if="showActions && showTransferOptions"
       class="contract-card__options"
     >
-      <div class="contract-card__options__header">
+      <!-- <div class="contract-card__options__header">
         <heading size="m" level="2" class="bottom-xs-0" color="black">
           Transfer ownership
         </heading>
-      </div>
+      </div> -->
       <p>
         If you transfer the ownership of this contract to someone, the new owner
         receives 30% of the deposit ({{ "hbars(30)" }}).
@@ -171,11 +171,11 @@
       </Button>
     </div>
     <div v-if="showActions && showSellOptions" class="contract-card__options">
-      <div class="contract-card__options__header">
+      <!-- <div class="contract-card__options__header">
         <heading size="m" level="2" class="bottom-xs-0" color="black">
           Set buyer
         </heading>
-      </div>
+      </div> -->
       <p>
         Did you sell this item? Select the buyer below such that he can obtain
         the contract.
@@ -225,11 +225,11 @@
       </Button>
     </div>
     <div v-if="showActions && showRemoveOptions" class="contract-card__options">
-      <div class="contract-card__options__header">
+      <!-- <div class="contract-card__options__header">
         <heading size="m" level="2" class="bottom-xs-0" color="black">
           Remove contract
         </heading>
-      </div>
+      </div> -->
       <p>
         If you accidentially created this contract, you can remove it from the
         list. It will remain as an inactive contract on the Hedera network.
@@ -289,9 +289,9 @@ export default {
     },
 
     setFakeBuyDate(val) {
-      console.log("val" + val);
+      // console.log("val" + val);
       this.fakeBuyDate = parseInt(Date.now() / 1000 - val * 86400); // convert 'days ago' to timestamp in seconds
-      this.fakeBuyDate = 0; // temp disable thi
+      // this.fakeBuyDate = 0; // temp disable thi
     },
 
     async confirmPurchase() {

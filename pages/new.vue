@@ -45,11 +45,6 @@
             key="0"
             class="field field--light field--textarea"
             placeholder="Product description (optional)"
-            :value="
-              contract.visual && !contract.description
-                ? contract.visual.alt
-                : contract.description
-            "
             @input="(e) => setValue('description', e.target.value)"
           />
           <heading size="l" level="2" class="bottom-xs-0">
@@ -259,7 +254,7 @@ export default {
       currentStep: 1,
       numMaterials: 0,
       subMaterials: [],
-      productionCountry: false,
+      production_country: false,
       selectedMaterials: [],
       contract: {},
     };
@@ -352,7 +347,6 @@ export default {
     selectImage(image) {
       Vue.set(this.contract, "visual", image);
       Vue.set(this.contract, "name", image.alt);
-      Vue.set(this.contract, "description", image.alt + " description");
       this.toggleDrawer("#gallery-drawer");
     },
     async createContract() {
@@ -368,8 +362,8 @@ export default {
         charity: "0.0.0", // todo this.contract.charity.val,
         name: this.contract.name,
         description: this.contract.description,
-        materialDescription: this.contract.material_description,
-        productionCountry: +this.contract.production_country.ID,
+        material_description: this.contract.material_description,
+        production_country: +this.contract.production_country.ID,
         category: +this.contract.category.ID,
         visual: +this.contract.visual.ID,
       };

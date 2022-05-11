@@ -342,8 +342,8 @@ export const actions = {
       category: data.category,
       deposit: data.deposit,
       description: data.description,
-      productionCountry: data.productionCountry,
-      materialDescription: data.materialDescription,
+      production_country: data.production_country,
+      material_description: data.material_description,
     });
 
     let contractId = await contractCreate(

@@ -70,10 +70,4 @@ export default {
       },
     },
   },
-
-  vue: {
-    config: {
-      silent: true,
-    },
-  },
 };
