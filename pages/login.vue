@@ -17,9 +17,26 @@
         </div>
       </div>
 
+      <heading size="l" level="2" class="bottom-xs-0"> Shop account </heading>
+
+      <Stack dir="vertical" class="bottom-xs-2">
+        <account-card
+          v-for="(account, index) in accounts.filter((a) => a.seller)"
+          :key="index"
+          :data="account"
+          login
+        />
+      </Stack>
+
+      <heading size="l" level="2" class="bottom-xs-0">
+        Regular user accounts
+      </heading>
+
       <Stack dir="vertical">
         <account-card
-          v-for="(account, index) in accounts.filter((a) => !a.charity)"
+          v-for="(account, index) in accounts.filter(
+            (a) => !a.seller && !a.charity
+          )"
           :key="index"
           :data="account"
           login

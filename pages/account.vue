@@ -50,6 +50,9 @@
         </heading>
       </Section>
 
+      {{ numSoldNew }}
+      {{ numBoughtSecondhand }}
+
       <Section v-if="numSoldNew > 0">
         <p v-if="numSoldNew > 1">
           Good job! You have sold {{ numSoldNew }} sustainable products! Keep up

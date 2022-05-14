@@ -1,11 +1,14 @@
 <template>
   <div class="page">
-    <Header fixed />
+    <div style="padding-top: 6px; width: 100%" />
+
+    <Header fixed v-if="$store.state.currentAccount.seller" />
+
     <div class="container container--wide">
       <template v-if="pendingContracts.length > 0">
-        <heading size="l" level="2" class="bottom-xs-0">
+        <!-- <heading size="l" level="2" class="bottom-xs-0">
           Pending contracts
-        </heading>
+        </heading> -->
         <div class="grid">
           <div
             class="col-xs-24"
@@ -19,13 +22,13 @@
 
       <template v-if="activeContracts.length > 0">
         <heading size="l" level="2" class="bottom-xs-0">
-          {{ isShop ? "Created contracts" : "Active contracts" }}
+          {{ isShop ? "Items in store" : "Active contracts" }}
         </heading>
         <div class="grid">
           <div
             class="col-xs-24"
-            v-for="(contract, index) in activeContracts.slice().reverse()"
-            :key="index"
+            v-for="contract in activeContracts.slice().reverse()"
+            :key="contract.ID"
           >
             <contract-card :data="contract" />
           </div>
@@ -53,7 +56,7 @@
             target="_blank"
             :href="`https://testnet.dragonglass.me/hedera/accounts/${$store.state.currentAccount.accountId}`"
           >
-            Inspect {{ $store.state.currentAccount.accountId }} on DragonGlass
+            Inspect {{ $store.state.currentAccount.name }} on DragonGlass
           </a>
         </p>
       </notification>

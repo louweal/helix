@@ -9,7 +9,7 @@
     >
       <div class="container container--wide">
         <slot>
-          <categories />
+          <!-- <categories /> -->
 
           <add-button />
         </slot>
@@ -109,7 +109,7 @@ export default {
   z-index: 11;
   transition: transform 0.4s ease-in-out;
   will-change: transform;
-  padding: 6px 4px 6px 4px;
+  padding: 0 4px 6px 4px;
 
   &--fixed {
     position: fixed;

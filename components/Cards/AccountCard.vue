@@ -65,6 +65,7 @@ export default {
     signIn(id) {
       this.$store.commit("setCurrentAccount", this.data);
       this.$store.commit("setCurrentCategory", -1);
+      this.$store.commit("setAction", "");
 
       this.$router.push({
         path: "/",

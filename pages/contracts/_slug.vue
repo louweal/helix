@@ -104,7 +104,7 @@
 
           <list-item
             icon="trophy"
-            v-if="!isShop && contract.duration && contract.state >= 2"
+            v-if="!isShop && contract.duration && contract.state === 2"
           >
             {{
               parseInt(contract.duration / 86400) -
@@ -153,15 +153,6 @@
         @input="getCharity"
         :options="allCharities"
       />
-
-      <a
-        v-if="charity"
-        target="_blank"
-        :href="`https://testnet.dragonglass.me/hedera/accounts/${charity}`"
-      >
-        Inspect {{ charity }} on DragonGlass
-      </a>
-      <br /><br />
 
       <Button
         class="button--primary button--fullwidth"

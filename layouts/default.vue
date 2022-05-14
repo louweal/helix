@@ -30,7 +30,7 @@
         target="_blank"
         :href="`https://testnet.dragonglass.me/hedera/accounts/${$store.state.currentAccount.accountId}`"
       >
-        Inspect on DragonGlass
+        Inspect your account on DragonGlass
       </a>
     </notification>
 

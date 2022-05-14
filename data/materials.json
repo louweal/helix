@@ -102,43 +102,7 @@
     "label": 6
   },
   {
-    "ID": 17,
-    "name": "lithium",
-    "parent": "metal",
-    "label": 6
-  },
-  {
-    "ID": 18,
-    "name": "silver",
-    "parent": "metal",
-    "label": 4
-  },
-  {
-    "ID": 19,
-    "name": "gold",
-    "parent": "metal",
-    "label": 6
-  },
-  {
-    "ID": 20,
-    "name": "freon",
-    "parent": "gas",
-    "label": 6
-  },
-  {
-    "ID": 21,
-    "name": "propane",
-    "parent": "gas",
-    "label": 6
-  },
-  {
-    "ID": 22,
-    "name": "butane",
-    "parent": "gas",
-    "label": 6
-  },
-  {
-    "ID": 23,
+    "ID": 27,
     "name": "recycled polyester",
     "parent": "textile",
     "label": 0

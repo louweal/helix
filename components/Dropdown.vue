@@ -139,6 +139,18 @@ export default {
     background-color: $input-background-hover-color;
     padding-top: $input-spacing;
     padding-bottom: $input-spacing;
+
+    &::after {
+      position: absolute;
+      content: "\e90c";
+      font-family: icomoon-helix;
+      right: 20px;
+      top: $input-spacing * 0.1;
+      height: 100%;
+      width: 10px;
+      line-height: 40px;
+      // z-index: -1;
+    }
   }
 
   &:hover {
@@ -154,18 +166,6 @@ export default {
     height: 100%;
     font-style: italic;
     padding-left: 4px;
-  }
-
-  &::after {
-    position: absolute;
-    content: "\e90c";
-    font-family: icomoon-helix;
-    right: 20px;
-    top: $input-spacing * 0.1;
-    height: 100%;
-    width: 10px;
-    line-height: 40px;
-    z-index: 0;
   }
 
   ::v-deep ul {

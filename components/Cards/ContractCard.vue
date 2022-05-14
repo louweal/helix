@@ -28,15 +28,9 @@
             class="bottom-xs-0"
             v-if="data.name"
           >
-            {{ data.name }} - {{ data.index }}
+            {{ data.name }}
           </heading>
-          <heading
-            size="s"
-            level="0"
-            weight="400"
-            fstyle="italic"
-            xxxv-if="seller"
-          >
+          <heading size="s" level="0" weight="400" fstyle="italic">
             {{ data.description }}
           </heading>
 
@@ -50,49 +44,57 @@
       </div>
     </div>
 
-    <div class="contract-card__actions" v-if="showActions">
-      <div class="grid no-bottom-margin-cols">
-        <div class="col-xs-8" v-if="data.state === 0">
-          <Button
-            class="button--light button--fullwidth"
-            @click.native="toggleSellOptions"
-          >
-            <icon icon="arrow-right" /> Sell
-          </Button>
-        </div>
-        <div class="col-xs-8" v-if="data.state === 0">
-          <Button
-            class="button--light button--fullwidth"
-            @click.native="toggleRemoveOptions"
-          >
-            <icon icon="delete" />
-            Remove
-          </Button>
-        </div>
-
-        <div class="col-xs-12" v-if="data.state === 1">
-          <input
-            class="field field--light"
-            type="text"
-            :placeholder="'*DEMO FIELD*'"
-            @input="(e) => setFakeBuyDate(e.target.value)"
-          />
-        </div>
-        <div class="col-xs-12" v-if="data.state === 1">
-          <!-- <heading size="s" level="0" fstyle="italic" weight="400"
+    <div class="grid no-bottom-margin-cols" v-if="data.state < 2">
+      <div class="col-xs-8" v-if="data.state === 0">
+        <Button
+          class="button--primary button--fullwidth"
+          @click.native="toggleSellOptions"
+        >
+          <icon icon="arrow-right" /> Sell
+        </Button>
+      </div>
+      <div class="col-xs-8" v-if="data.state === 0">
+        <Button
+          class="button--light button--fullwidth"
+          @click.native="toggleRemoveOptions"
+        >
+          <icon icon="delete" />
+          Remove
+        </Button>
+      </div>
+      <div class="col-xs-24" v-if="data.state === 1">
+        <input
+          class="field field--light"
+          type="text"
+          :placeholder="'*DEMO FIELD*'"
+          @input="(e) => setFakeBuyDate(e.target.value)"
+        />
+      </div>
+      <div class="col-xs-24" v-if="data.state === 1">
+        <!-- <heading size="s" level="0" fstyle="italic" weight="400"
             >This action locks the deposit amount into the contract.</heading
           > -->
-          <Button
-            @click.native="confirmPurchase"
-            class="button--primary button--fullwidth"
-          >
-            Confirm purchase
-          </Button>
-        </div>
 
+        <Button
+          @click.native="confirmPurchase"
+          class="button--primary button--fullwidth"
+        >
+          Pay ℏ {{ data.deposit / 1e8 }} to {{ sellerName }}*
+        </Button>
+        <i>* the price includes the deposit stored in this contract. </i>
+      </div>
+      <div class="col-xs-8" v-if="data.state !== 1">
+        <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
+          <Button class="button--fullwidth"> View details </Button>
+        </nuxt-link>
+      </div>
+    </div>
+
+    <div class="contract-card__actions" v-if="showActions && data.state >= 2">
+      <div class="grid no-bottom-margin-cols">
         <div class="col-xs-8" v-if="data.state === 2">
           <Button
-            class="button--light button--fullwidth"
+            class="button--primary button--fullwidth"
             @click.native="toggleTransferOptions"
           >
             <icon icon="arrow-right" /> Transfer
@@ -117,7 +119,7 @@
             Remove
           </Button>
         </div>
-        <div class="col-xs-8" v-if="data.state !== 1">
+        <div class="col-xs-8" xxxv-if="data.state >= 2">
           <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
             <Button class="button--fullwidth"> View details </Button>
           </nuxt-link>
@@ -139,8 +141,10 @@
         </heading>
       </div> -->
       <p>
-        If you transfer the ownership of this contract to someone, the new owner
-        receives 30% of the deposit ({{ "hbars(30)" }}).
+        Transfer the ownership of this contract if you gave away or sold this
+        item. The new owner receives 30% of the deposit and the charity receives
+        10%. You will directly receive up to 60%, depending on how much of this
+        amount you have already collected and/or donated.
       </p>
 
       <heading size="m" level="3" class="bottom-xs-0">
@@ -154,7 +158,7 @@
         :options="allAccounts"
       />
       <heading size="m" level="3" class="bottom-xs-0">
-        Charity <badge color="primary">up to 10%</badge>
+        Charity <badge color="primary">10%</badge>
       </heading>
 
       <dropdown
@@ -170,16 +174,16 @@
         Confirm
       </Button>
     </div>
-    <div v-if="showActions && showSellOptions" class="contract-card__options">
+    <div v-if="showSellOptions" class="contract-card__options">
       <!-- <div class="contract-card__options__header">
         <heading size="m" level="2" class="bottom-xs-0" color="black">
           Set buyer
         </heading>
       </div> -->
-      <p>
+      <!-- <p>
         Did you sell this item? Select the buyer below such that he can obtain
         the contract.
-      </p>
+      </p> -->
 
       <heading size="m" level="3" class="bottom-xs-0"> Buyer </heading>
 
@@ -193,7 +197,7 @@
         class="button--primary button--fullwidth"
         @click.native="setBuyer"
       >
-        Confirm
+        Sell item to {{ buyerName }}
       </Button>
     </div>
 
@@ -224,7 +228,7 @@
         Confirm
       </Button>
     </div>
-    <div v-if="showActions && showRemoveOptions" class="contract-card__options">
+    <div v-if="showRemoveOptions" class="contract-card__options">
       <!-- <div class="contract-card__options__header">
         <heading size="m" level="2" class="bottom-xs-0" color="black">
           Remove contract
@@ -255,6 +259,7 @@ export default {
       showRemoveOptions: false,
       showSellOptions: false,
       buyer: false,
+      buyerName: "",
       charity: false,
       fakeBuyDate: 0,
     };
@@ -357,7 +362,9 @@ export default {
       this.showRemoveOptions = false;
     },
     getBuyer(data) {
+      // console.log(data);
       this.buyer = data.ID;
+      this.buyerName = data.val;
     },
 
     getCharity(sel) {
@@ -385,7 +392,7 @@ export default {
         .map(({ accountId, name }) => ({
           id: accountId,
           label: name + " (" + accountId + ")",
-          value: accountId,
+          value: name,
         }));
     },
 
@@ -426,12 +433,14 @@ export default {
       return this.data.owner !== this.me && this.data.seller === this.me;
     },
 
-    seller() {
+    sellerName() {
+      console.log(this.data.seller);
+      return this.accounts.find((a) => a.accountId === this.data.seller).name;
       // let seller = this.accounts.find((a) => a.ID === this.data.seller).name;
-      let seller = this.accounts.find(
-        (a) => a.accountId === this.data.seller
-      ).name;
-      return seller !== this.$store.state.currentAccount.name ? seller : false;
+      // let seller = this.accounts.find(
+      //   (a) => a.accountId === this.data.seller
+      // ).name;
+      // return seller !== this.$store.state.currentAccount.name ? seller : false;
     },
   },
 };
@@ -451,7 +460,8 @@ export default {
 
   &__body {
     &.pending {
-      opacity: 0.5;
+      // opacity: 0.5;
+      min-height: 70vh;
     }
   }
 

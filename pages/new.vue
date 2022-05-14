@@ -7,7 +7,7 @@
       <!-- {{ $store.state.currentAccount.accountId }} -->
 
       <div class="add-form">
-        <Section v-if="currentStep === 1">
+        <Section v-if="currentStep < 2">
           <div v-if="contract.visual">
             <div
               @click="toggleDrawer('#gallery-drawer')"
@@ -47,7 +47,14 @@
             placeholder="Product description (optional)"
             @input="(e) => setValue('description', e.target.value)"
           />
-          <heading size="l" level="2" class="bottom-xs-0">
+
+          <input
+            class="field field--light"
+            type="text"
+            :placeholder="'Product price in hbar'"
+            @input="(e) => setValue('price', e.target.value)"
+          />
+          <!-- <heading size="l" level="2" class="bottom-xs-0">
             Product category
           </heading>
           <dropdown
@@ -55,9 +62,9 @@
             fieldName="category"
             @input="setDropdownValue"
             :options="categories"
-          />
+          /> -->
           <heading size="l" level="2" class="bottom-xs-0">
-            Contract duration
+            Expected product lifetime
           </heading>
           <dropdown
             key="2"
@@ -66,9 +73,7 @@
             :options="durationOptions"
           />
 
-          <template
-            v-if="contract.visual && contract.duration && contract.category"
-          >
+          <!-- <template v-if="contract.visual && contract.duration">
             <Button
               class="button--primary button--fullwidth"
               @click.native="currentStep += 1"
@@ -81,10 +86,10 @@
             <Button class="button--primary button--fullwidth" disabled>
               Next
             </Button>
-          </template>
-        </Section>
+          </template> -->
+          <!-- </Section> -->
 
-        <Section v-if="currentStep === 2">
+          <!-- <Section xxv-if="currentStep >= 2"> -->
           <heading size="l" level="2" class="bottom-xs-0">
             Country of production
           </heading>
@@ -147,27 +152,27 @@
           />
 
           <div class="grid">
-            <div class="col-xs-12">
+            <!-- <div class="col-xs-12">
               <Button
                 class="button--secondary button--fullwidth"
                 @click.native="currentStep -= 1"
               >
                 Back
               </Button>
-            </div>
-            <div class="col-xs-12">
+            </div> -->
+            <div class="col-xs-24 bottom-xs-3">
               <Button
                 v-if="selectedMaterials.length === numMaterials"
                 class="button--primary button--fullwidth"
                 @click.native="computeDeposit"
               >
-                Next
+                Continue &amp; calculate deposit
               </Button>
             </div>
           </div>
         </Section>
 
-        <Section v-if="currentStep === 3">
+        <Section v-if="currentStep === 2">
           <!-- <heading size="l" level="2" class="bottom-xs-0">
             Select charity
           </heading>
@@ -200,15 +205,15 @@
           />
 
           <div class="grid">
-            <div class="col-xs-12">
+            <!-- <div class="col-xs-12">
               <Button
                 class="button--secondary button--fullwidth"
                 @click.native="currentStep -= 1"
               >
                 Back
               </Button>
-            </div>
-            <div class="col-xs-12">
+            </div> -->
+            <div class="col-xs-24">
               <Button
                 class="button--primary button--fullwidth"
                 @click.native="createContract"
@@ -285,20 +290,20 @@ export default {
     },
 
     durationOptions() {
-      return [2, 4, 8, 16, 3000, 6000].map((d) => ({
+      return [3000, 6000].map((d) => ({
         id: d,
-        label: `${d} days (${(d / 365.242199).toFixed(2)} years)`,
+        label: `${(d / 365.242199).toFixed(2)} years (${d} days)`,
         value: d,
       }));
     },
 
-    categories() {
-      return this.$store.state.categories.map(({ name, ID }) => ({
-        id: ID,
-        label: name,
-        value: name.toLowerCase(),
-      }));
-    },
+    // categories() {
+    //   return this.$store.state.categories.map(({ name, ID }) => ({
+    //     id: ID,
+    //     label: name,
+    //     value: name.toLowerCase(),
+    //   }));
+    // },
 
     newId() {
       let allContracts = this.$store.state.contracts;
@@ -364,7 +369,7 @@ export default {
         description: this.contract.description,
         material_description: this.contract.material_description,
         production_country: +this.contract.production_country.ID,
-        category: +this.contract.category.ID,
+        category: 0, // todo remove +this.contract.category.ID,
         visual: +this.contract.visual.ID,
       };
 
