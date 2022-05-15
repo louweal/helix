@@ -102,9 +102,15 @@
     "label": 6
   },
   {
-    "ID": 27,
+    "ID": 17,
     "name": "recycled polyester",
     "parent": "textile",
+    "label": 0
+  },
+  {
+    "ID": 18,
+    "name": "metal",
+    "parent": "metal",
     "label": 0
   }
 ]

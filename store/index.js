@@ -175,7 +175,7 @@ export const actions = {
 
     // 3) get the new index
     const index = await lookupContractGetContractIndex(payload.buyerId);
-    console.log(index);
+    // console.log(index);
 
     // 4) delete contractid from the sellers lookup list
     await lookupContractDeleteContract(
@@ -218,7 +218,7 @@ export const actions = {
 
     commit("toggleAwaitState");
 
-    console.log(amount);
+    // console.log(amount);
 
     return amount;
   },
@@ -255,7 +255,7 @@ export const actions = {
       state.currentAccount.accountId,
       state.currentAccount.pvkey,
       payload.contractId,
-      payload.deposit,
+      payload.amount,
       payload.fakeBuyDate
     );
 
@@ -321,7 +321,7 @@ export const actions = {
     commit("updateField", {
       contractId: payload.contractId,
       field: "startdate",
-      value: 0,
+      value: Date.now() / 1000,
     });
     commit("updateField", {
       contractId: payload.contractId,
@@ -339,11 +339,12 @@ export const actions = {
     const staticDataStr = encodeData({
       name: data.name,
       visual: data.visual,
-      category: data.category,
       deposit: data.deposit,
       description: data.description,
       production_country: data.production_country,
       material_description: data.material_description,
+      duration: data.duration,
+      price: data.price,
     });
 
     let contractId = await contractCreate(
@@ -374,7 +375,7 @@ export const actions = {
     let accountId = state.currentAccount.accountId;
     let pvkey = state.currentAccount.pvkey;
 
-    console.log("currentAccount", accountId);
+    // console.log("currentAccount", accountId);
 
     const numContracts = await lookupContractGetNumContracts(accountId);
 
@@ -415,20 +416,13 @@ export const actions = {
           "getDate",
           "uint32"
         );
-        const duration = await contractGetter(
-          accountId,
-          pvkey,
-          contractId,
-          "getDuration",
-          "uint256"
-        );
+
         const s = decodeData(encodedS);
 
         data.push({
           index: i,
           ID: contractId.toString(),
           startdate: date, //parseInt((Date.now() / 1000 - date) / 86400),
-          duration: +duration,
           state: state,
           store: accountId, // is this correct?
           seller: prevOwner, // get this from store?
@@ -440,7 +434,8 @@ export const actions = {
           material_description: s.material_description,
           production_country: s.production_country,
           deposit: +s.deposit,
-          // charity: charity,
+          price: +s.price,
+          duration: +s.duration,
         });
       }
 
@@ -491,10 +486,11 @@ function decodeData(str) {
 
   obj["name"] = props[0];
   obj["visual"] = +props[1];
-  obj["category"] = +props[2];
-  obj["deposit"] = +props[3];
-  obj["description"] = props[4];
-  obj["production_country"] = props[5];
-  obj["material_description"] = props[6];
+  obj["deposit"] = +props[2];
+  obj["description"] = props[3];
+  obj["production_country"] = props[4];
+  obj["material_description"] = props[5];
+  obj["duration"] = props[6];
+  obj["price"] = props[7];
   return obj;
 }

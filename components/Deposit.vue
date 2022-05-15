@@ -1,14 +1,16 @@
 <template>
   <div class="deposit" v-if="val">
-    <span class="integral"
-      ><span v-if="label"
-        ><span v-if="unit">{{ unit }}</span
-        >ℏ </span
-      >{{ integral }}.</span
-    ><span class="fractional">{{ fractional }}</span>
+    <span class="integral">
+      <span v-if="label">
+        <span v-if="unit">{{ unit }}</span>
+        ℏ
+      </span>
+      {{ integral }}</span
+    ><span v-if="fractional">.</span>
+    <span class="fractional">{{ fractional }}</span>
 
     <heading level="0" size="m" weight="400" fstyle="italic" v-if="label">
-      {{ label }}
+      &nbsp;{{ label }}
     </heading>
   </div>
 </template>
@@ -45,9 +47,9 @@ export default {
 
     fractional() {
       let frac = this.deposit.split(".")[1];
-      // if (frac == undefined) {
-      //   return "00";
-      // }
+      if (frac == undefined) {
+        return "00";
+      }
       // if (frac.length === 0) {
       //   return "00";
       // }

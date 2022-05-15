@@ -29,29 +29,40 @@
             Upload image
           </div>
 
+          <heading size="l" level="2" class="bottom-xs-0">
+            Product name
+          </heading>
+
           <input
             class="field field--light"
             type="text"
-            :placeholder="'Product name'"
-            :value="
-              contract.visual && !contract.name
-                ? contract.visual.alt
-                : contract.name
+            :placeholder="
+              contract.visual ? contract.visual.alt : 'Product name'
             "
             @input="(e) => setValue('name', e.target.value)"
           />
 
+          <heading size="l" level="2" class="bottom-xs-0">
+            Product description (optional)
+          </heading>
           <textarea
             key="0"
             class="field field--light field--textarea"
-            placeholder="Product description (optional)"
+            :placeholder="
+              contract.visual
+                ? contract.visual.alt + ' description'
+                : 'Product description (optional)'
+            "
             @input="(e) => setValue('description', e.target.value)"
           />
 
+          <heading size="l" level="2" class="bottom-xs-0">
+            Product price (ℏ)
+          </heading>
           <input
             class="field field--light"
             type="text"
-            :placeholder="'Product price in hbar'"
+            :placeholder="contract.visual ? contract.visual.price * 10 : 'ℏ'"
             @input="(e) => setValue('price', e.target.value)"
           />
           <!-- <heading size="l" level="2" class="bottom-xs-0">
@@ -292,7 +303,7 @@ export default {
     durationOptions() {
       return [3000, 6000].map((d) => ({
         id: d,
-        label: `${(d / 365.242199).toFixed(2)} years (${d} days)`,
+        label: `${(d / 365.242199).toFixed(2)} years / ${d} days`,
         value: d,
       }));
     },
@@ -351,7 +362,9 @@ export default {
     },
     selectImage(image) {
       Vue.set(this.contract, "visual", image);
+      Vue.set(this.contract, "description", image.alt + " description");
       Vue.set(this.contract, "name", image.alt);
+      Vue.set(this.contract, "price", image.price * 10);
       this.toggleDrawer("#gallery-drawer");
     },
     async createContract() {
@@ -364,14 +377,17 @@ export default {
         seller: this.$store.state.currentAccount.accountId,
         duration: this.contract.duration.val * 86400,
         deposit: parseInt(this.contract.deposit), // string to int tinybar
-        charity: "0.0.0", // todo this.contract.charity.val,
         name: this.contract.name,
         description: this.contract.description,
         material_description: this.contract.material_description,
         production_country: +this.contract.production_country.ID,
-        category: 0, // todo remove +this.contract.category.ID,
         visual: +this.contract.visual.ID,
+        price: parseInt(this.contract.price * 1e8),
       };
+
+      // console.log(data.price);
+
+      // return;
 
       // add the contract on hedera network and to the store
       let contractId = await this.$store.dispatch("addSmartContract", data);

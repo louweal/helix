@@ -47,12 +47,13 @@ export async function contractCreate(accountId, pvKey, data, staticDataStr) {
         .addString(staticDataStr)
         .addUint256(data.duration)
         .addUint256(data.deposit)
+        .addUint256(data.price)
     )
     .setGas(4000000);
   const contractResponse = await contractTx.execute(client);
   const contractReceipt = await contractResponse.getReceipt(client);
   const newContractId = await contractReceipt.contractId;
-  console.log("ContractCreateTransaction - result: " + newContractId);
+  console.log("HC - ContractCreateTransaction - result: " + newContractId);
 
   return newContractId;
 }
@@ -77,7 +78,7 @@ export async function contractDeleteCreatedContract(
   const contractExecSubmit1 = await contractExecSign1.execute(client);
   const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
   console.log(
-    `ContractExecuteTransaction - deleteCreatedContract - status: ${contractExecRx1.status.toString()} \n`
+    `HC - ContractExecuteTransaction - deleteCreatedContract - status: ${contractExecRx1.status.toString()} \n`
   );
 }
 
@@ -107,7 +108,7 @@ export async function contractDeleteContract(
   const contractExecSubmit1 = await contractExecSign1.execute(client);
   const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
   console.log(
-    `ContractExecuteTransaction - deleteContract - status: ${contractExecRx1.status.toString()} \n`
+    `HC - ContractExecuteTransaction - deleteContract - status: ${contractExecRx1.status.toString()} \n`
   );
 }
 
@@ -137,7 +138,7 @@ export async function contractSetBuyer(
   const contractExecSubmit1 = await contractExecSign1.execute(client);
   const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
   console.log(
-    `ContractExecuteTransaction - setBuyer - status: ${contractExecRx1.status.toString()} \n`
+    `HC - ContractExecuteTransaction - setBuyer - status: ${contractExecRx1.status.toString()} \n`
   );
 }
 
@@ -145,18 +146,21 @@ export async function contractConfirmPurchase(
   accountId,
   pvKey,
   contractId,
-  deposit,
+  amount,
   buyDate
 ) {
   const sellerId = AccountId.fromString(accountId);
   const sellerKey = PrivateKey.fromString(pvKey);
   const client = Client.forTestnet().setOperator(sellerId, sellerKey);
 
+  // console.log(amount);
+  // return;
+
   // execute transaction
   const contractExecTx1 = await new ContractExecuteTransaction()
     .setContractId(contractId)
     .setGas(3000000)
-    .setPayableAmount(Hbar.fromTinybars(deposit))
+    .setPayableAmount(Hbar.fromTinybars(amount))
     .setFunction(
       "confirmPurchase",
       new ContractFunctionParameters().addUint256(buyDate)
@@ -166,7 +170,7 @@ export async function contractConfirmPurchase(
   const contractExecSubmit1 = await contractExecSign1.execute(client);
   const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
   console.log(
-    `ContractExecuteTransaction - confirmPurchase - status: ${contractExecRx1.status.toString()} \n`
+    `HC - ContractExecuteTransaction - confirmPurchase - status: ${contractExecRx1.status.toString()} \n`
   );
 }
 
@@ -197,7 +201,7 @@ export async function contractTransferOwnership(
   const contractExecSubmit1 = await contractExecSign1.execute(client);
   const contractExecRx1 = await contractExecSubmit1.getReceipt(client);
   console.log(
-    `ContractExecuteTransaction - transferOwnership - status: ${contractExecRx1.status.toString()} \n`
+    `HC - ContractExecuteTransaction - transferOwnership - status: ${contractExecRx1.status.toString()} \n`
   );
 }
 
@@ -282,8 +286,9 @@ export async function contractGetter(
     result = contractQuerySubmit.getAddress(0);
     result = AccountId.fromSolidityAddress(result).toString();
   }
+
   console.log(
-    `- - - ContractCallQuery - ${functionName} - result: ${result} \n`
+    `- HC - ContractCallQuery - ${functionName} - result: ${result} \n`
   );
   return result;
 }

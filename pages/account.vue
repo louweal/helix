@@ -16,9 +16,7 @@
           </div>
           <div class="col-xs-17">
             <div class="align-xs-end">
-              <Button to="/login" class="button--secondary">
-                Switch account
-              </Button>
+              <Button to="/login" class="button--secondary"> Sign out </Button>
             </div>
           </div>
         </div>
@@ -50,7 +48,7 @@
         </heading>
       </Section>
 
-      {{ numSoldNew }}
+      <!-- {{ numSoldNew }}
       {{ numBoughtSecondhand }}
 
       <Section v-if="numSoldNew > 0">
@@ -83,7 +81,7 @@
           Good job! You have bought 1 of your things secondhand. Keep up the
           good work!
         </p>
-      </Section>
+      </Section> -->
 
       <Section>
         <!-- <hr /> -->
@@ -120,27 +118,27 @@ export default {
       return +this.$store.state.currentAccount.ID;
     },
 
-    numSoldNew() {
-      if (this.isShop) {
-        return this.contracts.filter(
-          (c) => c.store === this.me && c.owner !== this.me
-        ).length;
-      }
-      return 0;
-    },
-    numSoldSecondhand() {
-      if (!this.isShop) {
-        return this.contracts.filter(
-          (c) => c.seller === this.me && c.owner !== this.me
-        ).length;
-      }
-      return 0;
-    },
-    numBoughtSecondhand() {
-      return this.contracts.filter(
-        (c) => +c.store !== +c.seller && c.owner === this.me
-      ).length;
-    },
+    // numSoldNew() {
+    //   if (this.isShop) {
+    //     return this.contracts.filter(
+    //       (c) => c.store === this.me && c.owner !== this.me
+    //     ).length;
+    //   }
+    //   return 0;
+    // },
+    // numSoldSecondhand() {
+    //   if (!this.isShop) {
+    //     return this.contracts.filter(
+    //       (c) => c.seller === this.me && c.owner !== this.me
+    //     ).length;
+    //   }
+    //   return 0;
+    // },
+    // numBoughtSecondhand() {
+    //   return this.contracts.filter(
+    //     (c) => +c.store !== +c.seller && c.owner === this.me
+    //   ).length;
+    // },
   },
 };
 </script>

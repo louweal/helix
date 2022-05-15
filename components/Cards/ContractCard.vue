@@ -1,10 +1,6 @@
 <template>
-  <div class="contract-card">
-    <div
-      class="contract-card__body"
-      @click="toggleActions()"
-      :class="pending ? 'pending' : false"
-    >
+  <div class="contract-card" :class="pending ? 'pending' : false">
+    <div class="contract-card__body" @click="toggleActions()">
       <div class="grid no-bottom-margin-cols">
         <div class="col-xs-4">
           <div class="contract-card__visual">
@@ -20,7 +16,7 @@
             ></div>
           </div>
         </div>
-        <div class="col-xs-15 offset-xs-1">
+        <div class="col-xs-12 offset-xs-1">
           <heading
             size="l"
             level="2"
@@ -33,11 +29,12 @@
           <heading size="s" level="0" weight="400" fstyle="italic">
             {{ data.description }}
           </heading>
-
-          <!-- {{ data.state }} -->
         </div>
-        <div class="col-xs-4">
-          <div class="contract-card__footer align-xs-end" v-if="data.deposit">
+        <div class="col-xs-7">
+          <div class="align-xs-end" v-if="data.deposit && data.state < 2">
+            <deposit :val="data.price + data.deposit" />
+          </div>
+          <div class="align-xs-end" v-if="data.deposit && data.state === 2">
             <deposit :val="data.deposit" />
           </div>
         </div>
@@ -79,11 +76,11 @@
           @click.native="confirmPurchase"
           class="button--primary button--fullwidth"
         >
-          Pay ℏ {{ data.deposit / 1e8 }} to {{ sellerName }}*
+          Pay ℏ {{ (data.price + data.deposit) / 1e8 }} to {{ sellerName }}*
         </Button>
-        <i>* the price includes the deposit stored in this contract. </i>
+        <i>* the price includes a deposit </i>
       </div>
-      <div class="col-xs-8" v-if="data.state !== 1">
+      <div class="col-xs-8" xxv-if="data.state !== 1">
         <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
           <Button class="button--fullwidth"> View details </Button>
         </nuxt-link>
@@ -304,15 +301,15 @@ export default {
       // console.log(this.data.ID);
 
       if (isNaN(this.fakeBuyDate)) {
-        console.log("Invalid buy date");
+        // console.log("Invalid buy date");
         return;
       }
 
-      console.log(this.fakeBuyDate);
+      // console.log(this.fakeBuyDate);
 
       let payload = {
         contractId: this.data.ID,
-        deposit: +this.data.deposit,
+        amount: +this.data.deposit + +this.data.price,
         fakeBuyDate: this.fakeBuyDate,
       };
       await this.$store.dispatch("confirmPurchase", payload);
@@ -434,7 +431,7 @@ export default {
     },
 
     sellerName() {
-      console.log(this.data.seller);
+      // console.log(this.data.seller);
       return this.accounts.find((a) => a.accountId === this.data.seller).name;
       // let seller = this.accounts.find((a) => a.ID === this.data.seller).name;
       // let seller = this.accounts.find(
@@ -458,12 +455,14 @@ export default {
   padding: 4px;
   height: 100%;
 
-  &__body {
-    &.pending {
-      // opacity: 0.5;
-      min-height: 70vh;
-    }
+  &.pending {
+    // opacity: 0.5;
+    border: 1px dashed get-color(primary);
+    // min-height: 70vh;
   }
+
+  // &__body {
+  // }
 
   &__actions {
     margin-top: 5px;

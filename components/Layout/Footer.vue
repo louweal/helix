@@ -29,7 +29,7 @@
             />Search
           </nuxt-link>
         </li>
-        <li>
+        <!-- <li>
           <nuxt-link to="/faq"
             ><img
               :src="
@@ -42,7 +42,7 @@
             />
             FAQ
           </nuxt-link>
-        </li>
+        </li> -->
         <li>
           <nuxt-link to="/account"
             ><img

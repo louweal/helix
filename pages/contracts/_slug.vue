@@ -50,18 +50,18 @@
               <div class="col-xs-12">
                 <Button
                   class="button--primary button--fullwidth"
-                  @click.native="toggleDrawer('#donate-drawer')"
+                  @click.native="collectNow"
                 >
-                  <icon icon="recycle" />
-                  Donate now
+                  <icon icon="bars" /> Collect now
                 </Button>
               </div>
               <div class="col-xs-12">
                 <Button
                   class="button--light button--fullwidth"
-                  @click.native="collectNow"
+                  @click.native="toggleDrawer('#donate-drawer')"
                 >
-                  <icon icon="bars" /> Collect now
+                  <icon icon="recycle" />
+                  or donate ...
                 </Button>
               </div>
             </div>
@@ -74,7 +74,14 @@
             Bought from {{ sellerName }}
           </list-item>
 
-          <list-item icon="calendar" v-if="!isShop && contract.startdate > -1">
+          <list-item icon="trophy" v-if="contract.state === 1">
+            Contract duration: {{ parseInt(contract.duration / 8640) }} days
+          </list-item>
+
+          <list-item
+            icon="calendar"
+            v-if="contract.startdate > -1 && contract.state > 1"
+          >
             Owner since
             {{ parseInt((Date.now() / 1000 - contract.startdate) / 86400) }}
             days

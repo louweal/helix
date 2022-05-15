@@ -25,7 +25,7 @@ export async function lookupContractRemoveContract(accountId, index) {
   const contractExecuteSubmit = await contractExecuteTx.execute(client);
   const contractExecuteRx = await contractExecuteSubmit.getReceipt(client);
   console.log(
-    `LookupContract - ContractExecuteTransaction - deleteContract - status: ${contractExecuteRx.status} \n`
+    `LC - ContractExecuteTransaction - deleteContract - status: ${contractExecuteRx.status} \n`
   );
 }
 
@@ -42,7 +42,7 @@ export async function lookupContractAddContract(accountId, contractId) {
   const contractExecuteSubmit = await contractExecuteTx.execute(client);
   const contractExecuteRx = await contractExecuteSubmit.getReceipt(client);
   console.log(
-    `ContractExecuteTransaction - addContract - status: ${contractExecuteRx.status} \n`
+    `LC - ContractExecuteTransaction - addContract - status: ${contractExecuteRx.status} \n`
   );
 }
 
@@ -59,7 +59,7 @@ export async function lookupContractDeleteContract(accountId, index) {
   const contractExecuteSubmit = await contractExecuteTx.execute(client);
   const contractExecuteRx = await contractExecuteSubmit.getReceipt(client);
   console.log(
-    `ExecuteTransaction - deleteContract - status: ${contractExecuteRx.status} \n`
+    `LC - ExecuteTransaction - deleteContract - status: ${contractExecuteRx.status} \n`
   );
 }
 
@@ -77,7 +77,7 @@ export async function lookupContractGetNumContracts(accountId) {
   const contractQueryResult = contractQuerySubmit.getUint32(0);
 
   console.log(
-    `ContractCallQuery - getNumContracts - result: ${contractQueryResult}`
+    `LC - ContractCallQuery - getNumContracts - result: ${contractQueryResult}`
   );
 
   return contractQueryResult;
@@ -103,7 +103,7 @@ export async function lookupContractGetContract(accountId, index) {
 
   const contractId = ContractId.fromSolidityAddress(contractQueryResult); // ?
   console.log(
-    `-  ${index} - ContractCallQuery - getContract - result: ${contractId} \n`
+    `LC - ${index} - ContractCallQuery - getContract - result: ${contractId} \n`
   );
   return contractId;
 }

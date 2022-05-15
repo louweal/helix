@@ -26,7 +26,7 @@
 export default {
   faqs: [
     {
-      question: "What are these contracts for?",
+      question: "What is Helix?",
       answer: false,
     },
 

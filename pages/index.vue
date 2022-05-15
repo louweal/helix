@@ -1,7 +1,5 @@
 <template>
   <div class="page">
-    <div style="padding-top: 6px; width: 100%" />
-
     <Header fixed v-if="$store.state.currentAccount.seller" />
 
     <div class="container container--wide">
@@ -97,7 +95,7 @@ export default {
 
   async mounted() {
     if (this.$store.state.currentAccount.ID === undefined) {
-      console.log("not signed in yet");
+      // console.log("not signed in yet");
       return;
     }
     if (
@@ -107,7 +105,7 @@ export default {
       let data = await this.$store.dispatch("getSmartContracts");
       // this.activeContracts = data;
     } else {
-      console.log("already fetched");
+      // console.log("already fetched");
     }
   },
 
