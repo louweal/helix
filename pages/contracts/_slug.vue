@@ -74,6 +74,11 @@
             Bought from {{ sellerName }}
           </list-item>
 
+          <list-item icon="trophy" v-if="contract.state === 0">
+            Expected lifetime: {{ parseInt(contract.duration / 86400) }} days /
+            {{ (contract.duration / 86400 / 365.242199).toFixed(2) }} years
+          </list-item>
+
           <list-item icon="trophy" v-if="contract.state === 1">
             Contract duration: {{ parseInt(contract.duration / 8640) }} days
           </list-item>
@@ -87,11 +92,11 @@
             days
           </list-item>
 
-          <list-item icon="calendar" v-if="isShop && contract.startdate > -1">
+          <!-- <list-item icon="calendar" v-if="isShop && contract.startdate > -1">
             Listed
             {{ parseInt((Date.now() / 1000 - contract.startdate) / 86400) }}
             days ago
-          </list-item>
+          </list-item> -->
 
           <list-item icon="pin" v-if="contract.production_country">
             Produced in

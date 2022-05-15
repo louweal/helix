@@ -1,6 +1,9 @@
 <template>
-  <div class="account-card">
-    <div class="account-card__inner" @click="login ? signIn(data.ID) : false">
+  <div class="account-card" @click="login ? signIn(data.ID) : false">
+    <div
+      class="account-card__inner"
+      :class="active ? 'account-card__inner--active' : false"
+    >
       <div class="grid collapse no-bottom-margin-cols align-xs-middle">
         <div class="col-xs-3">
           <div
@@ -52,6 +55,10 @@ export default {
       type: [Object, Array],
       default: () => {},
     },
+    active: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   created() {
@@ -76,7 +83,6 @@ export default {
       let drawer = document.querySelector(id);
       console.log(id);
       drawer.style.display = "block";
-      // drawer.classList.toggle("drawer--active");
     },
 
     hideDrawer(id) {
@@ -93,7 +99,6 @@ export default {
       this.name = item.name;
       this.avatar = item.avatar;
       this.hideDrawer("#accounts-drawer");
-      // this.listActive = !this.listActive;
     },
   },
 };
@@ -103,15 +108,24 @@ export default {
 .account-card {
   display: block;
   width: 100%;
+
   &__inner {
     display: block;
     background-color: #fff;
     border-radius: 6px;
     width: 100%;
-    // padding-bottom: 7px;
     padding: 9px;
     border: 1px solid get-color(line);
-    // display: flex;
+
+    &--active {
+      background: rgb(255, 255, 255);
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 1) 48%,
+        rgba(4, 108, 14, 1) 100%
+      );
+      border-width: 0;
+    }
   }
 
   &__list {

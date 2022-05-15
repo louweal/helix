@@ -4,13 +4,15 @@
     "alt": "Chair",
     "url": "chair.png",
     "price": 80,
-    "used": false
+    "used": false,
+    "materials": "steel, polyester, recycled polyester, polyetheen, cotton"
   },
   {
     "ID": 20,
     "alt": "Chair",
     "url": "chair2.png",
     "price": 90,
+    "materials": "birch",
     "used": false
   },
   {
@@ -18,6 +20,7 @@
     "alt": "Chair",
     "url": "chair3.png",
     "price": 169,
+    "materials": "steel, polyester, polypropylene, polyetheen, viscose",
     "used": false
   },
   {
@@ -25,77 +28,88 @@
     "alt": "Office chair",
     "url": "officechair2.png",
     "price": 45,
-    "used": false
+    "used": false,
+    "materials": "steel, polypropylene"
   },
   {
     "ID": 4,
     "alt": "Office chair",
     "url": "deskchair.png",
     "price": 70,
-    "used": false
+    "used": false,
+    "materials": "steel, recycled polyester, polyetheen"
   },
   {
     "ID": 3,
     "alt": "Couch",
     "url": "couch.png",
     "price": 790,
-    "used": false
+    "used": false,
+    "materials": "steel, polypropylene, recycled polyester"
   },
   {
     "ID": 23,
     "alt": "Couch",
     "url": "couch2.png",
     "price": 319,
-    "used": false
+    "used": false,
+    "materials": "steel, polypropylene, recycled polyester"
   },
   {
     "ID": 11,
     "alt": "Desk",
     "url": "desk.png",
     "price": 125,
-    "used": false
+    "used": false,
+    "materials": "steel, chipboard, hardboard"
   },
   {
     "ID": 0,
     "alt": "Carpet",
     "url": "arearug.png",
     "price": 300,
-    "used": false
+    "used": false,
+    "materials": "wool"
   },
 
   {
     "ID": 8,
-    "alt": "Apron",
-    "url": "apron.png",
-    "price": 5,
-    "used": false
+    "alt": "Blanket",
+    "url": "blanket.png",
+    "price": 4,
+    "used": false,
+    "materials": "recycled polyester"
   },
   {
     "ID": 13,
-    "alt": "Set of four dishcloths",
+    "alt": "Towels",
     "url": "dishcloth.png",
     "price": 3,
-    "used": false
+    "used": false,
+    "materials": "100% cotton"
   },
   {
     "ID": 5,
     "alt": "Set of four glasses",
     "url": "glass.png",
     "price": 5,
-    "used": false
+    "used": false,
+    "materials": "glass"
   },
   {
     "ID": 9,
     "alt": "Bag",
     "url": "bag.png",
     "used": false,
-    "price": 20
+    "price": 20,
+    "materials": "recycled polyester"
   },
   {
     "ID": 10,
     "alt": "Bed",
     "url": "bed.png",
     "price": 550,
+    "materials": "steel, hardboard, viscose, polyester",
     "used": false
   },
 
@@ -103,6 +117,8 @@
     "ID": 12,
     "alt": "Curtains",
     "url": "curtains.png",
+    "materials": "55% linen, 45% cotton",
+
     "used": false,
     "price": 70
   },
@@ -111,6 +127,7 @@
     "alt": "Shower curtain",
     "url": "showercurtain.png",
     "used": false,
+    "materials": "100% recycled polyester",
     "price": 8
   }
 ]

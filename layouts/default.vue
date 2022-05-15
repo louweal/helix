@@ -3,6 +3,27 @@
     <pre-loader />
     <spinner v-if="$store.state.waiting" />
 
+    <div class="demo-box" v-if="$route.path !== '/login'">
+      <!-- {{ accounts }} -->
+
+      <heading size="6xl" level="0" color="white">
+        Account switcher<br />
+        for demonstration only
+      </heading>
+
+      <br /><br />
+
+      <Stack dir="vertical">
+        <account-card
+          v-for="(account, index) in accounts.filter((a) => !a.charity)"
+          :key="index"
+          :data="account"
+          :active="$store.state.currentAccount.ID === account.ID"
+          login
+        />
+      </Stack>
+    </div>
+
     <Nuxt />
 
     <notification v-if="$store.state.action === 'transferSuccess'">
@@ -63,6 +84,12 @@ export default {
     }
   },
 
+  computed: {
+    accounts() {
+      return this.$store.state.accounts;
+    },
+  },
+
   methods: {
     getWidth() {
       this.width = document.documentElement.clientWidth;
@@ -83,6 +110,18 @@ export default {
 <style lang="scss" scoped>
 main {
   position: relative;
+}
+
+.demo-box {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  // border: 1px solid green;
+  max-width: 275px;
+  min-width: 275px;
+  z-index: 22;
+  padding: 1rem;
+  background-color: #333;
 }
 
 .page-enter-active,

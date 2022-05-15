@@ -16,7 +16,7 @@
             ></div>
           </div>
         </div>
-        <div class="col-xs-12 offset-xs-1">
+        <div class="col-xs-11">
           <heading
             size="l"
             level="2"
@@ -30,9 +30,12 @@
             {{ data.description }}
           </heading>
         </div>
-        <div class="col-xs-7">
-          <div class="align-xs-end" v-if="data.deposit && data.state < 2">
-            <deposit :val="data.price + data.deposit" />
+        <div class="col-xs-9">
+          <div class="xxalign-xs-end" v-if="data.deposit && data.state < 2">
+            <deposit :val="data.price" label="price" />
+          </div>
+          <div class="xxalign-xs-end" v-if="data.deposit && data.state < 2">
+            <deposit :val="data.deposit" label="deposit" />
           </div>
           <div class="align-xs-end" v-if="data.deposit && data.state === 2">
             <deposit :val="data.deposit" />

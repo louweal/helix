@@ -155,10 +155,18 @@
             </template>
           </div>
 
+          <heading size="l" level="2" class="bottom-xs-0">
+            Additional material information (optional)
+          </heading>
+
           <textarea
             key="1"
             class="field field--light field--textarea"
-            placeholder="Additional material information (optional)"
+            :placeholder="
+              contract.visual
+                ? contract.visual.materials
+                : 'Additional material information (optional)'
+            "
             @input="(e) => setValue('material_description', e.target.value)"
           />
 
@@ -365,6 +373,7 @@ export default {
       Vue.set(this.contract, "description", image.alt + " description");
       Vue.set(this.contract, "name", image.alt);
       Vue.set(this.contract, "price", image.price * 10);
+      Vue.set(this.contract, "material_description", image.materials);
       this.toggleDrawer("#gallery-drawer");
     },
     async createContract() {

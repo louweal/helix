@@ -43,19 +43,7 @@
   },
   {
     "ID": 7,
-    "name": "pine",
-    "parent": "wood",
-    "label": 5
-  },
-  {
-    "ID": 8,
-    "name": "teak",
-    "parent": "wood",
-    "label": 5
-  },
-  {
-    "ID": 9,
-    "name": "beech",
+    "name": "chipwood",
     "parent": "wood",
     "label": 5
   },
@@ -66,38 +54,14 @@
     "label": 4
   },
   {
-    "ID": 11,
-    "name": "PET / PETE",
-    "parent": "plastic",
-    "label": 6
-  },
-  {
     "ID": 12,
     "name": "HDPE",
     "parent": "plastic",
     "label": 6
   },
   {
-    "ID": 13,
-    "name": "LDPE",
-    "parent": "plastic",
-    "label": 6
-  },
-  {
-    "ID": 14,
-    "name": "PVC / vinyl",
-    "parent": "plastic",
-    "label": 6
-  },
-  {
     "ID": 15,
     "name": "polypropylene",
-    "parent": "plastic",
-    "label": 6
-  },
-  {
-    "ID": 16,
-    "name": "styrofoam",
     "parent": "plastic",
     "label": 6
   },
@@ -111,6 +75,30 @@
     "ID": 18,
     "name": "metal",
     "parent": "metal",
-    "label": 0
+    "label": 2
+  },
+  {
+    "ID": 19,
+    "name": "birch",
+    "parent": "wood",
+    "label": 2
+  },
+  {
+    "ID": 20,
+    "name": "viscose",
+    "parent": "textile",
+    "label": 3
+  },
+  {
+    "ID": 21,
+    "name": "hardboard",
+    "parent": "wood",
+    "label": 3
+  },
+  {
+    "ID": 20,
+    "name": "linen",
+    "parent": "textile",
+    "label": 4
   }
 ]

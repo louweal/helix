@@ -10,7 +10,7 @@
         <div class="grid">
           <div
             class="col-xs-24"
-            v-for="(contract, index) in pendingContracts.slice(0, 2).reverse()"
+            v-for="(contract, index) in pendingContracts.slice().reverse()"
             :key="index"
           >
             <contract-card :data="contract" pending />
@@ -19,8 +19,8 @@
       </template>
 
       <template v-if="activeContracts.length > 0">
-        <heading size="l" level="2" class="bottom-xs-0">
-          {{ isShop ? "Items in store" : "Active contracts" }}
+        <heading size="l" level="2" class="bottom-xs-0" v-if="!isShop">
+          Active contracts
         </heading>
         <div class="grid">
           <div
