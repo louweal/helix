@@ -62,14 +62,14 @@
           Remove
         </Button>
       </div>
-      <div class="col-xs-24" v-if="data.state === 1">
+      <!-- <div class="col-xs-24" v-if="data.state === 1">
         <input
           class="field field--light"
           type="text"
           :placeholder="'*DEMO FIELD*'"
           @input="(e) => setFakeBuyDate(e.target.value)"
         />
-      </div>
+      </div> -->
       <div class="col-xs-24" v-if="data.state === 1">
         <!-- <heading size="s" level="0" fstyle="italic" weight="400"
             >This action locks the deposit amount into the contract.</heading
@@ -79,9 +79,8 @@
           @click.native="confirmPurchase"
           class="button--primary button--fullwidth"
         >
-          Pay ℏ {{ (data.price + data.deposit) / 1e8 }} to {{ sellerName }}*
+          Pay ℏ {{ (data.price + data.deposit) / 1e8 }} to {{ sellerName }}
         </Button>
-        <i>* the price includes a deposit </i>
       </div>
       <div class="col-xs-8" xxv-if="data.state !== 1">
         <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
@@ -140,12 +139,26 @@
           Transfer ownership
         </heading>
       </div> -->
+      <br />
       <p>
         Transfer the ownership of this contract if you gave away or sold this
-        item. The new owner receives 30% of the deposit and the charity receives
-        10%. You will directly receive up to 60%, depending on how much of this
-        amount you have already collected and/or donated.
+        item.
       </p>
+
+      <badge color="primary">60%</badge> <b>you</b> receive 60% of the deposit*
+      <br />
+
+      <badge color="primary">30%</badge> <b>the buyer</b> receives 30% of the
+      deposit <br />
+
+      <badge color="primary">10%</badge> <b>the charity</b> receives 10% of the
+      deposit* <br />
+
+      <p>* minus the amount that was already collected and/or donated by you</p>
+
+      <!-- The new owner receives 30% of the deposit and the charity receives
+        10%. You will directly receive up to 60%, depending on how much of this
+        amount you have already collected and/or donated. -->
 
       <heading size="m" level="3" class="bottom-xs-0">
         Item recepient <badge color="primary">30%</badge>
@@ -197,7 +210,7 @@
         class="button--primary button--fullwidth"
         @click.native="setBuyer"
       >
-        Sell item to {{ buyerName }}
+        Send payment request to {{ buyerName }}
       </Button>
     </div>
 
@@ -207,6 +220,7 @@
           Delete contract
         </heading>
       </div> -->
+      <br />
       <p>
         Do you want to delete this contract? This action donates the complete
         remainder of the deposit to the charity selected below.

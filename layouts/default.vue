@@ -3,7 +3,7 @@
     <pre-loader />
     <spinner v-if="$store.state.waiting" />
 
-    <div class="demo-box" v-if="$route.path !== '/login'">
+    <div class="demo-box" v-if="$route.path !== '/login' && 1 === 1">
       <!-- {{ accounts }} -->
 
       <heading size="6xl" level="0" color="white">
