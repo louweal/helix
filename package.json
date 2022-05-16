@@ -1,5 +1,5 @@
 {
-  "name": "hederianmint",
+  "name": "helix",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -14,7 +14,6 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "core-js": "^3.19.3",
     "fs": "^0.0.1-security",
-    "nft.storage": "^6.2.0",
     "nuxt": "^2.15.7",
     "solc": "^0.8.8"
   },

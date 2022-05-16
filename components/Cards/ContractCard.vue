@@ -62,14 +62,14 @@
           Remove
         </Button>
       </div>
-      <div class="col-xs-24" v-if="data.state === 1">
+      <!-- <div class="col-xs-24" v-if="data.state === 1">
         <input
           class="field field--light"
           type="text"
           :placeholder="'*DEMO FIELD*'"
           @input="(e) => setFakeBuyDate(e.target.value)"
         />
-      </div>
+      </div> -->
       <div class="col-xs-24" v-if="data.state === 1">
         <Button
           @click.native="confirmPurchase"
