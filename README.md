@@ -1,5 +1,11 @@
 # Helix
 
+Helix is a platform that helps the environment using the hedera smart contract service.
+It was implemented with Vue, Nuxt, Solidity and the Hedera Smart Contract Service.
+The project was submitted to the Hedera Hackathon 2022 on Devpost.
+
+Demo website: [helix.codesparks.nl](https://helix.codesparks.nl)
+
 ## Setup
 
 ```
