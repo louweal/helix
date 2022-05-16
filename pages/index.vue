@@ -4,9 +4,6 @@
 
     <div class="container container--wide">
       <template v-if="pendingContracts.length > 0">
-        <!-- <heading size="l" level="2" class="bottom-xs-0">
-          Pending contracts
-        </heading> -->
         <div class="grid">
           <div
             class="col-xs-24"
@@ -66,20 +63,9 @@
       <div>
         <p class="bottom-xs-2">No contracts found</p>
 
-        <!-- <Stack dir="vertical"> -->
-        <!-- <Button
-            v-if="$store.state.currentAccount.seller"
-            to="/new"
-            class="button--secondary button--fullwidth"
-            >Add contract</Button
-          > -->
-
-        <!-- <template v-if="!$store.state.currentAccount.seller"> -->
         <Button to="/login" class="button--secondary button--fullwidth">
           Switch account
         </Button>
-        <!-- </template> -->
-        <!-- </Stack> -->
       </div>
     </div>
   </div>

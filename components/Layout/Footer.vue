@@ -1,7 +1,6 @@
 <template>
   <footer class="footer">
     <div class="container">
-      <!-- {{ $route.path }} -->
       <ul>
         <li @click="showAllContracts">
           <nuxt-link to="/"
@@ -29,20 +28,7 @@
             />Search
           </nuxt-link>
         </li>
-        <!-- <li>
-          <nuxt-link to="/faq"
-            ><img
-              :src="
-                require(isActive('/faq')
-                  ? '@/assets/images/icons/ico-faq-active.svg'
-                  : '@/assets/images/icons/ico-faq.svg')
-              "
-              alt="faq"
-              height="24"
-            />
-            FAQ
-          </nuxt-link>
-        </li> -->
+
         <li>
           <nuxt-link to="/account"
             ><img

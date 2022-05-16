@@ -3,9 +3,6 @@
     <back-button bg> Add contract </back-button>
 
     <div class="container" style="margin-top: 53px">
-      <!-- <br /> -->
-      <!-- {{ $store.state.currentAccount.accountId }} -->
-
       <div class="add-form">
         <Section v-if="currentStep < 2">
           <div v-if="contract.visual">
@@ -26,7 +23,7 @@
             class="field field--light field--upload"
             @click="toggleDrawer('#gallery-drawer')"
           >
-            Upload image
+            Add demo image
           </div>
 
           <heading size="l" level="2" class="bottom-xs-0">
@@ -65,15 +62,7 @@
             :placeholder="contract.visual ? contract.visual.price * 10 : 'ℏ'"
             @input="(e) => setValue('price', e.target.value)"
           />
-          <!-- <heading size="l" level="2" class="bottom-xs-0">
-            Product category
-          </heading>
-          <dropdown
-            key="1"
-            fieldName="category"
-            @input="setDropdownValue"
-            :options="categories"
-          /> -->
+
           <heading size="l" level="2" class="bottom-xs-0">
             Expected product lifetime
           </heading>
@@ -84,23 +73,6 @@
             :options="durationOptions"
           />
 
-          <!-- <template v-if="contract.visual && contract.duration">
-            <Button
-              class="button--primary button--fullwidth"
-              @click.native="currentStep += 1"
-            >
-              Next
-            </Button>
-          </template>
-
-          <template v-else>
-            <Button class="button--primary button--fullwidth" disabled>
-              Next
-            </Button>
-          </template> -->
-          <!-- </Section> -->
-
-          <!-- <Section xxv-if="currentStep >= 2"> -->
           <heading size="l" level="2" class="bottom-xs-0">
             Country of production
           </heading>
@@ -171,14 +143,6 @@
           />
 
           <div class="grid">
-            <!-- <div class="col-xs-12">
-              <Button
-                class="button--secondary button--fullwidth"
-                @click.native="currentStep -= 1"
-              >
-                Back
-              </Button>
-            </div> -->
             <div class="col-xs-24 bottom-xs-3">
               <Button
                 v-if="selectedMaterials.length === numMaterials"
@@ -192,20 +156,6 @@
         </Section>
 
         <Section v-if="currentStep === 2">
-          <!-- <heading size="l" level="2" class="bottom-xs-0">
-            Select charity
-          </heading>
-          <p>
-            At least 10% of the deposit will be donated to the selected charity.
-            If the buyer disposes the product before the contract has ended, the
-            complete remainder of the deposit is donated.
-          </p>
-          <dropdown
-            fieldName="charity"
-            @input="setDropdownValue"
-            :options="allCharities"
-          /> -->
-
           <div class="bottom-xs-2"></div>
           <heading size="l" level="2" class="bottom-xs-0"
             >Deposit summary</heading
@@ -224,14 +174,6 @@
           />
 
           <div class="grid">
-            <!-- <div class="col-xs-12">
-              <Button
-                class="button--secondary button--fullwidth"
-                @click.native="currentStep -= 1"
-              >
-                Back
-              </Button>
-            </div> -->
             <div class="col-xs-24">
               <Button
                 class="button--primary button--fullwidth"

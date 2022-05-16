@@ -62,19 +62,15 @@
           Remove
         </Button>
       </div>
-      <!-- <div class="col-xs-24" v-if="data.state === 1">
+      <div class="col-xs-24" v-if="data.state === 1">
         <input
           class="field field--light"
           type="text"
           :placeholder="'*DEMO FIELD*'"
           @input="(e) => setFakeBuyDate(e.target.value)"
         />
-      </div> -->
+      </div>
       <div class="col-xs-24" v-if="data.state === 1">
-        <!-- <heading size="s" level="0" fstyle="italic" weight="400"
-            >This action locks the deposit amount into the contract.</heading
-          > -->
-
         <Button
           @click.native="confirmPurchase"
           class="button--primary button--fullwidth"
@@ -109,36 +105,18 @@
           </Button>
         </div>
 
-        <div class="col-xs-8" v-if="data.state === 3">
-          <Button
-            class="button--light button--fullwidth"
-            @click.native="toggleRemoveResoldOptions"
-          >
-            <icon icon="delete" />
-            Remove
-          </Button>
-        </div>
-        <div class="col-xs-8" xxxv-if="data.state >= 2">
+        <div class="col-xs-8">
           <nuxt-link :to="data.ID ? '/contracts/' + data.ID : '/'">
             <Button class="button--fullwidth"> View details </Button>
           </nuxt-link>
         </div>
       </div>
-
-      <!-- <div class="grid no-bottom-margin-cols" v-if="pending">
-
-      </div> -->
     </div>
 
     <div
       v-if="showActions && showTransferOptions"
       class="contract-card__options"
     >
-      <!-- <div class="contract-card__options__header">
-        <heading size="m" level="2" class="bottom-xs-0" color="black">
-          Transfer ownership
-        </heading>
-      </div> -->
       <br />
       <p>
         Transfer the ownership of this contract if you gave away or sold this
@@ -155,10 +133,6 @@
       deposit* <br />
 
       <p>* minus the amount that was already collected and/or donated by you</p>
-
-      <!-- The new owner receives 30% of the deposit and the charity receives
-        10%. You will directly receive up to 60%, depending on how much of this
-        amount you have already collected and/or donated. -->
 
       <heading size="m" level="3" class="bottom-xs-0">
         Item recepient <badge color="primary">30%</badge>
@@ -188,16 +162,6 @@
       </Button>
     </div>
     <div v-if="showSellOptions" class="contract-card__options">
-      <!-- <div class="contract-card__options__header">
-        <heading size="m" level="2" class="bottom-xs-0" color="black">
-          Set buyer
-        </heading>
-      </div> -->
-      <!-- <p>
-        Did you sell this item? Select the buyer below such that he can obtain
-        the contract.
-      </p> -->
-
       <heading size="m" level="3" class="bottom-xs-0"> Buyer </heading>
 
       <dropdown
@@ -215,11 +179,6 @@
     </div>
 
     <div v-if="showActions && showDeleteOptions" class="contract-card__options">
-      <!-- <div class="contract-card__options__header">
-        <heading size="m" level="2" class="bottom-xs-0" color="black">
-          Delete contract
-        </heading>
-      </div> -->
       <br />
       <p>
         Do you want to delete this contract? This action donates the complete
@@ -243,11 +202,6 @@
       </Button>
     </div>
     <div v-if="showRemoveOptions" class="contract-card__options">
-      <!-- <div class="contract-card__options__header">
-        <heading size="m" level="2" class="bottom-xs-0" color="black">
-          Remove contract
-        </heading>
-      </div> -->
       <p>
         If you accidentially created this contract, you can remove it from the
         list. It will remain as an inactive contract on the Hedera network.
@@ -382,6 +336,7 @@ export default {
     },
 
     getCharity(sel) {
+      // console.log(sel.ID);
       this.charity = sel.ID;
     },
   },

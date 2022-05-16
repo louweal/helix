@@ -17,7 +17,6 @@
       </div>
 
       <div class="container">
-        <!-- {{ contract }} -->
         <Section>
           <heading
             size="3xl"
@@ -98,12 +97,6 @@
             years)
           </list-item>
 
-          <!-- <list-item icon="calendar" v-if="isShop && contract.startdate > -1">
-            Listed
-            {{ parseInt((Date.now() / 1000 - contract.startdate) / 86400) }}
-            days ago
-          </list-item> -->
-
           <list-item icon="pin" v-if="contract.production_country">
             Produced in
             {{
@@ -146,12 +139,7 @@
 
         <Section>
           <hr />
-          <accordion-item
-            label="Materials"
-            icon="tools"
-            level="2"
-            xxxv-if="contract.material_description !== undefined"
-          >
+          <accordion-item label="Materials" icon="tools" level="2">
             <p v-if="contract.material_description !== 'undefined'">
               {{ contract.material_description }}
             </p>

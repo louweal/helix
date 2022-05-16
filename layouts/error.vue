@@ -7,8 +7,5 @@
         </h2>
       </div>
     </Section>
-
-    <!-- <Section /> -->
-    <Section />
   </main>
 </template>

@@ -9,8 +9,6 @@
     >
       <div class="container container--wide">
         <slot>
-          <!-- <categories /> -->
-
           <add-button />
         </slot>
       </div>

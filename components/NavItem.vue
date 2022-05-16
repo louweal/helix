@@ -3,7 +3,7 @@
     <heading level="0" size="l" weight="400" class="bottom-xs-0">
       <slot />
     </heading>
-    <icon icon="chevron-right" xxxsize="lg" />
+    <icon icon="chevron-right" />
   </nuxt-link>
 </template>
 
@@ -17,7 +17,6 @@ export default {
   },
 };
 </script>
-
 
 <style lang="scss" scoped>
 .nav-item {

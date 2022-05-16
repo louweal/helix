@@ -3,9 +3,7 @@
     <pre-loader />
     <spinner v-if="$store.state.waiting" />
 
-    <div class="demo-box" v-if="$route.path !== '/login' && 1 === 1">
-      <!-- {{ accounts }} -->
-
+    <div class="demo-box" v-if="$route.path !== '/login' && 1 === 2">
       <heading size="6xl" level="0" color="white">
         Account switcher<br />
         for demonstration only
