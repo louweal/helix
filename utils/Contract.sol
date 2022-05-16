@@ -4,7 +4,7 @@ pragma solidity ^0.8.11;
 contract PurchaseAgreement {
     address payable public seller;
     address payable public buyer;
-    address public prevOwner;
+    address payable public prevOwner;
     string public staticData;
     uint256 public deposit;
     uint256 public initialDepositB;
@@ -13,6 +13,7 @@ contract PurchaseAgreement {
     uint256 public depositC;
     uint256 public date;
     uint256 public duration;
+    uint256 public price;
 
     enum State {
         Created,
@@ -26,12 +27,14 @@ contract PurchaseAgreement {
     constructor(
         string memory staticData_,
         uint256 duration_,
-        uint256 deposit_
+        uint256 deposit_,
+        uint256 price_
     ) payable {
         seller = payable(msg.sender);
-        prevOwner = msg.sender;
+        prevOwner = payable(msg.sender);
         staticData = staticData_;
-        duration = duration_ * 86400; //  in seconds 86400
+        duration = duration_; //  in seconds 86400
+        price = price_;
         date = block.timestamp;
         deposit = deposit_;
         initialDepositB = (deposit_ * 60) / 100;
@@ -61,27 +64,22 @@ contract PurchaseAgreement {
         return staticData;
     }
 
-    function getDuration() public view returns (uint256) {
-        return duration;
-    }
+    // function getDuration() public view returns (uint256) {
+    //     return duration;
+    // }
 
     // gets the initial deposit
-    function getDeposit() public view returns (uint256) {
-        return deposit;
-    }
+    // function getDeposit() public view returns (uint256) {
+    //     return deposit;
+    // }
 
     function getPrevOwner() public view returns (address) {
         return prevOwner;
     }
 
-    function getCurrentTimestamp() public view returns (uint256) {
-        return block.timestamp;
-    }
-
-    function getMaxAmount() public view returns (uint256) {
-        return
-            (((initialDepositB * (block.timestamp - date)) / duration)) -
-            (initialDepositB - depositB);
+    function getAvailableDeposit() public view returns (uint256) {
+        return (((initialDepositB * (block.timestamp - date)) / duration)
+        ) - (initialDepositB - depositB);
     }
 
     // confirm buying the new item
@@ -92,34 +90,38 @@ contract PurchaseAgreement {
         onlyBuyer
     {
         require(
-            msg.value == deposit,
-            "Please send in the exact deposit amount"
+            msg.value == (price + deposit),
+            "Please send in the item price + the deposit amount"
         ); // add the deposit to the contract
         // update state
         state = State.Sold;
 
-        if (date != 0) {
+        if (date_ != 0) {
             // for providing fake dates for demo's
             date = date_;
         } else {
             date = block.timestamp;
         }
-        prevOwner = seller;
+        prevOwner = payable(seller);
         seller = payable(msg.sender); // update seller to buyer
         buyer = payable(address(0)); // reset buyer value
+
+        // pay item price to shop
+        prevOwner.transfer(price);
+
     }
 
-    // collect 60% of the deposit back after contract end
-    function collectDeposit()
-        external
-        payable
-        inState(State.Sold)
-        onlySeller
-        contractEnded
-    {
-        state = State.Inactive;
-        seller.transfer(depositB);
-    }
+    // // collect 60% of the deposit back after contract end
+    // function collectDeposit()
+    //     external
+    //     payable
+    //     inState(State.Sold)
+    //     onlySeller
+    //     contractEnded
+    // {
+    //     state = State.Inactive;
+    //     seller.transfer(depositB);
+    // }
 
     // delete contract: 100% is donated to the charity
     function deleteContract(address charity_)
@@ -130,7 +132,7 @@ contract PurchaseAgreement {
     {
         state = State.Inactive;
         address payable charity = payable(charity_);
-        charity.transfer(deposit); // todo: charity
+        charity.transfer(depositB + depositC); 
     }
 
     function deleteCreatedContract()

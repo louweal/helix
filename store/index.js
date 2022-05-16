@@ -34,9 +34,6 @@ export const state = () => ({
 });
 
 export const mutations = {
-  SET_CONTRACTS(state, payload) {
-    state.contracts = payload;
-  },
   SET_ACCOUNTS(state, payload) {
     state.accounts = payload;
   },
@@ -87,22 +84,6 @@ export const mutations = {
           c.ID === payload.contractId ? payload.value : c[payload.field])
     );
   },
-
-  // transferContract(state, payload) {
-  //   // { ID , seller, buyer }
-  //   state.contracts.forEach((c) => {
-  //     (c.owner = c.ID === payload.ID ? payload.buyer : c.owner),
-  //       (c.seller = c.ID === payload.ID ? payload.seller : c.seller),
-  //       (c.startdate = c.ID === payload.ID ? todayDate() : c.startdate);
-  //   });
-  // },
-  // sellContract(state, payload) {
-  //   // { ID , buyer }
-  //   state.contracts.forEach((c) => {
-  //     (c.owner = c.ID === payload.ID ? payload.buyer : c.owner),
-  //       (c.startdate = c.ID === payload.ID ? todayDate() : c.startdate);
-  //   });
-  // },
 
   toggleAwaitState(state) {
     state.waiting = !state.waiting;
