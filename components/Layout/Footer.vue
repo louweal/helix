@@ -64,10 +64,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// ::v-deep .nuxt-link-exact-active {
-//   border: 3px solid red;
-// }
-
 .footer {
   position: fixed;
   bottom: 0;

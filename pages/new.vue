@@ -258,14 +258,6 @@ export default {
       }));
     },
 
-    // categories() {
-    //   return this.$store.state.categories.map(({ name, ID }) => ({
-    //     id: ID,
-    //     label: name,
-    //     value: name.toLowerCase(),
-    //   }));
-    // },
-
     newId() {
       let allContracts = this.$store.state.contracts;
 
@@ -283,15 +275,6 @@ export default {
       return dd + "-" + mm + "-" + yyyy;
     },
 
-    // allCharities() {
-    //   return this.accounts
-    //     .filter((a) => a.charity)
-    //     .map(({ name, ID, accountId }) => ({
-    //       id: ID,
-    //       label: name,
-    //       value: accountId,
-    //     }));
-    // },
     materialGroups() {
       return [...new Set(this.materials.map((m) => m.parent).flat())]
 
@@ -335,10 +318,6 @@ export default {
         visual: +this.contract.visual.ID,
         price: parseInt(this.contract.price * 1e8),
       };
-
-      // console.log(data.price);
-
-      // return;
 
       // add the contract on hedera network and to the store
       let contractId = await this.$store.dispatch("addSmartContract", data);
@@ -390,7 +369,6 @@ export default {
 
       let materialAvg = parseInt(materialSum / this.selectedMaterials.length);
 
-      // console.log("materi : " + materialSum);
       let ccname = this.$store.state.currentAccount.country;
       let countryData = this.$store.state.countries.find(
         (c) => c.name === ccname
@@ -399,10 +377,7 @@ export default {
       let shipmentDeposit = +this.labels.find((l) => l.name == dist).fee;
 
       let totalAvg = parseInt((1.0 * materialAvg + 1.0 * shipmentDeposit) / 2);
-      // console.log(totalAvg);
       let totalLabel = this.labels.find((l) => l.ID === totalAvg).name;
-
-      // console.log(materialSum + shipmentDeposit);
 
       Vue.set(
         this.contract,

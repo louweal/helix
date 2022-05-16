@@ -262,21 +262,13 @@ export default {
     },
 
     setFakeBuyDate(val) {
-      // console.log("val" + val);
       this.fakeBuyDate = parseInt(Date.now() / 1000 - val * 86400); // convert 'days ago' to timestamp in seconds
-      // this.fakeBuyDate = 0; // temp disable thi
     },
 
     async confirmPurchase() {
-      // console.log(this.data.deposit);
-      // console.log(this.data.ID);
-
       if (isNaN(this.fakeBuyDate)) {
-        // console.log("Invalid buy date");
         return;
       }
-
-      // console.log(this.fakeBuyDate);
 
       let payload = {
         contractId: this.data.ID,
@@ -288,12 +280,6 @@ export default {
       this.$router.push({
         path: "/",
       });
-    },
-
-    getFakeDate(val) {
-      let today = Date.now() / 1000;
-      let date = today - val * 86400;
-      //todo
     },
 
     async deleteContract() {
@@ -330,13 +316,11 @@ export default {
       this.showRemoveOptions = false;
     },
     getBuyer(data) {
-      // console.log(data);
       this.buyer = data.ID;
       this.buyerName = data.val;
     },
 
     getCharity(sel) {
-      // console.log(sel.ID);
       this.charity = sel.ID;
     },
   },
@@ -394,22 +378,13 @@ export default {
     me() {
       return +this.$store.state.currentAccount.ID;
     },
-    // labels() {
-    //   return this.$store.state.labels;
-    // },
 
     sold() {
       return this.data.owner !== this.me && this.data.seller === this.me;
     },
 
     sellerName() {
-      // console.log(this.data.seller);
       return this.accounts.find((a) => a.accountId === this.data.seller).name;
-      // let seller = this.accounts.find((a) => a.ID === this.data.seller).name;
-      // let seller = this.accounts.find(
-      //   (a) => a.accountId === this.data.seller
-      // ).name;
-      // return seller !== this.$store.state.currentAccount.name ? seller : false;
     },
   },
 };
@@ -423,18 +398,12 @@ export default {
   background-color: #fff;
   border-radius: 6px;
   width: 100%;
-  // padding-bottom: 7px;
   padding: 4px;
   height: 100%;
 
   &.pending {
-    // opacity: 0.5;
     border: 1px dashed get-color(primary);
-    // min-height: 70vh;
   }
-
-  // &__body {
-  // }
 
   &__actions {
     margin-top: 5px;
@@ -455,13 +424,6 @@ export default {
   &__visual {
     position: relative;
     background-color: #fff;
-    // padding: 24px;
   }
-
-  // &__state {
-  //   position: absolute;
-  //   left: 0px;
-  //   bottom: 0px;
-  // }
 }
 </style>

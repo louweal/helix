@@ -156,7 +156,6 @@ export const actions = {
 
     // 3) get the new index
     const index = await lookupContractGetContractIndex(payload.buyerId);
-    // console.log(index);
 
     // 4) delete contractid from the sellers lookup list
     await lookupContractDeleteContract(
@@ -198,9 +197,6 @@ export const actions = {
     );
 
     commit("toggleAwaitState");
-
-    // console.log(amount);
-
     return amount;
   },
 
@@ -356,8 +352,6 @@ export const actions = {
     let accountId = state.currentAccount.accountId;
     let pvkey = state.currentAccount.pvkey;
 
-    // console.log("currentAccount", accountId);
-
     const numContracts = await lookupContractGetNumContracts(accountId);
 
     let i = 0;
@@ -435,15 +429,6 @@ export const actions = {
     return data;
   },
 };
-
-// function todayDate() {
-//   var today = new Date();
-//   var dd = String(today.getDate()).padStart(2, "0");
-//   var mm = String(today.getMonth() + 1).padStart(2, "0");
-//   var yyyy = today.getFullYear();
-
-//   return dd + "-" + mm + "-" + yyyy;
-// }
 
 // helper functions
 

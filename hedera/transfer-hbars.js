@@ -19,26 +19,9 @@ async function main() {
   }
 
   // Create our connection to the Hedera network
-  // The Hedera JS SDK makes this really easy!
   const client = Client.forTestnet().setOperator(myAccountId, myPrivateKey);
 
-  //Create new keys
-  // const newAccountPrivateKey = await PrivateKey.generateED25519();
-  // const newAccountPublicKey = newAccountPrivateKey.publicKey;
-
-  //Create a new account with 1,000 tinybar starting balance
-  // const newAccountTransactionResponse = await new AccountCreateTransaction()
-  //     .setKey(newAccountPublicKey)
-  //     .setInitialBalance(Hbar.fromTinybars(1000))
-  //     .execute(client);
-
-  // // Get the new account ID
-  // const getReceipt = await newAccountTransactionResponse.getReceipt(client);
-  // const newAccountId = getReceipt.accountId;
-
-  // console.log("The new account ID is: " + newAccountId);
-
-  const newAccountId = process.env.STORE_ID;
+  const newAccountId = process.env.ALICES_ID;
 
   //Verify the account balance
   const accountBalance = await new AccountBalanceQuery()
@@ -53,8 +36,8 @@ async function main() {
 
   //Create the transfer transaction
   const sendHbar = await new TransferTransaction()
-    .addHbarTransfer(myAccountId, new Hbar(-1000))
-    .addHbarTransfer(newAccountId, new Hbar(1000))
+    .addHbarTransfer(myAccountId, new Hbar(-4000))
+    .addHbarTransfer(newAccountId, new Hbar(4000))
     .execute(client);
 
   //Verify the transaction reached consensus

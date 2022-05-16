@@ -32,7 +32,6 @@ export default {};
   z-index: 3000;
   overflow: hidden;
   animation: disappear 0.3s 2.1s ease-in forwards;
-  // padding: 1.2rem;
 
   ::v-deep i {
     display: block;
@@ -43,9 +42,6 @@ export default {};
   }
 
   &__inner {
-    // background-color: get-color(light);
-    // border-radius: 1rem;
-    // border: 1px solid red;
     width: 100%;
     height: 100%;
     display: flex;
@@ -56,9 +52,6 @@ export default {};
 }
 
 @keyframes disappear {
-  // from {
-  //   opacity: 1;
-  // }
   to {
     transform: translateY(-100%);
   }

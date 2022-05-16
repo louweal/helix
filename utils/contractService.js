@@ -153,9 +153,6 @@ export async function contractConfirmPurchase(
   const sellerKey = PrivateKey.fromString(pvKey);
   const client = Client.forTestnet().setOperator(sellerId, sellerKey);
 
-  // console.log(amount);
-  // return;
-
   // execute transaction
   const contractExecTx1 = await new ContractExecuteTransaction()
     .setContractId(contractId)
@@ -209,10 +206,6 @@ export async function contractCollect(accountId, pvKey, contractId) {
   const sellerId = AccountId.fromString(accountId);
   const sellerKey = PrivateKey.fromString(pvKey);
   const client = Client.forTestnet().setOperator(sellerId, sellerKey);
-
-  // console.log(contractId);
-
-  // return;
 
   // execute transaction
   const contractExecTx1 = await new ContractExecuteTransaction()

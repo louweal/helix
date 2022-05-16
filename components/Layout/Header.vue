@@ -99,7 +99,6 @@ export default {
 
 .header {
   top: 0;
-  // display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;

@@ -9,14 +9,7 @@ $grid-gutter: 4px;
     .grid {
       display: flex;
       flex-flow: column nowrap;
-      // margin-left: -$gutter * 0.5;
-      // margin-right: -$gutter * 0.5;
       flex-flow: row wrap;
-
-      // @include until(s) {
-      //   margin-left: -$gutter * 0.25;
-      //   margin-right: -$gutter * 0.25;
-      // }
 
       &.no-bottom-margin-cols {
         > .col,
@@ -34,28 +27,6 @@ $grid-gutter: 4px;
           padding: 0;
         }
       }
-
-      // &.collapse-m {
-      //   @include until(m) {
-      //     margin-left: 0;
-      //     margin-right: 0;
-
-      //     .col,
-      //     [class^="col-"] {
-      //       padding: 0;
-      //     }
-      //   }
-      // }
-
-      // &.uncollapse {
-      //   margin-left: -$gutter * 0.5;
-      //   margin-right: -$gutter * 0.5;
-
-      //   .col,
-      //   [class^="col-"] {
-      //     padding: 0 $gutter * 0.5;
-      //   }
-      // }
     }
 
     // helper classes for aligning and distributing flexbox childs
@@ -114,10 +85,6 @@ $grid-gutter: 4px;
       flex-basis: 0;
       padding: 0 $gutter * 0.5;
       margin-bottom: $gutter;
-
-      // @include until(s) {
-      //   margin-bottom: math.div($gutter, 2);
-      // }
     }
 
     .grid-col {

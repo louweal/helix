@@ -47,7 +47,6 @@ export default {
     },
 
     matchingContracts() {
-      // console.log(this.q);
       let myContracts = this.contracts.filter(
         (c) => c.owner === this.$store.state.currentAccount.accountId
       );
@@ -65,7 +64,6 @@ export default {
   methods: {
     setQuery(val) {
       this.q = val;
-      // console.log(val);
     },
   },
 };

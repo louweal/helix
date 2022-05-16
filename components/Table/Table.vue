@@ -23,25 +23,8 @@ export default {
 .table {
   margin-bottom: 1.3rem;
 
-  // &--with-header {
-  //   ::v-deep .tr {
-  //     &:first-child {
-  //       font-weight: 700;
-  //       font-family: $heading-font;
-  //     }
-
-  //     &:nth-child(even):not(:first-child) {
-  //       background-color: get-color(light);
-  //     }
-  //   }
-  // }
-
   &--without-header {
     ::v-deep .tr {
-      // .td:first-child {
-      //   font-weight: 700;
-      // }
-
       &:nth-child(even) {
         background-color: get-color(light);
       }

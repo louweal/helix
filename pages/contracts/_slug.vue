@@ -269,12 +269,9 @@ export default {
   methods: {
     toggleDrawer(id) {
       let drawer = document.querySelector(id);
-      // console.log(id);
       drawer.classList.toggle("drawer--active");
     },
     async collectNow() {
-      // console.log(this.contract.ID);
-
       await this.$store.dispatch("collect", {
         contractId: this.contract.ID,
       });
@@ -296,19 +293,6 @@ export default {
         path: "/",
       });
     },
-    // hbars(percentage) {
-    //   return (
-    //     parseFloat(this.contract.deposit * (percentage / 100)).toFixed(2) + " ℏ"
-    //   );
-    // },
-    // getItemRecepient(data) {
-    //   this.buyer = data.ID;
-    //   // console.log(data.ID);
-    // },
-    // getDepositRecepient(data) {
-    //   this.charity = this.allCharities.find((c) => c.id == +data.ID).label;
-    //   // console.log(this.charity);
-    // },
 
     getCharity(sel) {
       this.charity = sel.ID;

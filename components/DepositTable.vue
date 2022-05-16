@@ -75,10 +75,8 @@ export default {
       let sum = this.materialData
         .map((m) => m.label)
         .reduce((a, b) => a + b, 0);
-      // console.log(this.materials.length);
       let avg = parseInt(sum / this.materials.length);
       return this.labels.find((l) => l.ID === avg).name;
-      // return "A";
     },
 
     materialsFeeSum() {
@@ -94,7 +92,6 @@ export default {
     },
 
     distanceLabel() {
-      // console.log("country: " + this.country);
       let pid = this.country;
       return pid >= 0 ? this.currentCountry.distances[pid] : "?";
     },

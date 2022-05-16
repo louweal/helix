@@ -62,7 +62,6 @@ export default {
   },
 
   created() {
-    //todo
     this.name = this.data.name;
     this.accountId = this.data.accountId;
     this.avatar = this.data.avatar;
@@ -81,19 +80,15 @@ export default {
 
     showDrawer(id) {
       let drawer = document.querySelector(id);
-      console.log(id);
       drawer.style.display = "block";
     },
 
     hideDrawer(id) {
       let drawer = document.querySelector(id);
-      console.log(id);
       drawer.style.display = "none";
     },
 
     selectAccount(item) {
-      console.log(item);
-
       this.selected = item;
 
       this.name = item.name;

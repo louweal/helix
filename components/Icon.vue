@@ -32,10 +32,6 @@ export default {
   flex-shrink: 0;
   max-width: initial;
 
-  // span {
-  //   position: absolute;
-  // }
-
   &--lg {
     font-size: 2rem;
   }

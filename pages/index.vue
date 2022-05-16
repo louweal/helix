@@ -81,7 +81,6 @@ export default {
 
   async mounted() {
     if (this.$store.state.currentAccount.ID === undefined) {
-      // console.log("not signed in yet");
       return;
     }
     if (
@@ -89,9 +88,7 @@ export default {
       this.$store.state.currentAccount.fetched === false
     ) {
       let data = await this.$store.dispatch("getSmartContracts");
-      // this.activeContracts = data;
     } else {
-      // console.log("already fetched");
     }
   },
 
@@ -142,39 +139,6 @@ export default {
         return this.myContracts.filter((c) => c.state === 1);
       }
     },
-  },
-
-  methods: {
-    // doTransfer() {
-    //   if (this.isShop) {
-    //     this.$store.commit("sellContract", {
-    //       ID: +this.contract.ID,
-    //       buyer: +this.buyer,
-    //     });
-    //   } else {
-    //     if (this.contract.owner !== this.buyer) {
-    //       this.$store.commit("transferContract", {
-    //         ID: +this.contract.ID,
-    //         seller: +this.me,
-    //         buyer: +this.buyer,
-    //       });
-    //     }
-    //   }
-    //   this.$store.commit("setAction", "transferSuccess");
-    //   this.transferred = true;
-    //   this.toggleDrawer("#transfer-drawer");
-    //   this.$router.push({
-    //     path: "/",
-    //   });
-    // },
-    // doDelete() {
-    //   this.$store.commit("deleteContract", this.contract);
-    //   this.$store.commit("setAction", "deleteSuccess");
-    //   this.toggleDrawer("#delete-drawer");
-    //   this.$router.push({
-    //     path: "/",
-    //   });
-    // },
   },
 };
 </script>

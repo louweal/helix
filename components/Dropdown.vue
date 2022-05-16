@@ -57,7 +57,6 @@ export default {
     theLabel() {
       if (!this.defaultVal) {
         let defaultOption = this.options.filter((o) => o.default === true);
-        // console.log(defaultOption);
         if (defaultOption.length === 1) {
           defaultOption = defaultOption[0];
         } else {
@@ -82,7 +81,6 @@ export default {
 
       this.val = defaultOption.value;
       this.current = defaultOption.label;
-      // console.log("current: " + this.current);
 
       this.$emit(
         "input",
@@ -98,7 +96,6 @@ export default {
 
   methods: {
     handleInput(e) {
-      // console.log(e.target.dataset.value);
       this.$emit(
         "input",
         {

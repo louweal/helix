@@ -24,8 +24,6 @@ export default {
 
   methods: {
     onSubmit(e) {
-      // console.log("submit!");
-      // console.log(this.q);
       this.$emit("q", this.q.toLowerCase());
     },
   },
@@ -40,20 +38,6 @@ export default {
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.09);
   border-radius: 6px;
   position: relative;
-
-  // input[type="text"] {
-  //   height: 40px;
-  //   box-sizing: border-box;
-  //   border: none;
-  //   width: 100%;
-  //   padding: 6px 4px 4px 40px !important;
-  //   outline: none;
-  //   font-size: 17px;
-
-  //   &::placeholder {
-  //     font-style: italic;
-  //   }
-  // }
 
   ::v-deep .icon {
     z-index: 30;

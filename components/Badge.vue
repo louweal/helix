@@ -21,14 +21,9 @@ export default {
       type: [String, Boolean],
       default: false,
     },
-    // variant: {
-    //   type: [String, Boolean],
-    //   default: false,
-    // },
   },
 };
 </script>
-
 
 <style lang="scss" scoped>
 .badge {
@@ -43,10 +38,6 @@ export default {
   font-weight: 500;
   min-width: 50px;
   background-color: get-color(dark);
-
-  //   &--wide {
-  //     padding: 1px 20px;
-  //   }
 
   &--primary {
     background-color: get-color(primary);

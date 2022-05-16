@@ -15,18 +15,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  // props: {
-  //   heading: {
-  //     type: String,
-  //     default: "",
-  //     required: true,
-  //   },
-  // },
-};
-</script>
-
 <style lang="scss" scoped>
 .drawer {
   width: 100%;
@@ -62,10 +50,6 @@ export default {
     overflow: hidden;
     transform: translateY(-100%);
     transition: all 0.4s 0.15s ease-in-out;
-
-    > * {
-      // margin-bottom: 6px;
-    }
   }
 
   &__header {
@@ -97,7 +81,6 @@ export default {
 export default {
   methods: {
     toggleDrawer() {
-      // console.log("toggel");
       let drawer = this.$refs["drawer"];
       drawer.classList.toggle("drawer--active");
     },

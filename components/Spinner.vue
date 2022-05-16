@@ -22,7 +22,6 @@ export default {};
   height: 100%;
   z-index: 3000;
   overflow: hidden;
-  // animation: disappear 0.3s 2.1s ease-in forwards;
 
   ::v-deep i {
     display: block;
@@ -41,15 +40,6 @@ export default {};
     align-items: center;
   }
 }
-
-// @keyframes disappear {
-//   // from {
-//   //   opacity: 1;
-//   // }
-//   to {
-//     transform: translateY(-100%);
-//   }
-// }
 
 @keyframes rotate {
   to {
