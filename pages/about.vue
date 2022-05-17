@@ -15,8 +15,8 @@
             >Hedera 2022</a
           >
           'Hello Smart Contracts' Hackathon on Devpost and was submitted to the
-          Sustainability Challenge sponsored by Atma.io, Avery Dennison and to
-          the Women in Web3 challenge sponsored by the HBAR Foundation.
+          Sustainability Challenge sponsored by Atma.io, Avery Dennison and some
+          other challenges.
         </p>
 
         <p>
