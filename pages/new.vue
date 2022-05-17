@@ -1,8 +1,9 @@
 <template>
   <div class="page page--white">
     <back-button bg> Add contract </back-button>
+    <div style="height: 54px; width: 100%" />
 
-    <div class="container" style="margin-top: 53px">
+    <div class="container">
       <div class="add-form">
         <Section v-if="currentStep < 2">
           <div v-if="contract.visual">
@@ -156,7 +157,6 @@
         </Section>
 
         <Section v-if="currentStep === 2">
-          <div class="bottom-xs-2"></div>
           <heading size="l" level="2" class="bottom-xs-0"
             >Deposit summary</heading
           >

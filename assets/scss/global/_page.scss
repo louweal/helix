@@ -1,14 +1,14 @@
 .page {
   position: relative;
-  padding-bottom: 52px;
-  min-height: 100vh; // calc(100vh - 52px);
+  padding-bottom: 75px;
+  min-height: 100vh;
 
   &--white {
     background-color: #fff;
   }
 
   &--placeholder {
-    min-height: 80vh; // approx...
+    min-height: 80vh;
     height: auto;
     display: flex;
     justify-content: center;
