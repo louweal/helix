@@ -36,8 +36,8 @@ async function main() {
 
   //Create the transfer transaction
   const sendHbar = await new TransferTransaction()
-    .addHbarTransfer(myAccountId, new Hbar(-4000))
-    .addHbarTransfer(newAccountId, new Hbar(4000))
+    .addHbarTransfer(myAccountId, new Hbar(-8000))
+    .addHbarTransfer(newAccountId, new Hbar(8000))
     .execute(client);
 
   //Verify the transaction reached consensus
