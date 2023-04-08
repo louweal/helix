@@ -21,7 +21,7 @@ async function main() {
   // Create our connection to the Hedera network
   const client = Client.forTestnet().setOperator(myAccountId, myPrivateKey);
 
-  const newAccountId = process.env.ALICES_ID;
+  const newAccountId = "0.0.4010152"; //process.env.ALICES_ID;
 
   //Verify the account balance
   const accountBalance = await new AccountBalanceQuery()
@@ -64,5 +64,7 @@ async function main() {
       getNewBalance.hbars +
       " hbar."
   );
+
+  process.exit();
 }
 main();

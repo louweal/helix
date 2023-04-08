@@ -91,3 +91,7 @@ sw.*
 *.swp
 
 .editorconfig
+
+.env
+
+hedera/.env
