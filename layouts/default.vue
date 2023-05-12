@@ -21,7 +21,7 @@
       <modal-connect />
     </modal>
     <pushmenu />
-    <notice v-if="$store.state.notice.active" />
+    <notice v-if="$store.state.notice.active"> </notice>
   </div>
 </template>
 

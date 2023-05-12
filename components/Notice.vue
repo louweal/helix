@@ -3,7 +3,10 @@
     <div class="d-flex justify-content-between align-items-center gap-1">
       <div>
         <slot>
-          <p class="mb-0">This is an important message</p>
+          <p class="mb-0">
+            Incorrect personal link, no personal data was loaded. Current page
+            shows dummy data.
+          </p>
         </slot>
       </div>
       <div>
