@@ -27,7 +27,7 @@
 
             <!-- <div class="d-grid gap-2 mb-3"> -->
             <button
-              class="btn btn-primary"
+              class="btn btn-primary mb-4"
               type="button"
               @click="
                 $store.state.accountId
