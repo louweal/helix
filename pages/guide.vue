@@ -48,8 +48,8 @@
             <h2 class="fs-3" id="collect">Collect order data</h2>
 
             <p>
-              Whilst processing a customers order, collect the relevant data
-              into one JSON object. The object should have a
+              During processing of a customer's order, collect the relevant data
+              into a single JSON object. The object should have a
               <code>meta</code> property and a <code>products</code> property.
             </p>
 
@@ -71,7 +71,7 @@
                   </tr>
                   <tr>
                     <td>currency</td>
-                    <td>The currency the order was payed with.</td>
+                    <td>The currency used in your shop (e.g. USD, EUR)</td>
                   </tr>
                 </tbody>
               </table>
@@ -79,7 +79,7 @@
 
             <p>
               The <code>products</code> property be a array of objects with the
-              following properties: properties:
+              following properties:
             </p>
 
             <div class="mx-2">
@@ -92,7 +92,7 @@
                   <tr>
                     <td>visual</td>
                     <td>
-                      An link to the main product image.
+                      An link to the main product image
                       <i><code>optional</code></i>
                     </td>
                   </tr>
@@ -103,20 +103,17 @@
                   </tr>
                   <tr>
                     <td>lifespan</td>
-                    <td>The expected lifespan of the product in days.</td>
+                    <td>The expected lifespan of the product in days</td>
                   </tr>
                   <tr>
                     <td>amount</td>
-                    <td>
-                      The number of products in the order. The default value is
-                      1.
-                    </td>
+                    <td>Amount of products ordered. The default value is 1</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h4 class="mt-4 fs-5">Example:</h4>
+            <h4 class="mt-4 fs-6">Example:</h4>
 
             <div class="bg-white rounded">
               <pre><code>
@@ -146,7 +143,7 @@
 
               <p>Encode the object using base64 encoding</p>
 
-              <h4 class="fs-5">Example:</h4>
+              <h4 class="fs-6">Example:</h4>
 
               <div class="bg-white rounded">
                 <pre><code>
@@ -155,7 +152,7 @@
               </code> </pre>
               </div>
 
-              <h4 class="fs-5">Output:</h4>
+              <h4 class="fs-6">Output:</h4>
 
               <div class="bg-white rounded p-2" style="word-wrap: break-word">
                 ewogICJtZXRhIjogewogICAgInN0b3JlIjogIkhlZGVyYSBTdG9yZSIsCiAgICAib3JkZXJfZGF0ZSI6ICIwNy8wNS8yMDIzIiwgCiAgICAiY3VycmVuY3kiOiAiRVVSIgogIH0sCiAgInByb2R1Y3RzIjogWwogICAgewogICAgICAibmFtZSI6ICJCdWlsZCBIQVBJIFQtc2hpcnQiLAogICAgICAidmlzdWFsIjogImh0dHBzOi8vdXJsLXRvLXByb2R1Y3QtaW1hZ2UtaGVyZSIsCiAgICAgICJhbW91bnQiOiAyLAogICAgICAiZGVwb3NpdCI6IDIuNDUsCiAgICAgICJsaWZlc3BhbiI6ICIzNjUwIgogICAgfQogIF0KfQ==

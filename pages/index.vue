@@ -32,7 +32,7 @@
         <div class="row gy-4">
           <div class="col-12 col-lg-6 order-lg-1" data-aos="fade">
             <div class="position-relative">
-              <TransitionGroup name="image" tag="div">
+              <TransitionGroup name="image" tag="div" class="ratio ratio-1x1">
                 <img
                   key="sustainability"
                   src="@/images/sustainability.jpg"
@@ -147,6 +147,40 @@
     <section>
       <div class="container-xl">
         <div class="row gy-4">
+          <div class="col-12 col-lg-6 order-lg-1">
+            <div class="w-100 position-relative" data-aos="fade">
+              <div class="position-relative">
+                <TransitionGroup
+                  name="image"
+                  tag="div"
+                  class="position-relative ratio ratio-1x1"
+                >
+                  <img
+                    key="lifespan"
+                    src="@/images/lifespan.jpg"
+                    alt="lifespan product"
+                    class="rounded w-100"
+                    v-if="$store.state.accordions.list.how === 'lifespan'"
+                  />
+
+                  <img
+                    key="deposit"
+                    src="@/images/deposit.jpg"
+                    alt="environmental deposit"
+                    class="rounded w-100"
+                    v-else-if="$store.state.accordions.list.how === 'deposit'"
+                  />
+                  <img
+                    key="how"
+                    src="@/images/how.jpg"
+                    alt="how"
+                    class="rounded w-100"
+                    v-else
+                  />
+                </TransitionGroup>
+              </div>
+            </div>
+          </div>
           <div class="col-12 col-lg-6" data-aos="fade-up-scale">
             <badge>How it works</badge>
 
@@ -197,40 +231,6 @@
               </accordion-item>
             </div>
           </div>
-          <div class="col-12 col-lg-6">
-            <div class="w-100 position-relative" data-aos="fade">
-              <div class="position-relative">
-                <TransitionGroup
-                  name="image"
-                  tag="div"
-                  class="position-relative"
-                >
-                  <img
-                    key="lifespan"
-                    src="@/images/lifespan.jpg"
-                    alt="lifespan product"
-                    class="rounded w-100"
-                    v-if="$store.state.accordions.list.how === 'lifespan'"
-                  />
-
-                  <img
-                    key="deposit"
-                    src="@/images/deposit.jpg"
-                    alt="environmental deposit"
-                    class="rounded w-100"
-                    v-else-if="$store.state.accordions.list.how === 'deposit'"
-                  />
-                  <img
-                    key="how"
-                    src="@/images/how.jpg"
-                    alt="how"
-                    class="rounded w-100"
-                    v-else
-                  />
-                </TransitionGroup>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -269,6 +269,52 @@
     <section id="docs">
       <div class="container-xl">
         <div class="row gy-4">
+          <div class="col-12 col-lg-6 order-lg-1">
+            <div class="position-relative" data-aos="fade">
+              <TransitionGroup
+                name="image"
+                tag="div"
+                class="position-relative ratio ratio-1x1"
+              >
+                <img
+                  key="guide"
+                  src="@/images/guide.jpg"
+                  alt="setup guide helix"
+                  class="rounded w-100"
+                  v-if="$store.state.accordions.list.tech === 'guide'"
+                />
+
+                <img
+                  key="hedera"
+                  src="@/images/hedera.jpg"
+                  alt="hedera hashgraph"
+                  class="rounded w-100"
+                  v-else-if="$store.state.accordions.list.tech === 'hedera'"
+                />
+                <img
+                  key="smart"
+                  src="@/images/smart.jpg"
+                  alt="smart contracts"
+                  class="rounded w-100"
+                  v-else-if="$store.state.accordions.list.tech === 'smart'"
+                />
+                <img
+                  key="hbar"
+                  src="@/images/hbar.jpg"
+                  alt="smart contracts"
+                  class="rounded w-100"
+                  v-else-if="$store.state.accordions.list.tech === 'hbar'"
+                />
+                <img
+                  key="tech"
+                  src="@/images/tech.jpg"
+                  alt="technology for sustainability"
+                  class="rounded w-100"
+                  v-else
+                />
+              </TransitionGroup>
+            </div>
+          </div>
           <div class="col-12 col-lg-6" data-aos="fade-up-scale">
             <badge> Tech </badge>
 
@@ -348,48 +394,6 @@
                   plans involve expanding support for additional currencies.
                 </p>
               </accordion-item>
-            </div>
-          </div>
-          <div class="col-12 col-lg-6">
-            <div class="position-relative" data-aos="fade">
-              <TransitionGroup name="image" tag="div" class="position-relative">
-                <img
-                  key="guide"
-                  src="@/images/guide.jpg"
-                  alt="setup guide helix"
-                  class="rounded w-100"
-                  v-if="$store.state.accordions.list.tech === 'guide'"
-                />
-
-                <img
-                  key="hedera"
-                  src="@/images/hedera.jpg"
-                  alt="hedera hashgraph"
-                  class="rounded w-100"
-                  v-else-if="$store.state.accordions.list.tech === 'hedera'"
-                />
-                <img
-                  key="smart"
-                  src="@/images/smart.jpg"
-                  alt="smart contracts"
-                  class="rounded w-100"
-                  v-else-if="$store.state.accordions.list.tech === 'smart'"
-                />
-                <img
-                  key="hbar"
-                  src="@/images/hbar.jpg"
-                  alt="smart contracts"
-                  class="rounded w-100"
-                  v-else-if="$store.state.accordions.list.tech === 'hbar'"
-                />
-                <img
-                  key="tech"
-                  src="@/images/tech.jpg"
-                  alt="technology for sustainability"
-                  class="rounded w-100"
-                  v-else
-                />
-              </TransitionGroup>
             </div>
           </div>
         </div>
