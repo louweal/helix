@@ -26,7 +26,7 @@
 
           <form
             data-aos="fade-up-scale"
-            name="contact"
+            name="contact-form"
             method="POST"
             action="/contact/success"
             data-netlify="true"
