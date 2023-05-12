@@ -78,8 +78,8 @@
             </div>
 
             <p>
-              The <code>products</code> property be a array of objects with the
-              following properties:
+              The <code>products</code> property should be an array of objects
+              with the following properties:
             </p>
 
             <div class="mx-2">
