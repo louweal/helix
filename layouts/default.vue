@@ -53,7 +53,7 @@
       </a>
     </notification>
 
-    <Footer v-if="$route.path !== '/login'" />
+    <!-- <Footer v-if="$route.path !== '/login'" /> -->
   </main>
 </template>
 
@@ -77,9 +77,9 @@ export default {
     this.$store.commit("SET_LABELS", require("~/data/labels.json"));
     this.$store.commit("SET_MATERIALS", require("~/data/materials.json"));
 
-    if (!this.$store.state.currentAccount.ID) {
-      this.$router.push({ path: "/login" });
-    }
+    // if (!this.$store.state.currentAccount.ID) {
+    //   this.$router.push({ path: "/login" });
+    // }
   },
 
   computed: {

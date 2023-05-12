@@ -21,7 +21,7 @@ async function main() {
   // Create our connection to the Hedera network
   const client = Client.forTestnet().setOperator(myAccountId, myPrivateKey);
 
-  const newAccountId = "0.0.4010152"; //process.env.ALICES_ID;
+  const newAccountId = "0.0.3477266"; //"0.0.4010153"; //process.env.ALICES_ID;
 
   //Verify the account balance
   const accountBalance = await new AccountBalanceQuery()
@@ -36,8 +36,8 @@ async function main() {
 
   //Create the transfer transaction
   const sendHbar = await new TransferTransaction()
-    .addHbarTransfer(myAccountId, new Hbar(-4000))
-    .addHbarTransfer(newAccountId, new Hbar(4000))
+    .addHbarTransfer(myAccountId, new Hbar(-3000))
+    .addHbarTransfer(newAccountId, new Hbar(3000))
     .execute(client);
 
   //Verify the transaction reached consensus
