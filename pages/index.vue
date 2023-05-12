@@ -464,8 +464,8 @@
             </sticky>
           </div>
 
-          <div class="col-12 col-md-8" data-aos="fade-up-scale">
-            <div>
+          <div class="col-12 col-md-8">
+            <div data-aos="fade-up-scale">
               <badge>Hello Future </badge>
 
               <h2>On the road to a greener planet</h2>
@@ -489,7 +489,7 @@
                 </p>
               </div>
 
-              <p data-aos="fade">
+              <p xxxdata-aos="fade">
                 <nuxt-link
                   :to="{ hash: '#contact' }"
                   class="fw-bold text-primary"
