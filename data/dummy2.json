@@ -1,0 +1,67 @@
+[
+  {
+    "store": {
+      "name": "IKEA"
+    },
+    "product": {
+      "name": "SMEDSTORP 2-zitsbank, Vissle donkergroen",
+      "visual": "https://www.ikea.com/nl/nl/images/products/smedstorp-2-zitsbank-lejde-rood-bruin-zwart__0989821_pe818623_s5.jpg"
+    },
+    "contract": {
+      "id": 1101010,
+      "deposit": 17.45,
+      "currency": "EUR",
+      "startdate": 1680953845,
+      "enddate": 1870342645
+    }
+  },
+  {
+    "id": 134242,
+    "store": {
+      "name": "IKEA"
+    },
+    "product": {
+      "name": "FREDRIKSJÖN Badlaken",
+      "visual": "https://www.ikea.com/nl/nl/images/products/fredriksjon-badlaken-dieprood__1150479_pe884589_s5.jpg"
+    },
+    "contract": {
+      "id": 646352,
+      "deposit": 0.45,
+      "currency": "EUR",
+      "startdate": 1680963847,
+      "enddate": 1874342645
+    }
+  },
+  {
+    "store": {
+      "name": "IKEA"
+    },
+    "product": {
+      "name": "MÖRBYLÅNGA / BERNHARD Tafel en 4 stoelen",
+      "visual": "https://www.ikea.com/nl/nl/images/products/morbylanga-bernhard-tafel-en-4-stoelen-eikenfineer-bruin-gelazuurd-mjuk-goudbruin__0738065_pe741348_s5.jpg"
+    },
+    "contract": {
+      "id": 834242,
+      "deposit": 20.45,
+      "currency": "EUR",
+      "startdate": 1681953847,
+      "enddate": 1876342645
+    }
+  },
+  {
+    "store": {
+      "name": "Hedera Store"
+    },
+    "product": {
+      "name": "'Build HAPI' T-shirt",
+      "visual": "https://cdn.shopify.com/s/files/1/0046/8412/0133/products/tshirt_Black_1024x1024@2x.jpg?v=1541097852"
+    },
+    "contract": {
+      "id": 2425436,
+      "deposit": 2.45,
+      "currency": "EUR",
+      "startdate": 1681953847,
+      "enddate": 1876342645
+    }
+  }
+]

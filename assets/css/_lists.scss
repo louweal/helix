@@ -1,0 +1,26 @@
+// custom inline list with bullets in between
+.bullet-list-inline {
+  padding-left: 0;
+
+  li {
+    $size: 6px; // bullet size
+    $padding: 1.7rem;
+    $line-height: 24.64px; // 16 * $line-height-base
+
+    display: inline;
+    position: relative;
+    padding-right: $padding;
+
+    &:not(:first-of-type)::before {
+      position: absolute;
+      content: "";
+      z-index: 2;
+      left: calc(($padding / -2) - $size);
+      top: calc($line-height/2 - $size/2 - 3px);
+      width: $size;
+      height: $size;
+      border-radius: 50%;
+      background-color: $secondary;
+    }
+  }
+}

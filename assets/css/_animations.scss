@@ -1,0 +1,84 @@
+// custom animations
+.fade-in-up {
+  animation: fade-in-up 0.7s cubic-bezier(0.2, 0, 0.1, 1) both;
+  will-change: transform, opacity;
+  animation-play-state: paused;
+}
+
+.start-animation {
+  animation-play-state: running !important;
+}
+
+@keyframes fade-in-up {
+  from {
+    transform: translateY(60px); // scaleY(1.2)
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.css-fade-in {
+  opacity: 0 !important;
+  animation: fadeIn 0.9s cubic-bezier(0.2, 0, 0.1, 1) forwards;
+  animation-play-state: paused;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideX {
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideY {
+  to {
+    transform: translateY(0%);
+  }
+}
+
+// AOS customizations
+
+[data-aos] {
+  body[data-aos-easing="cubic"] &,
+  &[data-aos][data-aos-easing="cubic"] {
+    transition-timing-function: cubic-bezier(0.2, 0, 0.1, 1);
+  }
+}
+
+//    transform: translateY(40px) scaleY(1.2);
+
+[data-aos="fade-up-scale"] {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transform: translateY(50px) scaleY(1.15);
+
+  &.aos-animate {
+    opacity: 1;
+    transform: translateY(0px) scaleY(1);
+  }
+}
+
+[data-aos="space"] {
+  opacity: 1;
+  letter-spacing: 8px;
+  transition-property: opacity, letter-spacing;
+
+  &.aos-animate {
+    opacity: 1;
+    letter-spacing: 4px;
+  }
+}
+
+.img-hover {
+  img:hover {
+    filter: brightness(0);
+    // background-color: pink;
+  }
+}

@@ -1,0 +1,25 @@
+.cursor-pointer,
+.cp {
+  cursor: pointer;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.font-small {
+  font-size: 14px;
+}
+
+.font-xxs,
+.fs-xs {
+  font-size: 13px;
+}
+
+.fs-md {
+  font-size: 1.0625rem;
+
+  @include media-breakpoint-up(md) {
+    font-size: 1.125rem;
+  }
+}

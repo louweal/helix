@@ -1,0 +1,7 @@
+[
+  { "title": "About", "url": "/", "hash": "#about" },
+  { "title": "Docs", "url": "/", "hash": "#docs" },
+  { "title": "Sponsors", "url": "/", "hash": "#sponsors" },
+  { "title": "Roadmap", "url": "/", "hash": "#roadmap" },
+  { "title": "Contact", "url": "/", "hash": "#contact" }
+]

@@ -1,16 +1,16 @@
 <template>
   <div class="pre-loader">
-    <div class="pre-loader__inner">
-      <img
-        src="@/assets/images/logo.svg"
-        alt="logo"
-        width="212.62"
-        height="99.41"
-      />
+    <div class="pre-loader__inner p-5">
+      <div class="d-flex logo">
+        <div class="w-100 h-100">
+          <img src="@/images/logo.svg" alt="logo" class="w-100 h-100" />
+        </div>
+      </div>
 
-      <div class="bottom-xs-5"></div>
-
-      <icon icon="refresh" />
+      <!-- <p class="display-6 fs-1 text-center mt-2">
+        <span class="text-primary delay-800">sustainable.</span>
+        <span class="text-primary delay-1400">future.</span>
+      </p> -->
     </div>
   </div>
 </template>
@@ -24,42 +24,52 @@ export default {};
   background-color: #fff;
   display: block;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   width: 100vw;
   height: 100%;
   z-index: 3000;
   overflow: hidden;
-  animation: disappear 0.3s 2.1s ease-in forwards;
-
-  ::v-deep i {
-    display: block;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: get-color(primary);
-    animation: rotate 2s ease-in-out infinite;
-  }
+  animation: disappear 0.3s 2.2s ease-in forwards;
 
   &__inner {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center; //space-around;
+    justify-content: center;
     align-items: center;
+
+    .logo {
+      opacity: 0;
+      animation: fade-in-up 1.8s cubic-bezier(0.2, 0, 0.1, 1) forwards;
+    }
+
+    img {
+      // width: 200%;
+    }
+
+    p {
+      display: block;
+      span {
+        display: inline-block;
+
+        opacity: 0;
+        animation: fade-in-up 0.9s 500ms cubic-bezier(0.2, 0, 0.1, 1) forwards;
+      }
+    }
   }
+}
+
+.delay-800 {
+  animation-delay: 800ms !important;
+}
+
+.delay-1400 {
+  animation-delay: 1400ms !important;
 }
 
 @keyframes disappear {
   to {
     transform: translateY(-100%);
-  }
-}
-
-@keyframes rotate {
-  to {
-    transform: rotate(-360deg);
   }
 }
 </style>

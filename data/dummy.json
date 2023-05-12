@@ -1,0 +1,70 @@
+[
+  {
+    "store": {
+      "name": "Hedera Store"
+    },
+    "product": {
+      "name": "'Build HAPI' T-shirt",
+      "visual": "https://cdn.shopify.com/s/files/1/0046/8412/0133/products/tshirt_Black_1024x1024@2x.jpg?v=1541097852",
+      "amount": 1
+    },
+    "contract": {
+      "id": 2425436,
+      "deposit": 2.45,
+      "currency": "EUR",
+      "startdate": 1681953847,
+      "enddate": 1876342645
+    }
+  },
+  {
+    "store": {
+      "name": "Hedera Store"
+    },
+    "product": {
+      "name": "Multi-Sig Socks",
+      "visual": "https://cdn.shopify.com/s/files/1/0046/8412/0133/products/ImagefromiOS_3_1024x1024@2x.png?v=1622141307",
+      "amount": 2
+    },
+    "contract": {
+      "id": 2325436,
+      "deposit": 1.45,
+      "currency": "EUR",
+      "startdate": 1681954847,
+      "enddate": 1876362645
+    }
+  },
+  {
+    "store": {
+      "name": "Hedera Store"
+    },
+    "product": {
+      "name": "'Hello Future' V-neck - M",
+      "visual": "https://cdn.shopify.com/s/files/1/0046/8412/0133/products/tshirt_women_V_Purple_1024x1024@2x.jpg?v=1541014551",
+      "amount": 1
+    },
+    "contract": {
+      "id": 2325438,
+      "deposit": 1.55,
+      "currency": "EUR",
+      "startdate": 1681954847,
+      "enddate": 1876362645
+    }
+  },
+  {
+    "store": {
+      "name": "Hedera Store"
+    },
+    "product": {
+      "name": "Hedera Mug",
+      "visual": "https://cdn.shopify.com/s/files/1/0046/8412/0133/products/HH_Mug1_1024x1024@2x.jpg?v=1538687267",
+      "amount": 4
+    },
+    "contract": {
+      "id": 2325476,
+      "deposit": 1.55,
+      "currency": "EUR",
+      "startdate": 1681954847,
+      "enddate": 1876362645
+    }
+  }
+]

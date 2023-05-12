@@ -1,16 +1,12 @@
 export default {
-  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
-
-  // Target: https://go.nuxtjs.dev/config-target
+  modern: "client",
   target: "static",
   router: {
     base: "/",
   },
-
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "ℏ𝑒𝑙𝑖𝑥",
+    title: "Helix",
     htmlAttrs: {
       lang: "en",
     },
@@ -20,54 +16,42 @@ export default {
       {
         hid: "description",
         name: "description",
-        content: "Help the environment with Hedera Helix for Heroes.",
+        content: "Stories, reimagined",
       },
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
   },
 
-  css: ["@/assets/scss/global/all.scss"],
+  buildModules: ["@nuxtjs/style-resources"],
+
+  css: ["@/assets/css/main.scss"],
+
   styleResources: {
-    scss: ["@/assets/scss/vars.scss", "@/assets/scss/mixins.scss"],
-  },
-
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  // plugins: [{ src: "@/plugins/splitting.js", mode: "client" }],
-
-  // Auto import components: https://go.nuxtjs.dev/config-components
-  components: {
-    dirs: [
-      "~/components",
-      "~/components/Buttons",
-      "~/components/Cards",
-      "~/components/Table",
-      "~/components/Tabs",
-      "~/components/Layout",
+    scss: [
+      __dirname + "/node_modules/bootstrap/scss/_functions.scss",
+      __dirname + "/assets/css/_theme.scss",
+      __dirname + "/node_modules/bootstrap/scss/_variables.scss",
+      __dirname + "/node_modules/bootstrap/scss/_mixins.scss",
     ],
   },
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ["@nuxtjs/dotenv"],
+  messages: {
+    error_404: "Page not found",
+  },
 
-  // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/style-resources"],
+  plugins: [
+    "~/plugins/translate.js",
+    "~/plugins/aos.js",
+    "~/plugins/typed.js",
+    "~/plugins/hashconnect.js",
+  ],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-    html: {
-      minify: {
-        // minifies code in production mode
-        collapseBooleanAttributes: true,
-        decodeEntities: true,
-        minifyCSS: true,
-        minifyJS: true,
-        processConditionalComments: true,
-        removeEmptyAttributes: true,
-        removeRedundantAttributes: true,
-        trimCustomFragments: true,
-        useShortDoctype: true,
-      },
-    },
+  components: true,
+  // buildModules: [],
+  // build: {},
+
+  generate: {
+    fallback: true, // for error pages on Netlify
   },
 };

@@ -1,0 +1,263 @@
+<section>
+  <div class="container-xl rounded">
+    <div class="row">
+      <div class="col-12 col-lg-7">
+        <!-- <sticky> -->
+        <div class="py-2">
+          <div class="badge">Why</div>
+
+          <h2 class="fw-bold">
+            Meet the
+            <span class="helix-gradient">growing demand</span> for transparency
+          </h2>
+        </div>
+        <!-- </sticky> -->
+      </div>
+
+      <div class="col-12 offset-lg-1 col-lg-4">
+        <icon-card title="Contribute to global sustainability goals">
+          <p>
+            By providing information about the environmental impact of products,
+            you play a crucial role in supporting global sustainability goals,
+            such as reducing carbon emissions, conserving resources, and
+            minimizing waste. You will become active participants in the larger
+            mission to create a more sustainable and environmentally responsible
+            society!
+          </p>
+        </icon-card>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <icon-card title="Competitive advantage">
+          <p>
+            In a crowded marketplace, providing information about the
+            environmental impact of products can help you stand out from the
+            competition. It showcases a your dedication to sustainability and
+            attracts environmentally conscious consumers who actively seek out
+            businesses that align with their values.
+          </p>
+        </icon-card>
+      </div>
+      <div class="col-12 col-lg-4">
+        <icon-card title="Build trust and loyalty">
+          <p>
+            Transparent communication about the environmental impact
+            demonstrates your commitment to sustainability. This builds trust
+            with customers who value eco-conscious practices and can lead to
+            increased loyalty and repeat business.
+          </p>
+        </icon-card>
+      </div>
+      <div class="col-12 col-lg-4">
+        <icon-card title="Drive sustainable consumer behavior">
+          <p>
+            By highlighting the environmental impact of products, you can
+            educate and inspire customers to make more sustainable choices. This
+            can drive positive changes in consumer behavior, encouraging the
+            adoption of eco-friendly products and influencing purchasing
+            decisions across the market.
+          </p>
+        </icon-card>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="benefits">
+  <div class="container-xl">
+    <div class="row gy-0 gy-lg-4 justify-content-center">
+      <div class="col-12 col-sm-10 col-lg-6"></div>
+      <div class="col-12 col-sm-10 col-lg-6"></div>
+      <div class="col-12 col-sm-10 col-lg-6"></div>
+      <div class="col-12 col-sm-10 col-lg-6"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container-xl">
+    <div class="row gy-4">
+      <div class="col-12 col-lg-6 order-lg-1">
+        <TransitionGroup name="image" tag="div">
+          <img
+            key="how-1"
+            src="@/images/learn.jpg"
+            alt="learn sustainability"
+            class="rounded w-100"
+            v-if="$store.state.accordions.list.how === 'learn'"
+          />
+          <img
+            key="how-3"
+            src="@/images/rewarded.jpg"
+            alt="learn sustainability"
+            class="rounded w-100"
+            v-else-if="$store.state.accordions.list.how === 'rewarded'"
+          />
+          <img
+            key="how-2"
+            src="@/images/contribute.jpg"
+            alt="learn sustainability"
+            class="rounded w-100"
+            v-else
+          />
+        </TransitionGroup>
+      </div>
+      <div class="col-12 col-lg-6 order-lg-0">
+        <div class="badge text-uppercase" data-aos="fade-up-scale">
+          How it works
+        </div>
+
+        <h2 data-aos="fade-up-scale">
+          Don't panic, it's easier than you think
+        </h2>
+
+        <p data-aos="fade-up-scale">
+          Is it possible to attach a deposit to all possible products or
+          services? How does the process work? Can it actually be done? Well,
+          here's a spoiler: Yes, it is indeed possible.
+        </p>
+
+        <div class="accordion" data-aos="fade-up-scale">
+          <accordion-item
+            title="Step 1: Educate about environmental impact"
+            name="how"
+            slug="learn"
+          >
+            <p>
+              Consumers are increasingly concerned about the environmental
+              impact of their purchases. By providing detailed information about
+              the environmental footprint of products, you can meet the growing
+              demand for transparency and empower customers to make informed
+              choices aligned with their values.
+            </p>
+
+            <div class="btn btn-primary mb-3">
+              Read more <i class="bi bi-arrow-right"></i>
+            </div>
+          </accordion-item>
+          <accordion-item
+            title="Step 2: Define your own rules"
+            name="how"
+            slug="contribute"
+          >
+            <p>
+              Set an appropriate
+              <span class="fw-semibold">deposit amount</span> for each product
+              by considering various factors such as its materials, as well as
+              other relevant factors related to the production and shipping
+              process. Additionally, evaluate the
+              <span class="fw-semibold">anticipated lifespan</span> of the
+              product for an average customer.
+            </p>
+            <p>
+              To ensure transparency and provide valuable information to your
+              customers regarding the environmental impact of your products,
+              include both the deposit as the anticipated lifespan in the
+              product details on your website.
+            </p>
+          </accordion-item>
+          <accordion-item
+            title="Step 3: Make your customers happy!"
+            name="how"
+            slug="rewarded"
+          >
+            <p>
+              Following each purchase, you can now offer your customers the
+              opportunity to pay the designated deposit, as you specified
+              earlier, using <span class="fw-semibold">Helix</span>. If the
+              customer opts in, Helix automatically creates a smart contract
+              that securely holds their deposit until the expected lifespan of
+              the product is reached.
+            </p>
+
+            <div class="btn btn-primary mb-3">
+              Read more <i class="bi bi-arrow-right"></i>
+            </div>
+          </accordion-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container-xl">
+    <div class="row gy-4">
+      <div class="col-12 col-lg-6 order-lg-1">
+        <TransitionGroup name="image" tag="div">
+          <img
+            key="faq-1"
+            src="@/images/learn.jpg"
+            alt="learn sustainability"
+            class="rounded w-100"
+            v-if="$store.state.accordions.list.faq === 'learn'"
+          />
+          <img
+            key="faq-2"
+            src="@/images/rewarded.jpg"
+            alt="learn sustainability"
+            class="rounded w-100"
+            v-else-if="$store.state.accordions.list.faq === 'rewarded'"
+          />
+          <img
+            key="faq-3"
+            src="@/images/contribute.jpg"
+            alt="learn sustainability"
+            class="rounded w-100"
+            v-else
+          />
+        </TransitionGroup>
+      </div>
+      <div class="col-12 col-lg-6 order-lg-0">
+        <div class="badge text-uppercase" data-aos="fade-up-scale">FAQ</div>
+
+        <h2 data-aos="fade-up-scale">Got questions? We have the answers!</h2>
+
+        <div class="accordion">
+          <accordion-item
+            title="Are the deposits stored safely?"
+            name="faq"
+            slug="contribute"
+          >
+          </accordion-item>
+          <accordion-item
+            title="Are the deposits stored safely?"
+            name="faq"
+            slug="xxfdfxx"
+          >
+          </accordion-item>
+          <accordion-item
+            title="Are the deposits stored safely?"
+            name="faq"
+            slug="xdfxxx"
+          >
+          </accordion-item>
+          <accordion-item
+            title="Are the deposits stored safely?"
+            name="faq"
+            slug="xcvxxx"
+          >
+          </accordion-item>
+          <accordion-item
+            title="Are the deposits stored safely?"
+            name="faq"
+            slug="xxxdfx"
+          >
+          </accordion-item>
+          <accordion-item
+            title="Are the deposits stored safely?"
+            name="faq"
+            slug="xxxcxx"
+          >
+          </accordion-item>
+          <accordion-item
+            title="Are the deposits stored safely?"
+            name="faq"
+            slug="xxxhjyx"
+          >
+          </accordion-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

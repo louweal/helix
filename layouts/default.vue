@@ -1,133 +1,81 @@
 <template>
-  <main>
-    <pre-loader />
-    <spinner v-if="$store.state.waiting" />
+  <div>
+    <!-- <pre-loader /> -->
+    <div id="page">
+      <div class="min-vh-100 d-flex flex-column justify-content-between">
+        <div>
+          <Header />
 
-    <div class="demo-box" v-if="$route.path !== '/login' && 1 === 2">
-      <heading size="6xl" level="0" color="white">
-        Account switcher<br />
-        for demonstration only
-      </heading>
+          <div
+            id="pushdown"
+            class="w-100 mb-2 mb-md-3 mb-lg-4"
+            :class="$route.path === '/' ? 'd-none' : false"
+          ></div>
+          <Nuxt />
+        </div>
 
-      <br /><br />
-
-      <Stack dir="vertical">
-        <account-card
-          v-for="(account, index) in accounts.filter((a) => !a.charity)"
-          :key="index"
-          :data="account"
-          :active="$store.state.currentAccount.ID === account.ID"
-          login
-        />
-      </Stack>
+        <Footer v-if="$route.path !== '/app'" />
+      </div>
     </div>
-
-    <Nuxt />
-
-    <notification v-if="$store.state.action === 'transferSuccess'">
-      <p>Transfer successful</p>
-      <p><nuxt-link to="/login">Switch to another account</nuxt-link></p>
-    </notification>
-
-    <notification v-if="$store.state.action === 'deleteSuccess'">
-      <p>Deletion successful</p>
-    </notification>
-
-    <notification v-if="$store.state.action === 'collectSuccess'">
-      <p>Collect successful.</p>
-      <a
-        target="_blank"
-        :href="`https://testnet.dragonglass.me/hedera/accounts/${$store.state.currentAccount.accountId}`"
-      >
-        Inspect on DragonGlass
-      </a>
-    </notification>
-
-    <notification v-if="$store.state.action === 'donateSuccess'">
-      <p>Donation successful.</p>
-      <a
-        target="_blank"
-        :href="`https://testnet.dragonglass.me/hedera/accounts/${$store.state.currentAccount.accountId}`"
-      >
-        Inspect your account on DragonGlass
-      </a>
-    </notification>
-
-    <Footer v-if="$route.path !== '/login'" />
-  </main>
+    <modal name="connect" title="Connect">
+      <modal-connect />
+    </modal>
+    <pushmenu />
+    <notice v-if="$store.state.notice.active" />
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Default",
-
-  transition: "page",
-
-  data() {
-    return {
-      width: document.documentElement.clientWidth,
+  transition: {
+    name: "page",
+    mode: "out-in",
+  },
+  async created() {
+    let appMetadata = {
+      name: "Helix",
+      description: "Help the environment with Hedera Helix for Heroes",
+      icon: this.$store.state.domain + "favicon.png",
     };
+
+    this.$hashconnect.foundExtensionEvent.on((data) => {
+      console.log("Found extension EVENT", data);
+      // Vue.prototype.$foundExtension = data;
+      this.$store.commit("setFoundExtension", data);
+    });
+
+    this.$hashconnect.pairingEvent.on((data) => {
+      // console.log("Paired with wallet", data);
+      // Vue.prototype.$pairingData = data.pairingData;
+      this.$store.commit("setPairingData", data);
+    });
+
+    //This is fired when HashConnect loses connection, pairs successfully, or is starting connection
+    this.$hashconnect.connectionStatusChangeEvent.on((status) => {
+      console.log("hashconnect state change event", status);
+    });
+    // hashconnect.findLocalWallets();
+    this.$hashconnect.init(appMetadata, "testnet", false);
   },
 
-  created() {
-    this.$store.commit("SET_ACCOUNTS", require("~/data/accounts.json"));
-    this.$store.commit("SET_CATEGORIES", require("~/data/categories.json"));
-    this.$store.commit("SET_COUNTRIES", require("~/data/countries.json"));
-    this.$store.commit("SET_IMAGES", require("~/data/images.json"));
-    this.$store.commit("SET_LABELS", require("~/data/labels.json"));
-    this.$store.commit("SET_MATERIALS", require("~/data/materials.json"));
+  async mounted() {
+    let headerHeight = document.querySelector("#header").offsetHeight; //refs ?
+    let pushdown = document.querySelector("#pushdown"); // refs?
+    pushdown.style.height = headerHeight + "px";
 
-    if (!this.$store.state.currentAccount.ID) {
-      this.$router.push({ path: "/login" });
-    }
+    // console.log(headerHeight);
   },
 
-  computed: {
-    accounts() {
-      return this.$store.state.accounts;
+  watch: {
+    "$store.state.modals.disableScroll": function (val) {
+      if (val) {
+        // this.posY = window.scrollY;
+        document.body.style.top = `-${window.scrollY}px`;
+      }
+      document.body.classList.toggle("disable-scroll");
     },
-  },
-
-  methods: {
-    getWidth() {
-      this.width = document.documentElement.clientWidth;
-    },
-  },
-
-  mounted() {
-    this.getWidth();
-    window.addEventListener("resize", this.getWidth);
-  },
-
-  beforeDestroy() {
-    window.removeEventListener("resize", this.getWidth);
   },
 };
 </script>
 
-<style lang="scss" scoped>
-main {
-  position: relative;
-}
-
-.demo-box {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  // border: 1px solid green;
-  max-width: 275px;
-  min-width: 275px;
-  z-index: 22;
-  padding: 1rem;
-  background-color: #333;
-}
-
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.3s;
-}
-.page-enter,
-.page-leave-to {
-  opacity: 0.5;
-}
-</style>
+<style lang="scss" scoped></style>

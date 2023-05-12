@@ -1,25 +1,37 @@
 {
-  "name": "helix",
+  "name": "circless",
   "version": "1.0.0",
-  "private": true,
+  "description": "circless: less production, less recycling, less waste",
+  "main": "index.js",
   "scripts": {
-    "dev-external": "cross-env NUXT_HOST=0.0.0.0 nuxt",
-    "dev": "nuxt --port 8000",
+    "dev": "nuxt --port 8006",
     "build": "nuxt build",
     "start": "nuxt start --port 8001",
     "generate": "nuxt generate"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/louweal/circless.git"
+  },
+  "author": "Anneloes Louwe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/louweal/circless/issues"
+  },
+  "homepage": "https://github.com/louweal/circless#readme",
   "dependencies": {
-    "@hashgraph/sdk": "^2.24.0",
-    "@nuxtjs/dotenv": "^1.4.1",
-    "core-js": "^3.19.3",
-    "fs": "^0.0.1-security",
-    "nuxt": "^2.15.7"
+    "@hashgraph/sdk": "2.24.1",
+    "aos": "^2.3.4",
+    "bootstrap": "^5.2.1",
+    "core-js": "^3.25.2",
+    "hashconnect": "^0.2.4",
+    "nuxt": "^2.15.8",
+    "splitting": "^1.0.6",
+    "vue-typed-js": "^0.1.2"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.2.1",
-    "cross-env": "^7.0.3",
-    "sass": "^1.43.4",
-    "sass-loader": "10.1.1"
+    "sass": "^1.55.0",
+    "sass-loader": "^10.1.1"
   }
 }

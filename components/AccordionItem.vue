@@ -1,96 +1,104 @@
 <template>
-  <div
-    class="accordion-item"
-    :class="isExpanded ? 'accordion-item--active' : false"
-  >
-    <div class="accordion-item__header" @click="isExpanded = !isExpanded">
-      <Stack :gap="1.3">
-        <icon v-if="icon" :icon="icon" size="lg" />
-        <Heading level="3" size="l" class="bottom-xs-0" weight="400">
-          {{ label }}
-        </Heading>
-      </Stack>
-      <icon icon="chevron-down" class="accordion-item__icon" />
-    </div>
-    <transition name="expand">
-      <div class="accordion-item__body" v-if="isExpanded">
-        <div class="accordion-item__inner">
-          <slot />
+  <div>
+    <div class="accordion-item" @click="toggle()">
+      <button
+        class="accordion-button"
+        :class="isActive ? 'accordion-button--active' : false"
+      >
+        {{ title }}
+      </button>
+      <div v-if="isActive" class="accordion-collapse">
+        <div class="accordion-body">
+          <slot>
+            <p>
+              Morbi quam sed auctor pellentesque sed. Mauris iaculis nunc odio
+              faucibus amet tempor mattis quis. Turpis amet phasellus nunc
+              malesuada.
+            </p>
+          </slot>
         </div>
       </div>
-    </transition>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    label: {
+    name: {
+      // accordion name which the item is in
       type: String,
       default: "",
+      required: true,
     },
-    level: {
+    slug: {
+      // slug of the item
       type: String,
-      default: 3,
+      default: "",
+      required: true,
     },
-    icon: {
-      type: [String, Boolean],
-      default: false,
+    title: {
+      type: String,
+      default: "Lorem ipsum dolor sit amet",
     },
   },
 
-  data() {
-    return {
-      isExpanded: false,
-    };
+  computed: {
+    isActive() {
+      return this.$store.state.accordions.list[this.name] === this.slug;
+    },
+  },
+
+  methods: {
+    toggle() {
+      console.log("toggle!");
+      this.$store.commit("accordions/toggle", {
+        name: this.name,
+        item: this.slug,
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.accordion-item {
-  position: relative;
-  display: block;
-  border-bottom: 1px solid get-color(line);
+.accordion-collapse {
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in forwards;
+}
 
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    padding: 1rem 0;
-  }
+$accordion-icon-color: "black";
 
-  &__icon {
-    display: inline-flex;
-    font-size: 1.5rem;
-    // transition: transform 0s;
-  }
+button.accordion-button {
+  color: $headings-color;
+}
 
-  &__body {
-    overflow: hidden;
-  }
-
-  &__inner {
-    // do not add margin or padding to __body!
-    margin-bottom: 1.25rem;
-  }
-
-  &--active {
-    .accordion-item__icon {
-      transform: rotate(-180deg);
+.accordion-button {
+  &:hover {
+    &::after {
+      background-color: $primary;
+      $accordion-icon-color: "white";
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='#{$accordion-icon-color}' class='bi bi-plus-lg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z'/%3E%3C/svg%3E");
     }
   }
+  &::after {
+    background-color: $light;
+    transition: all 0.9s cubic-bezier(0.2, 0, 0.1, 1);
+    border-radius: 50%;
+    padding: 15px;
+    background-position: center;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='#{$accordion-icon-color}' class='bi bi-plus-lg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z'/%3E%3C/svg%3E");
+  }
 }
-
-.expand-enter-active,
-.expand-leave-active {
-  height: auto;
-  transition: all 0.4s ease-in;
-}
-.expand-enter,
-.expand-leave-to {
-  opacity: 0;
-  height: 0;
+.accordion-button--active {
+  &:hover {
+    &::after {
+      $accordion-icon-color: "white";
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='#{$accordion-icon-color}' class='bi bi-dash-lg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z'/%3E%3C/svg%3E");
+    }
+  }
+  &::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='#{$accordion-icon-color}' class='bi bi-dash-lg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z'/%3E%3C/svg%3E");
+  }
 }
 </style>
