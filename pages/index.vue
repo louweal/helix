@@ -454,14 +454,16 @@
     <section id="roadmap">
       <div class="container-xl">
         <div class="row gy-4">
-          <div class="d-none d-md-block col-md-4" data-aos="fade-up-scale">
-            <sticky>
-              <div>
-                <badge> Versions </badge>
+          <div class="d-none d-md-block col-md-4">
+            <div data-aos="fade-up-scale" class="h-100">
+              <sticky>
+                <div>
+                  <badge> Versions </badge>
 
-                <roadmap />
-              </div>
-            </sticky>
+                  <roadmap />
+                </div>
+              </sticky>
+            </div>
           </div>
 
           <div class="col-12 col-md-8">

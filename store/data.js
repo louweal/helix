@@ -2,18 +2,11 @@ export const state = () => ({
   contracts: undefined,
   demo: undefined,
   sortBy: {
-    // todo , make string
     group: "contract",
     field: "startdate",
     direction: 1,
   },
 });
-
-// export const getters = {
-//   getContract: (state, getters, rootState) => (id) => {
-//     return state.contracts.find((c) => c.contract.id === id);
-//   },
-// };
 
 export const mutations = {
   SET_CONTRACTS(state, contracts) {

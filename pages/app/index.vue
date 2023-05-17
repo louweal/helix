@@ -58,7 +58,7 @@
                   <caret group="contract" field="deposit" />
                 </div>
               </th>
-              <!-- <th scope="col">Actions</th> -->
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <TransitionGroup name="list" tag="tbody">
@@ -90,7 +90,7 @@
     <modal name="transfer" title="Transfer ownership">
       <modal-transfer />
     </modal>
-    <modal name="donate" title="Donate">
+    <modal name="donate" title="Donate deposit">
       <modal-donate />
     </modal>
 

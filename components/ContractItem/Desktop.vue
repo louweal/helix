@@ -21,20 +21,29 @@
       <div class="fw-bold">€0</div>
       <div class="font-xxs fw-light">€{{ c.contract.deposit }}</div>
     </td>
-    <!-- <td>
-      <span
-        class="text-primary cp"
+    <td>
+      <div>
+        <span
+          class="text-secondary cp border-bottom"
+          @click="$store.commit('modals/show', { name: 'collect', data: c })"
+        >
+          Collect
+        </span>
+        or
+        <span
+          class="text-secondary cp border-bottom"
+          @click="$store.commit('modals/show', { name: 'donate', data: c })"
+        >
+          donate deposit
+        </span>
+      </div>
+      <div
+        class="text-primary cp d-inline border-bottom"
         @click="$store.commit('modals/show', { name: 'transfer', data: c })"
-        >Transfer ownership</span
       >
-      <br />
-      <span
-        class="text-secondary cp"
-        @click="$store.commit('modals/show', { name: 'donate', data: c })"
-      >
-        Donate deposit
-      </span>
-    </td> -->
+        Transfer ownership
+      </div>
+    </td>
 
     <div
       v-if="c.product.amount > 1"

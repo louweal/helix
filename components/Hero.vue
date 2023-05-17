@@ -6,8 +6,6 @@
       <div class="container-xl align-self-center">
         <div class="row">
           <div class="col-12 col-lg-8">
-            <!-- The decentralized tool for reducing <br /> -->
-
             <vue-typed-js
               data-aos="fade-up-scale"
               data-aos-duration="1000"
