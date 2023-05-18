@@ -1,5 +1,5 @@
 export const state = () => ({
-  network: "testnet",
+  // network: "testnet",
   domain: "https://marvelous-chebakia-329fb2.netlify.app/",
   // user: { id: -1, name: "", address: "", slug: "" },
   accountId: undefined,
@@ -18,6 +18,10 @@ export const mutations = {
     state.accountId = accountId;
 
     state.data.contracts = undefined;
+  },
+
+  setAccountId(state, payload) {
+    state.accountId = payload;
   },
 
   disconnect(state) {

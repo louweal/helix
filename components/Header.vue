@@ -43,11 +43,7 @@
           Disconnect <span class="d-none d-md-inline"> wallet</span>
         </div>
 
-        <div
-          class="btn btn-primary"
-          @click="$store.commit('modals/show', { name: 'connect' })"
-          v-else
-        >
+        <div class="btn btn-primary" @click="findPairings()" v-else>
           Connect <span class="d-none d-md-inline"> wallet</span>
         </div>
       </div>
@@ -84,6 +80,19 @@ export default {
   computed: {},
 
   methods: {
+    findPairings() {
+      let pairingData = this.$hashconnect.hcData.pairingData;
+
+      console.log("pairingData :>> ", pairingData);
+
+      if (pairingData[0]) {
+        let accountId = pairingData[0].accountIds[0];
+        this.$store.commit("setAccountId", accountId);
+        console.log("accountid set");
+      } else {
+        this.$store.commit("modals/show", { name: "connect" });
+      }
+    },
     scrollToTop() {
       if (this.$route.path === "/") {
         window.scrollTo({ top: 0, behavior: "smooth" });

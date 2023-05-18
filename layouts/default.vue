@@ -62,8 +62,6 @@ export default {
     let headerHeight = document.querySelector("#header").offsetHeight; //refs ?
     let pushdown = document.querySelector("#pushdown"); // refs?
     pushdown.style.height = headerHeight + "px";
-
-    // console.log(headerHeight);
   },
 
   watch: {

@@ -31,7 +31,7 @@
               type="button"
               @click="
                 $store.state.accountId
-                  ? false
+                  ? createContracts()
                   : $store.commit('modals/show', { name: 'connect' })
               "
             >
@@ -76,16 +76,16 @@
     <section>
       <div class="container-xl">
         <div class="row justify-content-center">
-          <div class="col-8 col-md-5">
+          <div class="col-6 col-md-5">
             <h3 class="mb-0">Contracts</h3>
           </div>
-          <div class="col-8 col-md-3 text-end align-self-center">
+          <div class="col-6 col-md-3 text-end align-self-center">
             <div class="vstack font-small">
               <span>Order ID: {{ order.meta.order_id }}</span>
               <span>Order date: {{ order.meta.order_date }}</span>
             </div>
           </div>
-          <div class="col-12 col-md-8 border-top mt-3">
+          <div class="col-12 col-md-8 border-md-top mt-3">
             <div class="d-sm-none">
               <create-contract-item-mobile
                 :p="p"
@@ -185,7 +185,7 @@ export default {
     },
   },
 
-  created() {
+  mounted() {
     this.decode();
   },
 
@@ -197,15 +197,42 @@ export default {
   methods: {
     decode() {
       let encoded = this.$route.params.slug;
-      console.log(encoded);
 
       if (encoded) {
         let decoded = Buffer.from(encoded, "base64").toString();
         console.log("decoded :>> ", decoded);
         this.order = JSON.parse(decoded);
       } else {
+        console.log("use demodata");
         this.order = this.$options.demodata;
+        console.log(this.order.meta);
         this.$store.commit("notice/show");
+      }
+    },
+
+    async createContracts() {
+      console.log("clicked create");
+      // console.log(this.order.meta);
+      // console.log(this.order.products.length);
+      let products = this.order.products;
+      let meta = this.order.meta;
+      for (let i = 0; i < products.length; i++) {
+        let product = products[i];
+        let amount = 1;
+
+        if (product.amount && product.amount > 1) {
+          for (let j = 1; j <= product.amount; j++) {
+            await this.$store.dispatch("data/addSmartContract", {
+              ...meta,
+              ...product,
+            });
+          }
+        } else {
+          await this.$store.dispatch("data/addSmartContract", {
+            ...meta,
+            ...product,
+          });
+        }
       }
     },
   },

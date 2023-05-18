@@ -1,7 +1,7 @@
 {
-  "name": "circless",
+  "name": "helix",
   "version": "1.0.0",
-  "description": "circless: less production, less recycling, less waste",
+  "description": "helix: less production, less recycling, less waste",
   "main": "index.js",
   "scripts": {
     "dev": "nuxt --port 8006",
@@ -11,19 +11,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/louweal/circless.git"
+    "url": "git+https://github.com/louweal/helix.git"
   },
   "author": "Anneloes Louwe",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/louweal/circless/issues"
+    "url": "https://github.com/louweal/helix/issues"
   },
-  "homepage": "https://github.com/louweal/circless#readme",
+  "homepage": "https://github.com/louweal/helix#readme",
   "dependencies": {
     "@hashgraph/sdk": "2.24.1",
+    "@nuxtjs/dotenv": "^1.4.1",
     "aos": "^2.3.4",
     "bootstrap": "^5.2.1",
     "core-js": "^3.25.2",
+    "fs": "^0.0.1-security",
     "hashconnect": "^0.2.4",
     "nuxt": "^2.15.8",
     "splitting": "^1.0.6",

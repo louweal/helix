@@ -59,6 +59,7 @@ export default {
 
     async signIn() {
       this.$hashconnect.connectToLocalWallet();
+
       this.$store.commit("modals/hide");
     },
   },

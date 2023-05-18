@@ -1,12 +1,12 @@
 export default {
   ssr: false,
-  modern: "client",
+  // modern: "client",
   target: "static",
   router: {
     base: "/",
   },
   head: {
-    title: "Helix",
+    title: "ℏ𝑒𝑙𝑖𝑥",
     htmlAttrs: {
       lang: "en",
     },
@@ -22,8 +22,6 @@ export default {
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
   },
-
-  buildModules: ["@nuxtjs/style-resources"],
 
   css: ["@/assets/css/main.scss"],
 
@@ -48,9 +46,17 @@ export default {
   ],
 
   components: true,
-  // buildModules: [],
-  // build: {},
 
+  modules: ["@nuxtjs/style-resources"],
+
+  buildModules: ["@nuxtjs/dotenv"], //"@nuxtjs/style-resources"
+  build: {
+    extend(config) {
+      config.node = {
+        fs: "empty",
+      };
+    },
+  },
   generate: {
     fallback: true, // for error pages on Netlify
   },
