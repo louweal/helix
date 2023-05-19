@@ -18,16 +18,8 @@ const {
   Wallet,
 } = require("@hashgraph/sdk");
 
-// const { LocalProvider } = require("@hashgraph/sdk");
-
-if (process.env.MY_ACCOUNT_ID == null || process.env.MY_PRIVATE_KEY == null) {
-  throw new Error(
-    "Environment variables MY_ACCOUNT_ID, and MY_PRIVATE_KEY are required."
-  );
-}
-
 export async function contractCreate(metadata, lifespan, deposit, date) {
-  let network = process.env.HEDERA_NETWORK;
+  let network = process.env.HEDERA_NETWORK || "testnet";
   let topic = Vue.prototype.$hashconnect.hcData.topic;
   let accountId =
     Vue.prototype.$hashconnect.hcData.pairingData[0].accountIds[0];

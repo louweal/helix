@@ -13,9 +13,9 @@ let operatorKey;
 let client;
 
 export async function lookupContractSetOperator() {
-  operatorId = AccountId.fromString(process.env.MY_ACCOUNT_ID);
-  operatorKey = PrivateKey.fromString(process.env.MY_PRIVATE_KEY);
-  client = Client.forTestnet().setOperator(operatorId, operatorKey);
+  // operatorId = AccountId.fromString(process.env.MY_ACCOUNT_ID);
+  // operatorKey = PrivateKey.fromString(process.env.MY_PRIVATE_KEY);
+  // client = Client.forTestnet().setOperator(operatorId, operatorKey);
 }
 
 export async function lookupContractRemoveContract(accountId, index) {
