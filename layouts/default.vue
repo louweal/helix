@@ -6,11 +6,7 @@
         <div>
           <Header />
 
-          <div
-            id="pushdown"
-            class="w-100 mb-2 mb-md-3 mb-lg-4"
-            :class="$route.path === '/' ? 'd-none' : false"
-          ></div>
+          <div id="pushdown" class="w-100 mb-2 mb-md-3 mb-lg-4" :class="$route.path === '/' ? 'd-none' : false"></div>
           <Nuxt />
         </div>
 
@@ -35,7 +31,7 @@ export default {
     let appMetadata = {
       name: "Helix",
       description: "Help the environment with Hedera Helix for Heroes",
-      icon: this.$store.state.domain + "favicon.png",
+      icon: this.$store.state.domain + "logo.svg",
     };
 
     console.log("in created!!!");

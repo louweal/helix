@@ -105,14 +105,20 @@ async function signerTransactionFlow(tx, isVoid) {
   // sign with HashPack
   let frozenTx = await tx.freezeWithSigner(signer);
   const exTx = await frozenTx.executeWithSigner(signer);
+  //return await provider.getTransactionReceipt(exTx.transactionId);
 
   if (isVoid) {
     return await provider.getTransactionReceipt(exTx.transactionId); //  get status
   } else {
-    console.log("Get record??!?");
-    console.log(exTx);
+    let rec = await provider.call(new TransactionRecordQuery().setTransactionId(exTx.transactionId));
 
-    console.log(await provider.getTransactionReceipt(exTx.transactionId));
+    return rec;
+    console.log("Get record??!?");
+    // console.log(exTx);
+
+    console.log(provider);
+
+    // console.log(await provider.getTransactionReceipt(exTx.transactionId));
 
     // let result = await provider.getTransactionResult(exTx.transactionId);
     return false;
