@@ -28,11 +28,10 @@ async function transactionFlow(tx, returnType) {
 
   switch (returnType) {
     case "address":
-      val = rx.contractFunctionResult.getAddress(0);
-      val = AccountId.fromSolidityAddress(val);
+      val = AccountId.fromSolidityAddress(rx.getAddress(0));
       break;
     default:
-      val = rx.status.toString();
+      val = rx.toString();
   }
 
   console.log(`Result: ${val} \n`);
@@ -59,6 +58,7 @@ async function queryFlow(tx, returnType) {
   }
 
   console.log(`Result: ${val.toString()} \n`);
+  return val;
 }
 
 async function clientQueryFlow(tx) {
@@ -89,13 +89,13 @@ async function clientTransactionFlow(tx, isVoid) {
   const exTx = await signedTx.execute(client);
 
   if (isVoid) {
-    return await exTx.getReceipt(client); //  get status
+    return (await exTx.getReceipt(client)).status; //  get status
   } else {
-    return await exTx.getRecord(client); // to get return value
+    return (await exTx.getRecord(client)).contractFunctionResult; // to get return value
   }
 }
 
-async function signerTransactionFlow(tx) {
+async function signerTransactionFlow(tx, isVoid) {
   let network = Vue.prototype.$network;
   let topic = Vue.prototype.$hashconnect.hcData.topic;
   let accountId = Vue.prototype.$hashconnect.hcData.pairingData[0].accountIds[0];
@@ -110,7 +110,8 @@ async function signerTransactionFlow(tx) {
     return await provider.getTransactionReceipt(exTx.transactionId); //  get status
   } else {
     console.log("Get record??!?");
-    return await provider.getTransactionRecord(exTx.transactionId);
+    let result = await provider.getTransactionResult(exTx.transactionId);
+    return result;
   }
 }
 
