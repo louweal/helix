@@ -112,17 +112,8 @@ async function signerTransactionFlow(tx, isVoid) {
     return await provider.getTransactionReceipt(exTx.transactionId); //  get status
   } else {
     let rec = await provider.call(new TransactionRecordQuery().setTransactionId(exTx.transactionId));
-
+    console.log(rec);
     return rec;
-    console.log("Get record??!?");
-    // console.log(exTx);
-
-    console.log(provider);
-
-    // console.log(await provider.getTransactionReceipt(exTx.transactionId));
-
-    // let result = await provider.getTransactionResult(exTx.transactionId);
-    return false;
   }
 }
 
