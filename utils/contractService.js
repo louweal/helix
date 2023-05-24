@@ -9,6 +9,7 @@ const {
   ContractFunctionParameters,
   ContractExecuteTransaction,
   ContractCallQuery,
+  TransactionRecordQuery,
   Hbar,
 } = require("@hashgraph/sdk");
 
