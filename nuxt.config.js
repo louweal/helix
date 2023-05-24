@@ -16,7 +16,7 @@ export default {
       {
         hid: "description",
         name: "description",
-        content: "Stories, reimagined",
+        content: "Save the environment with Helix",
       },
       { name: "format-detection", content: "telephone=no" },
     ],

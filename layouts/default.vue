@@ -38,15 +38,14 @@ export default {
       icon: this.$store.state.domain + "favicon.png",
     };
 
+    console.log("in created!!!");
+
     this.$hashconnect.foundExtensionEvent.on((data) => {
-      console.log("Found extension EVENT", data);
-      // Vue.prototype.$foundExtension = data;
+      console.log("foundExtensionEvent", data);
       this.$store.commit("setFoundExtension", data);
     });
 
-    this.$hashconnect.pairingEvent.on((data) => {
-      // console.log("Paired with wallet", data);
-      // Vue.prototype.$pairingData = data.pairingData;
+    this.$hashconnect.pairingEvent.once((data) => {
       this.$store.commit("setPairingData", data);
     });
 
@@ -54,8 +53,20 @@ export default {
     this.$hashconnect.connectionStatusChangeEvent.on((status) => {
       console.log("hashconnect state change event", status);
     });
-    // hashconnect.findLocalWallets();
-    this.$hashconnect.init(appMetadata, "testnet", false);
+
+    this.$hashconnect.acknowledgeMessageEvent.once((acknowledgeData) => {
+      //do something with acknowledge response data
+      console.log("acknowledgeMessageEvent:");
+      console.log(acknowledgeData);
+    });
+
+    this.$hashconnect.connectionStatusChangeEvent.once((connectionStatus) => {
+      //do something with connection status
+      console.log("connectionStatusChangeEvent");
+      console.log(connectionStatus);
+    });
+
+    this.$hashconnect.init(appMetadata, this.$network, false);
   },
 
   async mounted() {

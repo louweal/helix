@@ -1,7 +1,8 @@
 export const state = () => ({
-  // network: "testnet",
-  domain: "https://marvelous-chebakia-329fb2.netlify.app/",
-  // user: { id: -1, name: "", address: "", slug: "" },
+  network: "testnet",
+  lookupContractId: "0.0.13335253",
+  depositFactoryId: "0.0.13389762",
+  domain: "https://helix.codesparks.nl/",
   accountId: undefined,
   foundExtension: { name: undefined },
   pairingData: undefined,
@@ -9,6 +10,7 @@ export const state = () => ({
 
 export const mutations = {
   setFoundExtension(state, payload) {
+    console.log("set found extensions");
     console.log(payload);
     state.foundExtension = payload;
   },

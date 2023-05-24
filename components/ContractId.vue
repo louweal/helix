@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     dgSubdomain() {
-      return process.env.HEDERA_NETWORK || "testnet";
+      return this.$network === "testnet" ? "testnet" : "app";
     },
   },
 

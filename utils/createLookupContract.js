@@ -56,8 +56,8 @@ async function main() {
   const contractReceipt = await contractResponse.getReceipt(client);
   const newContractId = await contractReceipt.contractId;
   console.log("The smart contract ID is " + newContractId);
+
+  process.exit();
 }
 
 main();
-
-exit();

@@ -378,6 +378,10 @@
                   For detailed instructions, please refer to our comprehensive
                   <nuxt-link to="/guide" class="border-bottom"
                     >Setup guide</nuxt-link
+                  >
+                  or
+                  <nuxt-link to="/create" class="border-bottom"
+                    >view our demo</nuxt-link
                   >.
                 </p>
               </accordion-item>

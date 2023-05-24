@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-contract Helix {
+contract Deposit {
     address payable public owner;
     string public metadata;
     uint256 public deposit;

@@ -83,8 +83,6 @@ export default {
     findPairings() {
       let pairingData = this.$hashconnect.hcData.pairingData;
 
-      console.log("pairingData :>> ", pairingData);
-
       if (pairingData[0]) {
         let accountId = pairingData[0].accountIds[0];
         this.$store.commit("setAccountId", accountId);
@@ -120,10 +118,17 @@ export default {
 
     disconnect() {
       if (this.$hashconnect) {
-        if (this.$store.state.pairingData) {
-          this.$hashconnect.disconnect(this.$store.state.pairingData.topic);
-          this.$store.commit("disconnect");
-          this.$store.commit("data/SET_DEMO_CONTRACTS", undefined); // resets contracts to dummy data
+        let pairingData = this.$hashconnect.hcData.pairingData;
+        if (pairingData) {
+          console.log(pairingData);
+          let topic = pairingData[0].topic;
+          if (topic) {
+            this.$hashconnect.disconnect(topic);
+            this.$store.commit("disconnect");
+            this.$store.commit("data/SET_DEMO_CONTRACTS", undefined); // resets contracts to dummy data
+          } else {
+            console.log("No topic found");
+          }
         } else {
           console.log("No pairing data found.");
         }

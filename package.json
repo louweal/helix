@@ -4,9 +4,9 @@
   "description": "helix: less production, less recycling, less waste",
   "main": "index.js",
   "scripts": {
-    "dev": "nuxt --port 8006",
+    "dev": "nuxt --port 8001",
     "build": "nuxt build",
-    "start": "nuxt start --port 8001",
+    "start": "nuxt start --port 8002",
     "generate": "nuxt generate"
   },
   "repository": {

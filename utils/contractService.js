@@ -16,13 +16,17 @@ const {
   ContractCallQuery,
   Hbar,
   Wallet,
+  ContractCreateFlow,
 } = require("@hashgraph/sdk");
 
 export async function contractCreate(metadata, lifespan, deposit, date) {
-  let network = process.env.HEDERA_NETWORK || "testnet";
+  let network = Vue.prototype.$network;
   let topic = Vue.prototype.$hashconnect.hcData.topic;
   let accountId =
     Vue.prototype.$hashconnect.hcData.pairingData[0].accountIds[0];
+
+  const htsContract = require("./Helix.json");
+  const bytecode = htsContract.data.bytecode.object;
 
   let provider = Vue.prototype.$hashconnect.getProvider(
     network,
@@ -31,28 +35,45 @@ export async function contractCreate(metadata, lifespan, deposit, date) {
   );
 
   let signer = Vue.prototype.$hashconnect.getSigner(provider);
+  const flow = new ContractCreateFlow().setGas(200000).setBytecode(bytecode);
+  const resp = await flow.executeWithSigner(signer); // Error: `Signer.getAccountKey()` is not implemented, but is required for `ContractCreateFlow`
 
-  const htsContract = require("./Helix.json");
-  const bytecode = htsContract.data.bytecode.object;
-
-  const fileCreateTx = new FileCreateTransaction()
-    .setContents(bytecode)
-    .setMaxTransactionFee(new Hbar(2));
-
-  const fileCreateFreeze = await fileCreateTx.freezeWithSigner(signer);
-
-  console.log(fileCreateFreeze);
-
-  const fileCreateSign = await fileCreateFreeze.signWithSigner(signer); // fileCreateTx.signWithSigner is not a function
-  const txCreateResponse = await fileCreateSign.executeWithSigner(signer);
-
-  const fileCreateRx = await provider.getTransactionReceipt(
-    txCreateResponse.transactionId
-  );
-  const bytecodeFileId = fileCreateRx.fileId;
-  console.log(`- The smart contract bytecode file ID is: ${bytecodeFileId}`);
-
+  const res = provider.getTransactionReceipt(resp.transactionId);
+  const cid = await res.contractId;
+  console.log("Result: " + cid);
   return;
+
+  // const freeze = await flow.freezeWithSigner(signer);
+  // const sign = await freeze.signWithSigner(signer);
+
+  // const fileCreateTx = new FileCreateTransaction();
+  // const fileCreateFreeze = await fileCreateTx.freezeWithSigner(signer);
+  // // console.log(fileCreateFreeze);
+  // const fileCreateSign = await fileCreateFreeze.signWithSigner(signer);
+  // const txCreateResponse = await fileCreateSign.executeWithSigner(signer);
+
+  // const fileCreateRx = await provider.getTransactionReceipt(
+  //   txCreateResponse.transactionId
+  // );
+  // const bytecodeFileId = fileCreateRx.fileId;
+  // console.log(`- The smart contract bytecode file ID is: ${bytecodeFileId}`);
+
+  // // Append contents to the file
+  // const fileAppendTx = new FileAppendTransaction()
+  //   .setFileId(bytecodeFileId)
+  //   .setContents(bytecode)
+  //   .setMaxChunks(20);
+
+  // const fileAppendFreeze = await fileAppendTx.freezeWithSigner(signer);
+  // // console.log(fileCreateFreeze);
+  // const fileAppendSign = await fileAppendFreeze.signWithSigner(signer);
+  // const fileAppendSubmit = await fileAppendSign.executeWithSigner(signer);
+  // const fileAppendRx = await provider.getTransactionReceipt(
+  //   fileAppendSubmit.transactionId
+  // );
+
+  // console.log(`FileAppendTransaction - status: ${fileAppendRx.status} \n`);
+
   // const sellerId = AccountId.fromString(accountId);
   // const sellerKey = PrivateKey.fromString(pvKey);
   // const client = Client.forTestnet().setOperator(sellerId, sellerKey);
