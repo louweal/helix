@@ -3,11 +3,7 @@
     <div class="container-xl" v-if="this.$store.state.data.contracts">
       <div class="d-sm-none">
         <TransitionGroup name="list" tag="div">
-          <contract-item-mobile
-            :c="c"
-            v-for="c in this.$store.state.data.contracts"
-            :key="c.contract.id"
-          />
+          <contract-item-mobile :c="c" v-for="c in this.$store.state.data.contracts" :key="c.contract.id" />
         </TransitionGroup>
       </div>
       <div class="table-responsive d-none d-sm-block">
@@ -40,20 +36,14 @@
                   Product name
                   <caret group="product" field="name" />
                 </div>
-                <div
-                  class="font-small fw-light cp"
-                  @click="sortBy('store', 'name')"
-                >
+                <div class="font-small fw-light cp" @click="sortBy('store', 'name')">
                   Store
                   <caret group="store" field="name" />
                 </div>
               </th>
               <th scope="col">
                 <div>Received</div>
-                <div
-                  class="font-small fw-light cp"
-                  @click="sortBy('contract', 'deposit')"
-                >
+                <div class="font-small fw-light cp" @click="sortBy('contract', 'deposit')">
                   Total deposit
                   <caret group="contract" field="deposit" />
                 </div>
@@ -62,11 +52,7 @@
             </tr>
           </thead>
           <TransitionGroup name="list" tag="tbody">
-            <contract-item-desktop
-              :c="c"
-              v-for="c in $store.state.data.contracts"
-              :key="c.contract.id"
-            />
+            <contract-item-desktop :c="c" v-for="c in $store.state.data.contracts" :key="c.contract.id" />
           </TransitionGroup>
         </table>
       </div>
@@ -75,14 +61,12 @@
     <div v-else class="text-center">
       <p>No contracts found.</p>
     </div>
+    hello
+
+    {{ numContracts }}
 
     <div class="position-fixed bottom-0 start-50 translate-middle d-sm-none">
-      <div
-        class="btn bg-light"
-        @click="$store.commit('modals/show', { name: 'sort' })"
-      >
-        <i class="bi bi-sort-down-alt"></i> Sort
-      </div>
+      <div class="btn bg-light" @click="$store.commit('modals/show', { name: 'sort' })"><i class="bi bi-sort-down-alt"></i> Sort</div>
     </div>
 
     <modal name="sort" title="Sort contracts"> <modal-sort /> </modal>
@@ -104,11 +88,18 @@
 import demodata from "@/data/dummy.json";
 
 export default {
+  data() {
+    return {
+      numContracts: -1,
+    };
+  },
   async fetch() {
     if (!this.$store.state.accountId) {
       this.$store.commit("data/SET_DEMO_CONTRACTS", demodata);
     } else {
       console.log("todo: get user contracts");
+      this.numContracts = await this.$store.dispatch("data/getNumContracts");
+
       this.$store.commit("data/SET_CONTRACTS", undefined);
     }
   },

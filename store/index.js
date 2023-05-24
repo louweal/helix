@@ -18,7 +18,6 @@ export const mutations = {
     state.pairingData = payload;
     let accountId = payload.accountIds[0];
     state.accountId = accountId;
-
     state.data.contracts = undefined;
   },
 

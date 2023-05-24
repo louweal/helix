@@ -40,6 +40,10 @@ export default {
 
     console.log("in created!!!");
 
+    if (process.env.MY_ACCOUNT_ID) {
+      this.$store.commit("setAccountId", process.env.MY_ACCOUNT_ID);
+    }
+
     this.$hashconnect.foundExtensionEvent.on((data) => {
       console.log("foundExtensionEvent", data);
       this.$store.commit("setFoundExtension", data);
