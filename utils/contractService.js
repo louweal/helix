@@ -110,8 +110,12 @@ async function signerTransactionFlow(tx, isVoid) {
     return await provider.getTransactionReceipt(exTx.transactionId); //  get status
   } else {
     console.log("Get record??!?");
-    let result = await provider.getTransactionResult(exTx.transactionId);
-    return result;
+    console.log(exTx);
+
+    console.log(await provider.getTransactionReceipt(exTx.transactionId));
+
+    // let result = await provider.getTransactionResult(exTx.transactionId);
+    return false;
   }
 }
 
