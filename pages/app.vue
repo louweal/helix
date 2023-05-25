@@ -1,11 +1,11 @@
 <template>
   <main>
     <div class="container-xl" v-if="this.$store.state.data.contracts">
-      <div class="d-sm-none">
+      <!-- <div class="d-sm-none">
         <TransitionGroup name="list" tag="div">
           <contract-item-mobile :c="c" v-for="c in this.$store.state.data.contracts" :key="c.contract.id" />
         </TransitionGroup>
-      </div>
+      </div> -->
       <div class="table-responsive d-none d-sm-block">
         <table class="table align-middle">
           <thead class="align-middle">
@@ -51,9 +51,13 @@
               <th scope="col">Actions</th>
             </tr>
           </thead>
-          <TransitionGroup name="list" tag="tbody">
-            <contract-item-desktop :c="c" v-for="c in $store.state.data.contracts" :key="c.contract.id" />
-          </TransitionGroup>
+          <!-- <TransitionGroup name="list" tag="tbody">
+            <contract-item-desktop :c="c" v-for="(c, i) in $store.state.data.contracts" :key="c.contract.id" />
+          </TransitionGroup> -->
+
+          {{
+            $store.state.data.contracts
+          }}
         </table>
       </div>
     </div>
@@ -61,12 +65,11 @@
     <div v-else class="text-center">
       <p>No contracts found.</p>
     </div>
-    hello
-
-    {{ numContracts }}
 
     <div class="position-fixed bottom-0 start-50 translate-middle d-sm-none">
-      <div class="btn bg-light" @click="$store.commit('modals/show', { name: 'sort' })"><i class="bi bi-sort-down-alt"></i> Sort</div>
+      <div class="btn bg-light" @click="$store.commit('modals/show', { name: 'sort' })">
+        <i class="bi bi-sort-down-alt"></i> Sort
+      </div>
     </div>
 
     <modal name="sort" title="Sort contracts"> <modal-sort /> </modal>
@@ -97,10 +100,24 @@ export default {
     if (!this.$store.state.accountId) {
       this.$store.commit("data/SET_DEMO_CONTRACTS", demodata);
     } else {
-      console.log("todo: get user contracts");
-      this.numContracts = await this.$store.dispatch("data/getNumContracts");
+      if (this.$store.state.data.contracts.length === 0) {
+        console.log("getting user contracts from Hedera network...");
+        let numContracts = await this.$store.dispatch("data/getNumContracts");
 
-      this.$store.commit("data/SET_CONTRACTS", undefined);
+        for (let i = 0; i < numContracts; i++) {
+          let contractId = await this.$store.dispatch("data/getContractId", {
+            accountId: this.$store.state.accountId,
+            i: i,
+          });
+
+          console.log(contractId);
+          if (contractId === "0.0.0") {
+            continue; // skip deleted contracts
+          }
+
+          await this.$store.dispatch("data/getMetadata", { contractId, contractId, i: i });
+        }
+      }
     }
   },
 

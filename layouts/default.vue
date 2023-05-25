@@ -28,6 +28,10 @@ export default {
     mode: "out-in",
   },
   async created() {
+    if (process.env.MY_ACCOUNT_ID) {
+      this.$store.commit("setAccountId", process.env.MY_ACCOUNT_ID);
+    }
+
     let appMetadata = {
       name: "Helix",
       description: "Help the environment with Hedera Helix for Heroes",
@@ -36,9 +40,9 @@ export default {
 
     console.log("in created!!!");
 
-    if (process.env.MY_ACCOUNT_ID) {
-      this.$store.commit("setAccountId", process.env.MY_ACCOUNT_ID);
-    }
+    // let solAddr = await this.$store.dispatch("data/makeSolidityAddress", "0.0.3477325"); // just a random testnet account
+    // console.log("solAdd :>");
+    // console.log(solAddr);
 
     this.$hashconnect.foundExtensionEvent.on((data) => {
       console.log("foundExtensionEvent", data);

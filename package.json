@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nuxt --port 8001",
+    "dev-ext": "cross-env NUXT_HOST=0.0.0.0 NUXT_PORT=3333 nuxt",
     "build": "nuxt build",
     "start": "nuxt start --port 8002",
     "generate": "nuxt generate"
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.2.1",
+    "cross-env": "^7.0.3",
     "sass": "^1.55.0",
     "sass-loader": "^10.1.1"
   }

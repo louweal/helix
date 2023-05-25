@@ -27,19 +27,15 @@
 
       <div class="col-12">
         <select name="" id="" class="form-select">
-          <option
-            :value="c.address"
-            v-for="c in $options.charities"
-            :key="c.address"
-          >
-            {{ c.name }}
+          <option :value="ch.address" v-for="ch in $options.charities" :key="ch.address">
+            {{ ch.name }}
           </option>
         </select>
       </div>
     </div>
 
-    <div class="btn btn-secondary" xxxclick="">
-      {{ $t("Donate xxx ℏ") }} <i class="bi bi-arrow-right"></i>
+    <div class="btn btn-secondary" @click="donate">
+      Donate {{ c.contract.deposit }} ℏ <i class="bi bi-arrow-right"></i>
     </div>
   </div>
 </template>
@@ -49,12 +45,21 @@ export default {
   charities: [
     {
       name: "The Plastic Soup Foundation",
-      address: "xxxxxxx",
+      address: "0000000000000000000000000000000000350f4d",
     },
   ],
   computed: {
     c() {
       return this.$store.state.modals.data;
+    },
+  },
+
+  methods: {
+    donate() {
+      this.$store.dispatch("data/donateDeposit", {
+        accountId: this.$store.state.accountId,
+        contractId: this.c.contract.id,
+      });
     },
   },
 };

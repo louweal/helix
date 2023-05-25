@@ -1,11 +1,6 @@
 <template>
-  <a
-    :href="`https://${dgSubdomain}.dragonglass.me/hedera/contracts/${contractId(
-      id
-    )}`"
-    target="_blank"
-  >
-    {{ contractId(id) }}
+  <a :href="`https://${dgSubdomain}.dragonglass.me/hedera/contracts/${id}`" target="_blank">
+    {{ id }}
     <i class="bi bi-box-arrow-up-right"></i>
   </a>
 </template>
@@ -14,19 +9,13 @@
 export default {
   props: {
     id: {
-      type: Number,
-      default: -1,
+      type: String,
+      default: "0.0.000000",
     },
   },
   computed: {
     dgSubdomain() {
       return this.$network === "testnet" ? "testnet" : "app";
-    },
-  },
-
-  methods: {
-    contractId(id) {
-      return "0.0." + id;
     },
   },
 };

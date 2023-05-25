@@ -14,12 +14,12 @@
       {{ p.deposit }}
     </td>
 
-    <div
+    <!-- <div
       v-if="p.amount > 1"
       class="position-absolute bg-primary rounded-circle start-0 top-0 text-white px-2 ms-2 mt-2"
     >
       {{ p.amount }}X
-    </div>
+    </div> -->
   </tr>
 </template>
 
@@ -43,10 +43,8 @@ export default {
       var months = Math.floor((numberOfDays % 365) / 30);
       var days = Math.floor((numberOfDays % 365) % 30);
 
-      var yearsDisplay =
-        years > 0 ? years + (years == 1 ? " year, " : " years, ") : "";
-      var monthsDisplay =
-        months > 0 ? months + (months == 1 ? " month, " : " months, ") : "";
+      var yearsDisplay = years > 0 ? years + (years == 1 ? " year, " : " years, ") : "";
+      var monthsDisplay = months > 0 ? months + (months == 1 ? " month, " : " months, ") : "";
       var daysDisplay = days > 0 ? days + (days == 1 ? " day" : " days") : "";
       return yearsDisplay + monthsDisplay + daysDisplay;
     },

@@ -1,10 +1,7 @@
 <template>
   <tr class="item">
     <td scope="row">
-      <div
-        class="ratio ratio-1x1 cp"
-        @click="$store.commit('modals/show', { name: 'visual', data: c })"
-      >
+      <div class="ratio ratio-1x1 cp" @click="$store.commit('modals/show', { name: 'visual', data: c })">
         <visual :product="c.product" />
       </div>
     </td>

@@ -7,39 +7,25 @@
     :key="$store.state.accountId"
   >
     <div class="d-flex justify-content-between align-items-center">
-      <nuxt-link
-        to="/"
-        event=""
-        @click.native="scrollToTop()"
-        class="header-logo me-4"
-        aria-label="to homepage"
-      >
+      <nuxt-link to="/" event="" @click.native="scrollToTop()" class="header-logo me-4" aria-label="to homepage">
         <div class="logo"></div>
       </nuxt-link>
 
       <ul class="d-none d-lg-block list-inline mb-0">
-        <li
-          class="list-inline-item px-lg-2"
-          v-for="(l, i) in $options.menu"
-          :key="i"
-        >
+        <li class="list-inline-item px-lg-2" v-for="(l, i) in $options.menu" :key="i">
           <nuxt-link :to="{ path: l.url, hash: l.hash }" class="nav-link">
             {{ l.title }}
           </nuxt-link>
         </li>
       </ul>
 
-      <!-- <nuxt-link to="/welcome">Welcome</nuxt-link> -->
+      <nuxt-link to="/app">App</nuxt-link>
 
       <div class="ms-auto d-none d-lg-flex align-items-center gap-2 gap-md-4">
         <!-- <nuxt-link to="docs"
           >Documentation <i class="bi bi-box-arrow-up-right"></i
         ></nuxt-link> -->
-        <div
-          class="btn btn-primary"
-          @click="disconnect()"
-          v-if="$store.state.accountId"
-        >
+        <div class="btn btn-primary" @click="disconnect()" v-if="$store.state.accountId">
           Disconnect <span class="d-none d-md-inline"> wallet</span>
         </div>
 
@@ -48,11 +34,7 @@
         </div>
       </div>
       <div class="d-lg-none" @click="$store.commit('pushmenu/toggle')">
-        <i
-          class="bi lh-1"
-          style="font-size: 38px"
-          :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"
-        ></i>
+        <i class="bi lh-1" style="font-size: 38px" :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"></i>
       </div>
     </div>
   </nav>
@@ -104,10 +86,7 @@ export default {
       let headerHeight = header.offsetHeight;
 
       // make header transparent only on top of hero on homepage
-      if (
-        this.$route.path === "/" &&
-        window.scrollY <= window.innerHeight - headerHeight
-      ) {
+      if (this.$route.path === "/" && window.scrollY <= window.innerHeight - headerHeight) {
         header.classList.add("header--transparent");
         header.classList.remove("header--white");
       } else {
@@ -126,6 +105,7 @@ export default {
             this.$hashconnect.disconnect(topic);
             this.$store.commit("disconnect");
             this.$store.commit("data/SET_DEMO_CONTRACTS", undefined); // resets contracts to dummy data
+            // this.$store.commit("data/SET_DEMO_CONTRACTS", undefined); // resets contracts to dummy data
           } else {
             console.log("No topic found");
           }

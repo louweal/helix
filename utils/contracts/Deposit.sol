@@ -47,7 +47,7 @@ contract Deposit {
         depositC = (deposit_ * 10) / 100;
 
         // official charities
-        charities[0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2] = true;
+        charities[0000000000000000000000000000000000350f4d] = true;
 
     }
 

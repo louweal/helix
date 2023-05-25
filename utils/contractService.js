@@ -51,11 +51,17 @@ async function queryFlow(tx, returnType) {
   }
   let val;
   switch (returnType) {
+    case "string":
+      val = exTx.getString(0);
+      break;
     case "uint32":
       val = exTx.getUint32(0);
       break;
     case "address":
       val = AccountId.fromSolidityAddress(exTx.getAddress(0)).toString();
+      break;
+    default:
+      console.log("Unknown returnType: " + returnType);
   }
 
   console.log(`Result: ${val.toString()} \n`);
@@ -111,7 +117,10 @@ async function signerTransactionFlow(tx, isVoid) {
   if (isVoid) {
     return await provider.getTransactionReceipt(exTx.transactionId); //  get status
   } else {
-    let rec = await provider.call(new TransactionRecordQuery().setTransactionId(exTx.transactionId));
+    console.log(await provider.getTransactionReceipt(exTx.transactionId));
+    let rec = await provider.call(
+      new TransactionRecordQuery().setIncludeChildren(true).setTransactionId(exTx.transactionId)
+    ); // undefined .setIncludeChildren(true)
     console.log(rec);
     return rec;
   }
@@ -131,8 +140,12 @@ function functionParameters(params) {
       case "uint256":
         cfp = cfp.addUint256(value);
         break;
+      case "uint32":
+        cfp = cfp.addUint32(value);
+        break;
       case "address": {
         cfp = cfp.addAddress(ContractId.fromString(value).toSolidityAddress());
+        break;
       }
       default:
         console.log("Unknown parameter type");
@@ -140,6 +153,10 @@ function functionParameters(params) {
   }
 
   return cfp;
+}
+
+export function getSolidityAddress(str) {
+  return AccountId.fromString(str).toSolidityAddress().toString();
 }
 
 export async function contractExecuteTransaction(id, name, params, returnType = false, value = false) {

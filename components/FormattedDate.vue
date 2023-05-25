@@ -9,7 +9,7 @@ export default {
   props: {
     date: {
       type: Number,
-      default: "",
+      default: 0,
     },
   },
   methods: {

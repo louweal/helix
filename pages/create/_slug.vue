@@ -11,12 +11,13 @@
             <p>
               On {{ order.meta.order_date }} you visited {{ order.meta.store }} and bought {{ numProducts }} products.
               {{ order.meta.store }}
-              is dedicated to support global sustainability goals, such as reducing carbon emissions, conserving resources, and minimizing
-              waste.
+              is dedicated to support global sustainability goals, such as reducing carbon emissions, conserving
+              resources, and minimizing waste.
             </p>
             <p>
-              {{ order.meta.store }} has carefully calculated a deposit for each product in your order and kindly asks you to pay these
-              deposits. Currently, you can only pay this bill with a Hedera wallet (via Hashpack). Thank you for shopping consciously!
+              {{ order.meta.store }} has carefully calculated a deposit for each product in your order and kindly asks
+              you to pay these deposits. Currently, you can only pay this bill with a Hedera wallet (via Hashpack).
+              Thank you for shopping consciously!
             </p>
 
             <p></p>
@@ -44,15 +45,15 @@
         <div class="row justify-content-center text-center">
           <div class="col-12 col-md-8">
             <h2 class="lh-sm" data-aos="fade-up-scale">
-              You'll will get up to 60% of the deposit back during the lifespan of the product and you can donate 10% or more to your
-              favorite environmental charity.
+              You'll will get up to 60% of the deposit back during the lifespan of the product and you can donate 10% or
+              more to your favorite environmental charity.
             </h2>
           </div>
           <div class="col-12 col-md-10">
             <p data-aos="fade-up-scale">
               When you pay the deposit we will create the following
-              {{ numContracts }} smart contracts. The duration of each contract is equal to the expected lifespan and the start date of all
-              contracts is equal to the order date of your order.
+              {{ numContracts }} smart contracts. The duration of each contract is equal to the expected lifespan and
+              the start date of all contracts is equal to the order date of your order.
             </p>
           </div>
         </div>
@@ -81,7 +82,7 @@
                   <tr>
                     <th scope="col" style="width: 130px"></th>
                     <th scope="col">Name</th>
-                    <th scope="col">Duration</th>
+                    <th scope="col">Lifespan</th>
                     <th scope="col">Deposit</th>
                   </tr>
                 </thead>
@@ -109,9 +110,10 @@
             <div class="row">
               <div class="col-12 col-md-6">
                 <p>
-                  No, {{ order.meta.store }} will not receive your deposit. Your deposits will be stored securely on the Hedera Hashgraph
-                  network within a so-called <i>smart contract</i>. It will stay there until <b>you</b> decide otherwise. Simply visit this
-                  website again if you wish to collect or donate (part of) your deposits in the future.
+                  No, {{ order.meta.store }} will not receive your deposit. Your deposits will be stored securely on the
+                  Hedera Hashgraph network within a so-called <i>smart contract</i>. It will stay there until
+                  <b>you</b> decide otherwise. Simply visit this website again if you wish to collect or donate (part
+                  of) your deposits in the future.
                 </p>
               </div>
             </div>
@@ -167,7 +169,7 @@ export default {
       } else {
         console.log("use demodata");
         this.order = this.$options.demodata;
-        console.log(this.order.meta);
+        // console.log(this.order.meta);
         this.$store.commit("notice/show");
       }
     },
@@ -178,6 +180,13 @@ export default {
       // console.log(this.order.products.length);
       let products = this.order.products;
       let meta = this.order.meta;
+      let newMeta = {
+        order_id: meta.order_id,
+        store: meta.store,
+        currency: meta.currency,
+        order_date: Math.floor(new Date(meta.order_date).getTime() / 1000),
+      };
+
       for (let i = 0; i < products.length; i++) {
         let product = products[i];
         let amount = 1;
@@ -185,13 +194,13 @@ export default {
         if (product.amount && product.amount > 1) {
           for (let j = 1; j <= product.amount; j++) {
             await this.$store.dispatch("data/createDepositContract", {
-              ...meta,
+              ...newMeta,
               ...product,
             });
           }
         } else {
           await this.$store.dispatch("data/createDepositContract", {
-            ...meta,
+            ...newMeta,
             ...product,
           });
         }
