@@ -30,12 +30,13 @@
     "hashconnect": "^0.2.4",
     "nuxt": "^2.15.8",
     "splitting": "^1.0.6",
-    "vue-typed-js": "^0.1.2"
+    "vue-typed-js": "^0.1.2",
+    "webpack": "^4.46.0"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.2.1",
     "cross-env": "^7.0.3",
     "sass": "^1.55.0",
-    "sass-loader": "^10.1.1"
+    "sass-loader": "^10.4.1"
   }
 }

@@ -38,12 +38,7 @@ export default {
     error_404: "Page not found",
   },
 
-  plugins: [
-    "~/plugins/translate.js",
-    "~/plugins/aos.js",
-    "~/plugins/typed.js",
-    "~/plugins/hashconnect.js",
-  ],
+  plugins: ["~/plugins/translate.js", "~/plugins/aos.js", "~/plugins/typed.js", "~/plugins/hashconnect.js"],
 
   components: true,
 
