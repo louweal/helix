@@ -34,9 +34,7 @@
       </div>
     </div>
 
-    <div class="btn btn-secondary" @click="donate">
-      Donate {{ c.contract.deposit }} ℏ <i class="bi bi-arrow-right"></i>
-    </div>
+    <div class="btn btn-secondary" @click="donate">Donate {{ c.contract.deposit }} ℏ <i class="bi bi-arrow-right"></i></div>
   </div>
 </template>
 
@@ -60,6 +58,8 @@ export default {
         accountId: this.$store.state.accountId,
         contractId: this.c.contract.id,
       });
+
+      this.$store.commit("modals/hide");
     },
   },
 };

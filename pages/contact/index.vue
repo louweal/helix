@@ -3,17 +3,6 @@
     <div class="container-xl">
       <div class="row justify-content-center" data-aos="fade">
         <div class="col-12 col-md-8">
-          <!-- <div class="row mb-3">
-            <div class="col-4 col-md-2">
-              <img
-                data-aos="fade"
-                key="how-3"
-                src="@/images/anneloes.jpg"
-                alt="anneloes louwe"
-                class="rounded-circle w-100"
-              />
-            </div>
-          </div> -->
           <h2 data-aos="fade-up-scale">Hi there!</h2>
 
           <p data-aos="fade-up-scale">
@@ -65,9 +54,3 @@
     </div>
   </main>
 </template>
-
-<script>
-export default {};
-</script>
-
-<style></style>

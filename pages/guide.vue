@@ -9,9 +9,7 @@
 
             <p class="fs-md">
               This guide is written for webshop owners.
-              <span class="border-bottom border-danger"
-                >Some JavaScript knowledge is required</span
-              >.
+              <span class="border-bottom border-danger">Some JavaScript knowledge is required</span>.
             </p>
           </div>
         </div>
@@ -34,9 +32,7 @@
                     <nuxt-link :to="{ hash: '#encode' }">Encode</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link :to="{ hash: '#create-link' }"
-                      >Create link</nuxt-link
-                    >
+                    <nuxt-link :to="{ hash: '#create-link' }">Create link</nuxt-link>
                   </li>
                 </ol>
               </div>
@@ -48,15 +44,11 @@
             <h2 class="fs-3" id="collect">Collect order data</h2>
 
             <p>
-              During processing of a customer's order, collect the relevant data
-              into a single JSON object. The object should have a
+              During processing of a customer's order, collect the relevant data into a single JSON object. The object should have a
               <code>meta</code> property and a <code>products</code> property.
             </p>
 
-            <p>
-              The <code>meta</code> property should have the following
-              properties:
-            </p>
+            <p>The <code>meta</code> property should have the following properties:</p>
 
             <div class="mx-2">
               <table class="table table-striped">
@@ -77,10 +69,7 @@
               </table>
             </div>
 
-            <p>
-              The <code>products</code> property should be an array of objects
-              with the following properties:
-            </p>
+            <p>The <code>products</code> property should be an array of objects with the following properties:</p>
 
             <div class="mx-2">
               <table class="table table-striped">
@@ -174,7 +163,6 @@
           </div>
         </div>
       </div>
-      <!-- </div> -->
     </section>
   </main>
 </template>

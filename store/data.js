@@ -32,7 +32,7 @@ export const mutations = {
 
   addContract(state, payload) {
     // state.contracts[payload.i] = payload.item;
-    state.contracts.push(payload);
+    state.contracts.push(payload.item);
   },
 
   setSortBy(state, payload) {
@@ -56,8 +56,7 @@ export const mutations = {
     // console.log(typeof dataClone);
     if (typeof state[type][0][state.sortBy.group][state.sortBy.field] === "string") {
       state[type].sort((a, b) =>
-        a[state.sortBy.group][state.sortBy.field].toLowerCase() >
-        b[state.sortBy.group][state.sortBy.field].toLowerCase()
+        a[state.sortBy.group][state.sortBy.field].toLowerCase() > b[state.sortBy.group][state.sortBy.field].toLowerCase()
           ? -1 * state.sortBy.direction
           : 1 * state.sortBy.direction
       );

@@ -2,7 +2,6 @@
   <div class="item position-relative">
     <div class="row g-2">
       <div class="col-3">
-        <!-- {{ p }} -->
         <visual :product="p" />
       </div>
       <div class="col-9 align-self-center">
@@ -40,10 +39,8 @@ export default {
       var months = Math.floor((numberOfDays % 365) / 30);
       var days = Math.floor((numberOfDays % 365) % 30);
 
-      var yearsDisplay =
-        years > 0 ? years + (years == 1 ? " year, " : " years, ") : "";
-      var monthsDisplay =
-        months > 0 ? months + (months == 1 ? " month, " : " months, ") : "";
+      var yearsDisplay = years > 0 ? years + (years == 1 ? " year, " : " years, ") : "";
+      var monthsDisplay = months > 0 ? months + (months == 1 ? " month, " : " months, ") : "";
       var daysDisplay = days > 0 ? days + (days == 1 ? " day" : " days") : "";
       return yearsDisplay + monthsDisplay + daysDisplay;
     },

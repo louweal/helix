@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main v-if="true === false">
     <div class="container-xl" v-if="this.$store.state.data.contracts">
       <!-- <div class="d-sm-none">
         <TransitionGroup name="list" tag="div">
@@ -51,13 +51,9 @@
               <th scope="col">Actions</th>
             </tr>
           </thead>
-          <!-- <TransitionGroup name="list" tag="tbody">
+          <TransitionGroup name="list" tag="tbody">
             <contract-item-desktop :c="c" v-for="(c, i) in $store.state.data.contracts" :key="c.contract.id" />
-          </TransitionGroup> -->
-
-          {{
-            $store.state.data.contracts
-          }}
+          </TransitionGroup>
         </table>
       </div>
     </div>
@@ -67,9 +63,7 @@
     </div>
 
     <div class="position-fixed bottom-0 start-50 translate-middle d-sm-none">
-      <div class="btn bg-light" @click="$store.commit('modals/show', { name: 'sort' })">
-        <i class="bi bi-sort-down-alt"></i> Sort
-      </div>
+      <div class="btn bg-light" @click="$store.commit('modals/show', { name: 'sort' })"><i class="bi bi-sort-down-alt"></i> Sort</div>
     </div>
 
     <modal name="sort" title="Sort contracts"> <modal-sort /> </modal>
@@ -84,6 +78,11 @@
     <modal name="visual">
       <modal-visual />
     </modal>
+  </main>
+  <main v-else>
+    <div class="container-xl">
+      <p>Under maintenance</p>
+    </div>
   </main>
 </template>
 
